@@ -305,9 +305,9 @@ def pipeline2 (df):
 
 data_load_state.text('Script loaded! Awaiting input...')
 
-
 if st.button('Scrape YouTube'):
     data = pipeline1(user_input1,int(user_input2))
+
 if st.button('Create Wordcloud'):
     wordcloud = pipeline2(data)
 
