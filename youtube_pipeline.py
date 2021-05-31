@@ -40,8 +40,6 @@ from google.auth.transport.requests import Request
 from youtube_transcript_api import YouTubeTranscriptApi
 from sklearn.feature_extraction.text import TfidfVectorizer
 import matplotlib.pyplot as plt
-
-from stqdm import stqdm
 from wordcloud import WordCloud
 from PIL import Image
 
