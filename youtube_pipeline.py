@@ -42,11 +42,12 @@ from PIL import Image
 
 
 def pipeline2 (df):
-    data_load_state.text('2/4: Running Term-Frequency Inverse-Document-Frequency analysis...')
+
+    progress = st.text('2/4: Running Term-Frequency Inverse-Document-Frequency analysis...')
     df = tfidf_prep(df)
-    data_load_state.text('3/4: Vectorizing documents...')
+    progress.text('3/4: Vectorizing documents...')
     df = vectorize(df)
-    data_load_state.text('4/4: Building wordcloud visualization...')
+    progress.text('4/4: Building wordcloud visualization...')
     wordcloud = visualize(df)
     return wordcloud
 
