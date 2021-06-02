@@ -3,7 +3,7 @@ import streamlit as st
 import SessionState
 from scraper_fns import *
 from nlp_fns import * 
-
+import base64
 
 st.title('Fucking Fancy Youtube Scraper (TM)')
 
@@ -58,6 +58,16 @@ ss = SessionState.get()
 if q_button:
     ss.x = get_data(user_input1, user_input2)
 
+######################### Download csv of scraped data ###################
+
+if hasattr(ss, 'x'):
+    csv = ss.x.to_csv(index=False)
+    b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
+    href = f'<a href="data:file/csv;base64,{b64}">Download CSV File</a> (right-click and save as &lt;some_name&gt;.csv)'
+    st.markdown(href, unsafe_allow_html=True)
+
+############################################################################
+
 if word_cloud_button:
     wordcloud = pipeline2(ss.x)
     st.image(wordcloud.to_array())
@@ -68,10 +78,14 @@ if st.button("test"):
 
 
 
+
+
+
+
 #scrape_state.text(('Total videos scraped: ' + str(total_scraped)+". Total scrapes remaining: approximately " + str(10000-total_scraped)))
 
 
-##### SAVE FOR LATER MAYBE ##############
+#################### SAVE FOR LATER MAYBE ########################
 
 # @st.cache(allow_output_mutation=True,persist=True, suppress_st_warning=True)
 # def pipeline1 (query,results):

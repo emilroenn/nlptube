@@ -2,6 +2,7 @@ import streamlit as st
 import SessionState
 from scraper_fns import *
 from nlp_fns import *
+import base64
 
 from nltk.corpus import stopwords
 import gensim
@@ -90,10 +91,15 @@ def main():
         data3text = "DATA 3: Empty"
     if ss.data3q != "NA":
         data3text = "DATA 3: " + str(ss.data3q) + " (" + str(ss.data3s) + " comments)"
-    
     st.sidebar.text(data1text)
+    if hasattr(ss, 'data1_href'):
+        st.sidebar.markdown(ss.data1_href, unsafe_allow_html=True)
     st.sidebar.text(data2text)
+    if hasattr(ss, 'data2_href'):
+        st.sidebar.markdown(ss.data2_href, unsafe_allow_html=True)
     st.sidebar.text(data3text)
+    if hasattr(ss, 'data3_href'):
+        st.sidebar.markdown(ss.data3_href, unsafe_allow_html=True)
 
 
     # Display the selected page with the session state
@@ -108,7 +114,6 @@ def page_main():
 
 def page_how():
     st.title('How to use this tool')
-    
     st.write("This is where we tell you how to use it, motherfucker")
 
 def page_scrape():
@@ -127,18 +132,32 @@ def page_scrape():
             ss.data1q = user_input1
             ss.data1s = len(ss.data1)
             total = len(ss.data1)
+            csv = ss.data1.to_csv(index=False)
+            b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
+            ss.data1_href = f'<a href="data:file/csv;base64,{b64}">Download CSV File</a> (right-click and save as &lt;some_name&gt;.csv)'
+            st.markdown(ss.data1_href, unsafe_allow_html=True)
         if dataset == "Data 2":
             ss.data2 = get_data(user_input1, user_input2)
             ss.data2q = user_input1
             ss.data2s = len(ss.data2)
             total = len(ss.data2)
+            csv = ss.data2.to_csv(index=False)
+            b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
+            ss.data2_href = f'<a href="data:file/csv;base64,{b64}">Download CSV File</a> (right-click and save as &lt;some_name&gt;.csv)'
+            st.markdown(ss.data2_href, unsafe_allow_html=True)
         if dataset == "Data 3":
             ss.data3 = get_data(user_input1, user_input2)
             ss.data3q = user_input1
             ss.data3s = len(ss.data3)
             total = len(ss.data3)
+            csv = ss.data3.to_csv(index=False)
+            b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
+            ss.data3_href = f'<a href="data:file/csv;base64,{b64}">Download CSV File</a> (right-click and save as &lt;some_name&gt;.csv)'
+            st.markdown(ss.data3_href, unsafe_allow_html=True)
         progress.header("Done!")
         st.write("Total comments scraped:", total)
+
+
         
   #  download_button = st.button('Download data')
   #  if download_button:
