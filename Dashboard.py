@@ -84,6 +84,7 @@ def main():
         "Scrape YouTube Data": page_scrape,
         "Pre-process Data": page_pre,
         "Visualize Data" : page_visualize,
+        "Sentiment Analysis" : page_sentiment,
         "About Us" : page_about
     }
 
@@ -104,6 +105,8 @@ def main():
         ss.current = "Pre-process Data"
     if st.sidebar.button("Visualize Data"):
         ss.current = "Visualize Data"
+    if st.sidebar.button("Sentiment Analysis"):
+        ss.current = "Sentiment Analysis"
     if st.sidebar.button("About Us"):
         ss.current = "About Us"
 
@@ -337,11 +340,12 @@ def page_visualize():
                 wordcloud_list = pipeline_multiple(df_list, cloud_color, cloud_bg, cloud_shape, cloud_font)
                 
 
-              #  with st.form(key='my_form'):
-              #      st.text("Customize wordcloud:")   
-              #      col1, col2 = st.beta_columns(2)
-                st.image(wordcloud_list[0].to_array())
-                st.image(wordcloud_list[1].to_array())
+
+                wc_col1, wc_col2 = st.beta_columns(2)
+                wc_col1.text(ss.data1q)
+                wc_col2.text(ss.data2q)
+                wc_col1.image(wordcloud_list[0].to_array())
+                wc_col2.image(wordcloud_list[1].to_array())
              #   st.image(wordcloud_list[2].to_array())
 
         except AttributeError as e:
@@ -350,9 +354,15 @@ def page_visualize():
         
         
 
+
+def page_sentiment():
+    st.title("IT'S ABOUT EMOTIONS, FUCKER")
+    st.text("Let's see how we feel.")   
+
+
 def page_about():
-    st.title('Fucking Fancy Youtube Scraper (TM)')
-    st.text("Good for you, motherfucker")   
+    st.title("LET'S TALK A LITTLE ABOUT US")
+    st.text("We made this, so we're pretty cool, hey.")   
 
 
 if __name__ == "__main__":
