@@ -54,10 +54,11 @@ def main():
     pages = {
         "Welcome": page_main,
         "How it works": page_how,
+        "Upload Data": page_upload,
         "Scrape YouTube Data": page_scrape,
         "Pre-process Data": page_pre,
         "Visualize Data" : page_visualize,
-        "About us" : page_about
+        "About Us" : page_about
     }
 
     # Sidebar title
@@ -69,6 +70,8 @@ def main():
         ss.current = "Welcome"
     if st.sidebar.button("How it works"):
         ss.current = "How it works"
+    if st.sidebar.button("Upload Data"):
+        ss.current = "Upload Data"
     if st.sidebar.button("Scrape YouTube Data"):
         ss.current = "Scrape YouTube Data"
     if st.sidebar.button("Pre-process Data"):
@@ -116,6 +119,44 @@ def page_how():
     st.title('How to use this tool')
     st.write("This is where we tell you how to use it, motherfucker")
 
+def page_upload():
+    st.title('Upload your own motherfucking data')
+    dataset = st.selectbox("Select a dataset to create", ['Data 1', 'Data 2', 'Data 3'])
+
+    upload_button = st.button('Upload')
+
+    if upload_button:
+        if dataset == "Data 1":
+            ss.data1 = get_data(user_input1, user_input2)
+            ss.data1q = user_input1
+            ss.data1s = len(ss.data1)
+            total = len(ss.data1)
+            csv = ss.data1.to_csv(index=False)
+            b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
+            ss.data1_href = f'<a href="data:file/csv;base64,{b64}">Download CSV File</a> (right-click and save as &lt;some_name&gt;.csv)'
+            st.markdown(ss.data1_href, unsafe_allow_html=True)
+        if dataset == "Data 2":
+            ss.data2 = get_data(user_input1, user_input2)
+            ss.data2q = user_input1
+            ss.data2s = len(ss.data2)
+            total = len(ss.data2)
+            csv = ss.data2.to_csv(index=False)
+            b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
+            ss.data2_href = f'<a href="data:file/csv;base64,{b64}">Download CSV File</a> (right-click and save as &lt;some_name&gt;.csv)'
+            st.markdown(ss.data2_href, unsafe_allow_html=True)
+        if dataset == "Data 3":
+            ss.data3 = get_data(user_input1, user_input2)
+            ss.data3q = user_input1
+            ss.data3s = len(ss.data3)
+            total = len(ss.data3)
+            csv = ss.data3.to_csv(index=False)
+            b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
+            ss.data3_href = f'<a href="data:file/csv;base64,{b64}">Download CSV File</a> (right-click and save as &lt;some_name&gt;.csv)'
+            st.markdown(ss.data3_href, unsafe_allow_html=True)
+
+        st.write("Data uploaded!")
+
+    
 def page_scrape():
     st.title('SCRAPE SOME FUCKING DATA YO')
     st.text("Let's get you some fucking data. You can store up to three datasets for analysis and comparison.")
@@ -158,12 +199,6 @@ def page_scrape():
         st.write("Total comments scraped:", total)
 
 
-        
-  #  download_button = st.button('Download data')
-  #  if download_button:
-  #      st.write("This is where we download shit")
-
-
 
 def page_pre():
     st.title('PREPROCESS, MOTHERFUCKER. DO YOU SPEAK IT?')
@@ -191,10 +226,7 @@ def page_visualize():
 def page_about():
     st.title('Fucking Fancy Youtube Scraper (TM)')
     st.text("Good for you, motherfucker")   
-    back = st.button("Get back") 
 
-    if back:
-        ss.current = "Main"
 
 if __name__ == "__main__":
     main()
