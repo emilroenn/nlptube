@@ -60,7 +60,7 @@ def main():
     }
 
     # Sidebar title
-    st.sidebar.title("Navigation :floppy_disk:")
+    st.sidebar.title("Navigation")
     st.sidebar.header("")
 
     # Sidebar buttons - if a button is True, state will be set to the page of that button
@@ -77,7 +77,7 @@ def main():
     if st.sidebar.button("About Us"):
         ss.current = "About Us"
 
-    st.sidebar.header("Data Stored:")
+    st.sidebar.header(":floppy_disk: Data Stored:")
     if ss.data1q == "NA":
         data1text = "DATA 1: Empty"
     if ss.data1q != "NA":
