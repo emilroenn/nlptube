@@ -8,7 +8,7 @@ import time
 
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import nltk
-nltk.download('vader_lexicon')
+#nltk.download('vader_lexicon')
 import numpy as np
 sid = SentimentIntensityAnalyzer()
 
@@ -85,61 +85,88 @@ def main():
     st.sidebar.header("")
 
     # Sidebar buttons - if a button is True, state will be set to the page of that button
-    if st.sidebar.button("Welcome"):
-        ss.current = "Welcome"
-    if st.sidebar.button("How it works"):
-        ss.current = "How it works"
-    if st.sidebar.button("Upload Data"):
-        ss.current = "Upload Data"
-    if st.sidebar.button("Scrape YouTube Data"):
-        ss.current = "Scrape YouTube Data"
-    if st.sidebar.button("Wordcloud Analysis"):
-        ss.current = "Wordcloud Analysis"
-    if st.sidebar.button("Sentiment Analysis"):
-        ss.current = "Sentiment Analysis"
-    if st.sidebar.button("Topic Analysis"):
-        ss.current = "Topic Analysis"
-    if st.sidebar.button("About Us"):
-        ss.current = "About Us"
 
-    
-    st.sidebar.header(":floppy_disk: Data Stored:")
-    if ss.data1q == "NA":
-        data1text = "CONTAINER 1: Empty"
-    if ss.data1q != "NA":
-        data1text = "CONTAINER 1: " + str(ss.data1q) + " (" + str(ss.data1s) + " comments)"
-    if ss.data2q == "NA":
-        data2text = "CONTAINER 2: Empty"
-    if ss.data2q != "NA":
-        data2text = "CONTAINER 2: " + str(ss.data2q) + " (" + str(ss.data2s) + " comments)"
-    if ss.data3q == "NA":
-        data3text = "CONTAINER 3: Empty"
-    if ss.data3q != "NA":
-        data3text = "CONTAINER 3: " + str(ss.data3q) + " (" + str(ss.data3s) + " comments)"
-    if ss.data4q == "NA":
-        data4text = "CONTAINER 4: Empty"
-    if ss.data4q != "NA":
-        data4text = "CONTAINER 4: " + str(ss.data4q) + " (" + str(ss.data4s) + " comments)"
-    if ss.data5q == "NA":
-        data5text = "CONTAINER 5: Empty"
-    if ss.data5q != "NA":
-        data5text = "CONTAINER 5: " + str(ss.data5q) + " (" + str(ss.data5s) + " comments)"
+    with st.sidebar.beta_expander("About This App"):
+        if st.button("Welcome"):
+            ss.current = "Welcome"
+        if st.button("How It Works"):
+            ss.current = "How it works"
+        if st.button("About Us"):
+            ss.current = "About Us"
 
-    st.sidebar.text(data1text)
-    if hasattr(ss, 'data1_href'):
-        st.sidebar.markdown(ss.data1_href, unsafe_allow_html=True)
-    st.sidebar.text(data2text)
-    if hasattr(ss, 'data2_href'):
-        st.sidebar.markdown(ss.data2_href, unsafe_allow_html=True)
-    st.sidebar.text(data3text)
-    if hasattr(ss, 'data3_href'):
-        st.sidebar.markdown(ss.data3_href, unsafe_allow_html=True)
-    st.sidebar.text(data4text)
-    if hasattr(ss, 'data4_href'):
-        st.sidebar.markdown(ss.data4_href, unsafe_allow_html=True)
-    st.sidebar.text(data5text)
-    if hasattr(ss, 'data5_href'):
-        st.sidebar.markdown(ss.data5_href, unsafe_allow_html=True)
+    with st.sidebar.beta_expander("Manage Data"):
+        if st.button("Scrape YouTube Data"):
+            ss.current = "Scrape YouTube Data"
+        if st.button("Upload YouTube Data"):
+            ss.current = "Upload Data"
+
+    with st.sidebar.beta_expander("Analyze Data"):
+        if st.button("Wordcloud Analysis"):
+            ss.current = "Wordcloud Analysis"
+        if st.button("Sentiment Analysis"):
+            ss.current = "Sentiment Analysis"
+        if st.button("Topic Analysis"):
+            ss.current = "Topic Analysis"
+
+    with st.sidebar.beta_expander("Data Storage"):
+      #  st.header(":floppy_disk:")
+        if ss.data1q == "NA":
+            st.markdown('<font color=grey>**CONTAINER 1:** \n *Not in use*</font>', unsafe_allow_html=True)
+        if ss.data1q != "NA":
+            st.markdown('<font color=green>**CONTAINER 1:**</font>', unsafe_allow_html=True)
+            text1 = "**Search term: **" + str(ss.data1q) + "  \n   **Comments:** " + str(ss.data1s)
+            st.write(text1)
+            if hasattr(ss, 'data1_href'):
+                st.markdown(ss.data1_href, unsafe_allow_html=True)
+
+        if ss.data2q == "NA":
+            st.markdown('<font color=grey>**CONTAINER 2:** \n *Not in use*</font>', unsafe_allow_html=True)
+        if ss.data2q != "NA":
+            st.markdown('<font color=green>**CONTAINER 2:**</font>', unsafe_allow_html=True)
+            text2 = "**Search term: **" + str(ss.data2q) + "  \n   **Comments:** " + str(ss.data2s)
+            st.write(text2)
+            if hasattr(ss, 'data2_href'):
+                st.markdown(ss.data2_href, unsafe_allow_html=True)
+
+        if ss.data3q == "NA":
+            st.markdown('<font color=grey>**CONTAINER 3:** \n *Not in use*</font>', unsafe_allow_html=True)
+        if ss.data3q != "NA":
+            st.markdown('<font color=green>**CONTAINER 3:**</font>', unsafe_allow_html=True)
+            text3 = "**Search term: **" + str(ss.data3q) + "  \n   **Comments:** " + str(ss.data3s)
+            st.write(text3)
+            if hasattr(ss, 'data3_href'):
+                st.markdown(ss.data3_href, unsafe_allow_html=True)
+
+        if ss.data4q == "NA":
+            st.markdown('<font color=grey>**CONTAINER 4:** \n *Not in use*</font>', unsafe_allow_html=True)
+        if ss.data4q != "NA":
+            st.markdown('<font color=green>**CONTAINER 4:**</font>', unsafe_allow_html=True)
+            text4 = "**Search term: **" + str(ss.data4q) + "  \n   **Comments:** " + str(ss.data4s)
+            st.write(text4)
+            if hasattr(ss, 'data4_href'):
+                st.markdown(ss.data4_href, unsafe_allow_html=True)
+
+        if ss.data5q == "NA":
+            st.markdown('<font color=grey>**CONTAINER 5:** \n *Not in use*</font>', unsafe_allow_html=True)
+        if ss.data5q != "NA":
+            st.markdown('<font color=green>**CONTAINER 5:**</font>', unsafe_allow_html=True)
+            text5 = "**Search term: **" + str(ss.data5q) + "  \n   **Comments:** " + str(ss.data5s)
+            st.write(text5)
+            if hasattr(ss, 'data5_href'):
+                st.markdown(ss.data5_href, unsafe_allow_html=True)
+        
+        
+      #  st.markdown('<font color=grey>**CONTAINER 1:**</font>', unsafe_allow_html=True)
+    #    st.write(data1text)
+
+      #  st.write(data2text)
+
+    #    st.write(data3text)
+
+     #   st.write(data4text)
+
+      #  st.write(data5text)
+
 
 
     # Display the selected page with the session state
@@ -148,7 +175,7 @@ def main():
 
 
 def page_main():
-    st.title('Welcome to the Fucking Fancy Youtube Scraper (TM)')
+    st.title('Welcome to the YouNLP Analysis Tool')
     st.header("This is where we put a motherfucking header")
     st.write("This is where the welcome text fucking goes, motherfucker.")
 
@@ -157,29 +184,28 @@ def page_how():
     st.write("This is where we tell you how to use it, motherfucker")
 
 def page_upload():
-    st.title('Upload your own motherfucking data')
-    st.info("Select the data container that you wish to upload your data to")
+
+    st.header('Upload YouTube Data')
     
-    col1, col2, col3, col4, col5 = st.beta_columns(5)
-    container1 = col1.button("Data Container 1")
-    container2 = col2.button("Data Container 2")
-    container3 = col3.button("Data Container 3")
-    container4 = col4.button("Data Container 4")
-    container5 = col5.button("Data Container 5")
-  #  dataset = st.selectbox("",['Data 1', 'Data 2', 'Data 3'])
-    
-    if container1:
+    col1, col2, col3 = st.beta_columns([1,2,3])
+
+
+    col3.write("**To analyse data, you gotta have data first!**  \n This tool executes a YouTube search for an input query, finds the number of videos selected, and scrapes up to the top 100 comments of each video. Details about the scraped videos and comments are then converted to a data frame and stored in the selected container in the app. After scraping is complete, feel free to download the data frame or use one of the tools in the sidebar for further analysis. You can store up to 5 datasets in the app's containers.")
+    dataset = col1.radio("Store data in:", ('Container 1', 'Container 2', 'Container 3', 'Container 4', 'Container 5'))
+   # st.info("Please note: YouTube's API has a daily limit of 10,000 requests. Please limit searches to 100 videos or less.")
+
+    if dataset == "Container 1":
         ss.upload = "Data 1"
-    if container2:
+    if dataset == "Container 2":
         ss.upload = "Data 2"
-    if container3:
+    if dataset == "Container 3":
         ss.upload = "Data 3"
-    if container4:
+    if dataset == "Container 4":
         ss.upload = "Data 3"
-    if container5:
+    if dataset == "Container 5":
         ss.upload = "Data 3"
 
-    dataset = ss.upload
+
     STYLE = """
     <style>
     img {
@@ -218,8 +244,8 @@ def page_upload():
         """Run this function to display the Streamlit app"""
         st.markdown(STYLE, unsafe_allow_html=True)
 
-        file = st.file_uploader("Upload file", type="CSV")
-        show_file = st.empty()
+        file = col2.file_uploader("Upload file", type="CSV")
+        show_file = col2.empty()
         if not file:
             show_file.info("Please upload a file of type: CSV " )
             return
@@ -230,7 +256,7 @@ def page_upload():
         # elif file_type == FileType.PYTHON:
             # st.info("please upload a .csv file in the scraper format, and not and not python code")
         if file_type == FileType.CSV:
-            if dataset == "Data 1":
+            if dataset == "Container 1":
                 data = pd.read_csv(file)
                 ss.data1 = data
                 ss.data1q = data.at[2,'Query']
@@ -240,9 +266,10 @@ def page_upload():
                 csv = ss.data1.to_csv(index=False)
                 b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
                 ss.data1_href = f'<a href="data:file/csv;base64,{b64}" download="{ss.data1q}.csv">Download CSV</a>'
-                st.info(f"file using the query '{ss.data1q}' with {ss.data1s} comments successfully uploaded to data container 1")
-                st.dataframe(data.head(10))
-            if dataset == "Data 2":
+                st.info(f"File using the query '{ss.data1q}' with {ss.data1s} comments successfully uploaded to Data Container 1")
+                with st.beta_expander("Examine data frame"):
+                    st.dataframe(ss.data1.head(10))
+            if dataset == "Container 2":
                 data = pd.read_csv(file)
                 ss.data2 = data
                 ss.data2q = data.at[2,'Query']
@@ -252,9 +279,10 @@ def page_upload():
                 csv = ss.data2.to_csv(index=False)
                 b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
                 ss.data2_href = f'<a href="data:file/csv;base64,{b64}" download="{ss.data2q}.csv">Download CSV</a>'
-                st.info(f"file using the query '{ss.data2q}' with {ss.data2s} comments successfully uploaded to data container 2")
-                st.dataframe(data.head(10))
-            if dataset == "Data 3":
+                st.info(f"File using the query '{ss.data2q}' with {ss.data2s} comments successfully uploaded to Data Container 2")
+                with st.beta_expander("Examine data frame"):
+                    st.dataframe(ss.data2.head(10))
+            if dataset == "Container 3":
                 data = pd.read_csv(file)
                 ss.data3 = data
                 ss.data3q = data.at[2,'Query']
@@ -264,9 +292,10 @@ def page_upload():
                 csv = ss.data3.to_csv(index=False)
                 b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
                 ss.data3_href = f'<a href="data:file/csv;base64,{b64}" download="{ss.data3q}.csv">Download CSV</a>'
-                st.info(f"file using the query '{ss.data3q}' with {ss.data3s} comments successfully uploaded to data container 3")
-                st.dataframe(data.head(10))
-            if dataset == "Data 4":
+                st.info(f"File using the query '{ss.data3q}' with {ss.data3s} comments successfully uploaded to Data Container 3")
+                with st.beta_expander("Examine data frame"):
+                    st.dataframe(ss.data3.head(10))
+            if dataset == "Container 4":
                 data = pd.read_csv(file)
                 ss.data4 = data
                 ss.data4q = data.at[2,'Query']
@@ -276,9 +305,10 @@ def page_upload():
                 csv = ss.data4.to_csv(index=False)
                 b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
                 ss.data4_href = f'<a href="data:file/csv;base64,{b64}" download="{ss.data4q}.csv">Download CSV</a>'
-                st.info(f"file using the query '{ss.data4q}' with {ss.data4s} comments successfully uploaded to data container 3")
-                st.dataframe(data.head(10))
-            if dataset == "Data 5":
+                st.info(f"File using the query '{ss.data4q}' with {ss.data4s} comments successfully uploaded to Data Container 4")
+                with st.beta_expander("Examine data frame"):
+                    st.dataframe(ss.data4.head(10))
+            if dataset == "Container 5":
                 data = pd.read_csv(file)
                 ss.data5 = data
                 ss.data5q = data.at[2,'Query']
@@ -288,11 +318,12 @@ def page_upload():
                 csv = ss.data5.to_csv(index=False)
                 b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
                 ss.data5_href = f'<a href="data:file/csv;base64,{b64}" download="{ss.data5q}.csv">Download CSV</a>'
-                st.info(f"file using the query '{ss.data5q}' with {ss.data5s} comments successfully uploaded to data container 3")
-                st.dataframe(data.head(10))
+                st.info(f"File using the query '{ss.data5q}' with {ss.data5s} comments successfully uploaded to Data Container 5")
+                with st.beta_expander("Examine data frame"):
+                    st.dataframe(ss.data5.head(10))
 
         file.close()
-        
+
     main2()
 
     
@@ -300,7 +331,7 @@ def page_scrape():
     st.header('YouTube Scraper')
     with st.form(key='my_form'):
         col1, col2, col3 = st.beta_columns([1,2,3])
-        col3.write("**To analyse data, you gotta have data first!**  \n This tool executes a YouTube search for an input query, finds the number of videos selected, and scrapes up to the top 100 comments of each video. Detailed information about both the videos and comments are then converted to a data frame and stored in the selected data container in the app. After the scraping is complete, feel free to download the data frame or use one of the tools in the sidebar for further analysis!")
+        col3.write("**To analyse data, you gotta have data first!**  \n This tool executes a YouTube search for an input query, finds the number of videos selected, and scrapes up to the top 100 comments of each video. Details about the scraped videos and comments are then converted to a data frame and stored in the selected container in the app. After scraping is complete, feel free to download the data frame or use one of the tools in the sidebar for further analysis. You can store up to 5 datasets in the app's containers.")
         dataset = col1.radio("Store data in:", ('Container 1', 'Container 2', 'Container 3', 'Container 4', 'Container 5'))
         user_input1 = col2.text_input("Search term:", '')
         user_input2 = col2.number_input("Videos:", 1)
@@ -320,7 +351,7 @@ def page_scrape():
         if user_input1 == "":
             st.info("Please enter a search term before scraping!")
         else:
-            progress = st.header("Scraping YouTube, please wait...")
+            progress = st.subheader("Scraping YouTube, please wait...")
             if dataset == "Container 1":
                 ss.data1 = get_data(user_input1, user_input2)
                 ss.data1q = user_input1
@@ -330,9 +361,10 @@ def page_scrape():
                 total = len(ss.data1)
                 csv = ss.data1.to_csv(index=False)
                 b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
-                ss.data1_href = f'<a href="data:file/csv;base64,{b64}" download="{ss.data1q}.csv">Click here to download CSV</a>'
+                ss.data1_href = f'<a href="data:file/csv;base64,{b64}" download="{ss.data1q}.csv">Download CSV</a>'
                 st.markdown(ss.data1_href, unsafe_allow_html=True)
-                st.dataframe(ss.data1.head(10))
+                with st.beta_expander("Examine data frame"):
+                    st.dataframe(ss.data1.head(10))
             if dataset == "Container 2":
                 ss.data2 = get_data(user_input1, user_input2)
                 ss.data2q = user_input1
@@ -342,8 +374,10 @@ def page_scrape():
                 total = len(ss.data2)
                 csv = ss.data2.to_csv(index=False)
                 b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
-                ss.data2_href = f'<a href="data:file/csv;base64,{b64}" download="{ss.data2q}.csv">Click here to download CSV</a>'
+                ss.data2_href = f'<a href="data:file/csv;base64,{b64}" download="{ss.data2q}.csv">Download CSV</a>'
                 st.markdown(ss.data2_href, unsafe_allow_html=True)
+                with st.beta_expander("Examine data frame"):
+                    st.dataframe(ss.data2.head(10))
             if dataset == "Container 3":
                 ss.data3 = get_data(user_input1, user_input2)
                 ss.data3q = user_input1
@@ -353,8 +387,10 @@ def page_scrape():
                 total = len(ss.data3)
                 csv = ss.data3.to_csv(index=False)
                 b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
-                ss.data3_href = f'<a href="data:file/csv;base64,{b64}" download="{ss.data3q}.csv">Click here to download CSV</a>'
+                ss.data3_href = f'<a href="data:file/csv;base64,{b64}" download="{ss.data3q}.csv">Download CSV</a>'
                 st.markdown(ss.data3_href, unsafe_allow_html=True)
+                with st.beta_expander("Examine data frame"):
+                    st.dataframe(ss.data3.head(10))
             if dataset == "Container 4":
                 ss.data4 = get_data(user_input1, user_input2)
                 ss.data4q = user_input1
@@ -364,8 +400,10 @@ def page_scrape():
                 total = len(ss.data4)
                 csv = ss.data4.to_csv(index=False)
                 b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
-                ss.data4_href = f'<a href="data:file/csv;base64,{b64}" download="{ss.data4q}.csv">Click here to download CSV</a>'
+                ss.data4_href = f'<a href="data:file/csv;base64,{b64}" download="{ss.data4q}.csv">Download CSV</a>'
                 st.markdown(ss.data4_href, unsafe_allow_html=True)
+                with st.beta_expander("Examine data frame"):
+                    st.dataframe(ss.data4.head(10))
             if dataset == "Container 5":
                 ss.data5 = get_data(user_input1, user_input2)
                 ss.data5q = user_input1
@@ -375,10 +413,12 @@ def page_scrape():
                 total = len(ss.data5)
                 csv = ss.data5.to_csv(index=False)
                 b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
-                ss.data5_href = f'<a href="data:file/csv;base64,{b64}" download="{ss.data5q}.csv">Click here to download CSV</a>'
+                ss.data5_href = f'<a href="data:file/csv;base64,{b64}" download="{ss.data5q}.csv">Download CSV</a>'
                 st.markdown(ss.data5_href, unsafe_allow_html=True)
-            progress.header("Done!")
-            st.write("Total comments scraped:", total)
+                with st.beta_expander("Examine data frame"):
+                    st.dataframe(ss.data5.head(10))
+            progress.subheader("Done! Total comments scraped: " + str(total))
+       #     st.write("Total comments scraped:", total)
 
 
 
@@ -549,6 +589,9 @@ def page_visualize():
 
                 submit_button = st.form_submit_button(label='Create Wordclouds')
 
+            progress = st.header("Ready to plot! Click 'Create Wordcloud' to begin.")
+            progressbar = st.progress(0)
+
         if datanumber == 3:
             st.info("**3 datasets found in storage. Customize and create wordclouds below to compare!**")
             with st.form(key='3'):
@@ -573,6 +616,9 @@ def page_visualize():
                 extra_stopwords = st.text_input("Remove stopwords (please separate words by comma):")
                 
                 submit_button = st.form_submit_button(label='Create Wordclouds')
+
+            progress = st.header("Ready to plot! Click 'Create Wordcloud' to begin.")
+            progressbar = st.progress(0)
 
         if datanumber == 4:
             st.write("**4 datasets found in storage. Customize and create wordclouds below to compare!**")
@@ -603,6 +649,9 @@ def page_visualize():
                 extra_stopwords = st.text_input("Remove stopwords (please separate words by comma):")
                 
                 submit_button = st.form_submit_button(label='Create Wordclouds')
+
+            progress = st.header("Ready to plot! Click 'Create Wordcloud' to begin.")
+            progressbar = st.progress(0)
 
         if datanumber == 5:
             st.write("**5 datasets found in storage. Customize and create wordclouds below to compare!**")
@@ -639,8 +688,8 @@ def page_visualize():
                 
                 submit_button = st.form_submit_button(label='Create Wordclouds')
 
-        progress = st.header("Ready to plot! Click 'Create Wordcloud' to begin.")
-        progressbar = st.progress(0)
+            progress = st.header("Ready to plot! Click 'Create Wordcloud' to begin.")
+            progressbar = st.progress(0)
 
         try:
             if submit_button:
