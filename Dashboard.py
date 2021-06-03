@@ -649,7 +649,18 @@ def page_sentiment():
         ss.data3['compound'] = ss.data3['scores'].apply(lambda x: x.get('compound'))
         list_dfs.append(ss.data3)
         queries.append(ss.data3q)
+    if hasattr(ss, 'data4'):
+        ss.data4['scores'] = ss.data4['Comment'].apply(lambda comment: sid.polarity_scores(comment))
+        ss.data4['compound'] = ss.data4['scores'].apply(lambda x: x.get('compound'))
+        list_dfs.append(ss.data4)
+        queries.append(ss.data4q)
+    if hasattr(ss, 'data5'):
+        ss.data5['scores'] = ss.data5['Comment'].apply(lambda comment: sid.polarity_scores(comment))
+        ss.data5['compound'] = ss.data5['scores'].apply(lambda x: x.get('compound'))
+        list_dfs.append(ss.data5)
+        queries.append(ss.data5q)
     
+
     if len(queries) == 0:
             st.write("**You don't have any datasets loaded yet - analysis requires at least 1!**") 
             st.write("Please scrape or upload at least 1 dataset before continuing.")
@@ -660,7 +671,6 @@ def page_sentiment():
         formated["Comment Published"] = pd.to_datetime(formated["Comment Published"], format= "%Y-%m-%dT%H:%M:%SZ")
         formated["Comment Published"] = pd.to_datetime(formated["Comment Published"], format='%Y-%m-%d')
         formated["Comment Published"] = formated["Comment Published"].dt.strftime('%Y-%m-%d')
-        
 
         formated = formated.groupby(['Query', 'Comment Published'], as_index=False)['compound'].mean()
 
