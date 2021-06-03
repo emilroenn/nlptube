@@ -41,7 +41,7 @@ from typing import Union
 import pandas as pd
 import streamlit as st
 
-ss = SessionState.get(current = "Welcome", upload = "NA", wc = "NA",
+ss = SessionState.get(current = "Welcome", upload = "NA", wc = "NA", df_list = [1,1,1,1,1],
                 data1q = "NA", data1s = 0, data1tf = "NA",
                 data2q = "NA", data2s = 0, data2tf = "NA", 
                 data3q = "NA", data3s = 0, data3tf = "NA",
@@ -235,6 +235,7 @@ def page_upload():
                 ss.data1 = data
                 ss.data1q = data.at[2,'Query']
                 ss.data1s = len(ss.data1)
+                ss.df_list[0] = ss.data1
                 csv = ss.data1.to_csv(index=False)
                 b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
                 ss.data1_href = f'<a href="data:file/csv;base64,{b64}" download="{ss.data1q}.csv">Download CSV</a>'
@@ -245,6 +246,7 @@ def page_upload():
                 ss.data2 = data
                 ss.data2q = data.at[2,'Query']
                 ss.data2s = len(ss.data2)
+                ss.df_list[1] = ss.data2
                 csv = ss.data2.to_csv(index=False)
                 b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
                 ss.data2_href = f'<a href="data:file/csv;base64,{b64}" download="{ss.data2q}.csv">Download CSV</a>'
@@ -255,6 +257,7 @@ def page_upload():
                 ss.data3 = data
                 ss.data3q = data.at[2,'Query']
                 ss.data3s = len(ss.data3)
+                ss.df_list[2] = ss.data3
                 csv = ss.data3.to_csv(index=False)
                 b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
                 ss.data3_href = f'<a href="data:file/csv;base64,{b64}" download="{ss.data3q}.csv">Download CSV</a>'
@@ -264,7 +267,8 @@ def page_upload():
                 data = pd.read_csv(file)
                 ss.data4 = data
                 ss.data4q = data.at[2,'Query']
-                ss.data4s = len(ss.data5)
+                ss.data4s = len(ss.data4)
+                ss.df_list[3] = ss.data4
                 csv = ss.data4.to_csv(index=False)
                 b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
                 ss.data4_href = f'<a href="data:file/csv;base64,{b64}" download="{ss.data4q}.csv">Download CSV</a>'
@@ -275,6 +279,7 @@ def page_upload():
                 ss.data5 = data
                 ss.data5q = data.at[2,'Query']
                 ss.data5s = len(ss.data5)
+                ss.df_list[4] = ss.data5
                 csv = ss.data5.to_csv(index=False)
                 b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
                 ss.data5_href = f'<a href="data:file/csv;base64,{b64}" download="{ss.data5q}.csv">Download CSV</a>'
@@ -287,56 +292,66 @@ def page_upload():
 
     
 def page_scrape():
-    st.title('SCRAPE SOME FUCKING DATA YO')
-    st.text("Let's get you some fucking data. You can store up to three datasets for analysis and comparison.")
-    dataset = st.selectbox("Select a dataset to create", ['Data 1', 'Data 2', 'Data 3'])
-    user_input1 = st.text_input("Search term:", '')
-    user_input2 = st.number_input("Number of results:", 1)
+    st.header('YouTube Scraper')
+    with st.form(key='my_form'):
+        col1, col2, col3 = st.beta_columns(3)
+        col3.write("To analyse data, you gotta have data first! The tool below executes a YouTube search for an input query, finds the number of videos selected, and scrapes up to the top 100 comments of each video. Detailed information about both the videos and comments are then converted to a data frame and stored in the selected data container in the app. After the scraping is complete, feel free to download the data frame or use one of the tools in the sidebar for further analysis!")
+        dataset = col2.radio("Select a dataset to create", ('Container 1', 'Container 2', 'Container 3', 'Container 4', 'Container 5'))
+        user_input1 = col1.text_input("Search term:", '')
+        user_input2 = col1.number_input("Videos:", 1)
+        submit_button = col2.form_submit_button(label='Start Scraper')
+        col3.info("Please note: YouTube's API has a daily limit of 10,000 requests. Please limit searches to 100 videos or less.")
 
-    start_button = st.button('Scrape Youtube')
 
-    if start_button:
+  #  start_button = st.button('Scrape Youtube')
+
+    if submit_button:
         progress = st.header("Scraping YouTube, please wait...")
-        if dataset == "Data 1":
+        if dataset == "Container 1":
             ss.data1 = get_data(user_input1, user_input2)
             ss.data1q = user_input1
             ss.data1s = len(ss.data1)
+            ss.df_list[0] = ss.data1
             total = len(ss.data1)
             csv = ss.data1.to_csv(index=False)
             b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
             ss.data1_href = f'<a href="data:file/csv;base64,{b64}" download="{ss.data1q}.csv">Download CSV</a>'
             st.markdown(ss.data1_href, unsafe_allow_html=True)
-        if dataset == "Data 2":
+        if dataset == "Container 2":
             ss.data2 = get_data(user_input1, user_input2)
             ss.data2q = user_input1
             ss.data2s = len(ss.data2)
+            ss.df_list[1] = ss.data2
             total = len(ss.data2)
             csv = ss.data2.to_csv(index=False)
             b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
             ss.data2_href = f'<a href="data:file/csv;base64,{b64}" download="{ss.data2q}.csv">Download CSV</a>'
             st.markdown(ss.data2_href, unsafe_allow_html=True)
-        if dataset == "Data 3":
+        if dataset == "Container 3":
             ss.data3 = get_data(user_input1, user_input2)
             ss.data3q = user_input1
             ss.data3s = len(ss.data3)
+            ss.df_list[2] = ss.data3
             total = len(ss.data3)
             csv = ss.data3.to_csv(index=False)
             b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
             ss.data3_href = f'<a href="data:file/csv;base64,{b64}" download="{ss.data3q}.csv">Download CSV</a>'
             st.markdown(ss.data3_href, unsafe_allow_html=True)
-        if dataset == "Data 4":
+        if dataset == "Container 4":
             ss.data4 = get_data(user_input1, user_input2)
             ss.data4q = user_input1
             ss.data4s = len(ss.data4)
+            ss.df_list[3] = ss.data4
             total = len(ss.data4)
             csv = ss.data4.to_csv(index=False)
             b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
             ss.data4_href = f'<a href="data:file/csv;base64,{b64}" download="{ss.data4q}.csv">Download CSV</a>'
             st.markdown(ss.data4_href, unsafe_allow_html=True)
-        if dataset == "Data 5":
+        if dataset == "Container 5":
             ss.data5 = get_data(user_input1, user_input2)
             ss.data5q = user_input1
             ss.data5s = len(ss.data5)
+            ss.df_list[4] = ss.data5
             total = len(ss.data5)
             csv = ss.data5.to_csv(index=False)
             b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
@@ -344,9 +359,6 @@ def page_scrape():
             st.markdown(ss.data5_href, unsafe_allow_html=True)
         progress.header("Done!")
         st.write("Total comments scraped:", total)
-
-
-
 
 
 
