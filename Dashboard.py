@@ -499,7 +499,7 @@ def page_visualize():
             st.write("Please scrape or upload at least 2 datasets before continuing.")
         
         if datanumber == 2:
-            st.write("**2 datasets found in storage. Customize and create wordclouds below to compare!**")
+            st.info("**2 datasets found in storage. Customize and create wordclouds below to compare!**")
             with st.form(key='2'):
                 st.header("Customize wordclouds:")                  
                 col1, col2 = st.beta_columns(2)
@@ -519,7 +519,7 @@ def page_visualize():
                 submit_button = st.form_submit_button(label='Create Wordclouds')
 
         if datanumber == 3:
-            st.write("**3 datasets found in storage. Customize and create wordclouds below to compare!**")
+            st.info("**3 datasets found in storage. Customize and create wordclouds below to compare!**")
             with st.form(key='3'):
                 st.header("Customize wordclouds:")                  
                 col1, col2, col3 = st.beta_columns(3)
@@ -647,9 +647,10 @@ def page_visualize():
                 progressbar.progress(0.2)
                 prepped_list = []
                 progress_value = 0.2
+                progress.header("Preprocessing...")
 
                 for i in df_list:
-                    increment = 0.5/len(df_list)
+                    increment = 0.2/len(df_list)
                     progress_value += increment 
                     progressbar.progress(progress_value)
                     if hasattr(ss, "data1"):
@@ -699,11 +700,18 @@ def page_visualize():
 
 
                 prepped_list = [item for sublist in prepped_list for item in sublist]
+                progress.header("Vectorizing...")
                 df = vectorize_multiple(prepped_list, extra_stopwords)
+                progressbar.progress(0.5)
                 total_dfs = len(prepped_list)
                 wordcloud_list = []
 
+                progress.header("Visualizing...")
+                progress_value = 0.5
                 for x in range(total_dfs):
+                    increment = 0.4/len(df_list)
+                    progress_value += increment 
+                    progressbar.progress(progress_value)
                     selected_df = df[[x]]
                     cloud_color = cloud_color_list[x]
                     cloud_bg = cloud_bg_list[x]
@@ -713,7 +721,8 @@ def page_visualize():
                     wordcloud_list.append(wordcloud)
                 
                 windows = len(df_list)
-
+                
+                progressbar.progress(0.95)
                 progress.header("Displaying wordclouds - this may take a second...")
 
                 if windows == 2:
@@ -752,13 +761,12 @@ def page_visualize():
                     wc_col3.image(wordcloud_list[2].to_array())
                     wc_col4.image(wordcloud_list[3].to_array())
                     wc_col5.image(wordcloud_list[4].to_array())
-            time.sleep(0.5)
-            progressbar.progress(1.0)
-            progress.header("Done! Save the wordclouds, or try changing the inputs for other results!")
+                time.sleep(0.5)
+                progressbar.progress(1.0)
+                progress.header("Done! Save the wordclouds, or try changing the inputs for other results!")
         except AttributeError as e:
             st.write("Please scrape some data first, fool!")
             st.write("Error:", e)
-
 
 def page_sentiment():
     st.title("IT'S ABOUT EMOTIONS, FUCKER")
@@ -808,25 +816,26 @@ def page_sentiment():
         formated["Comment Published"] = formated["Comment Published"].dt.strftime('%Y-%m-%d')
 
         formated = formated.groupby(['Query', 'Comment Published'], as_index=False)['compound'].mean()
-
+        st.dataframe(formated)
         options = st.multiselect(
         'Select data to include',
-        queries)
+        queries,
+        default=queries[0])
 
         formated = formated[formated.Query.isin(options)]
         
         brush = alt.selection(type='interval', encodings=['x'])
         base = alt.Chart(formated).mark_line().encode(
-        x = 'Comment Published',
-        y = 'compound',
+        x = 'Comment Published:T',
+        y = 'compound:Q',
         color=alt.Color("Query")
         ).properties(
-        width=800,
-        height=300
+        width=1000,
+        height=400
         )
 
         upper = base.encode(
-        alt.X('Comment Published', scale=alt.Scale(domain=brush))
+        alt.X('Comment Published:T', scale=alt.Scale(domain=brush))
         )
 
         lower = base.properties(
