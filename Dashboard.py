@@ -710,7 +710,6 @@ def page_topic():
     st.title("TOPICS ARE COOL. LET'S ANALYZE THEM.")
 
 
-
 def page_about():
     st.title("LET'S TALK A LITTLE ABOUT US")
     st.text("We made this, so we're pretty cool, hey.")   
