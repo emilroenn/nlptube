@@ -4,6 +4,7 @@ from scraper_fns import *
 from nlp_fns import *
 import base64
 import altair as alt
+import time
 
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import nltk
@@ -345,6 +346,11 @@ def page_scrape():
         st.write("Total comments scraped:", total)
 
 
+
+
+
+
+
 def page_visualize():
     st.header('**Wordclouds**')
     st.write("Wordclouds are one of the most simple yet effective visualizations of large amounts of text data. A tag cloud (word cloud or wordle or weighted list in visual design) is a novelty visual representation of text data, typically used to depict keyword metadata (tags) on websites, or to visualize free form text. Tags are usually single words, and the importance of each tag is shown with font size or color.[2] This format is useful for quickly perceiving the most prominent terms to determine its relative prominence. Bigger term means greater weight.")   
@@ -382,52 +388,95 @@ def page_visualize():
             cloud_font = col1.selectbox("Font:", ['Default (AU Passata)','AU', 'SpicyRice'])
             cloud_bg = col2.selectbox("Background:", ['Default (White)','black', 'white', 'red'])
             cloud_shape = col2.selectbox("Shape:", ['Default (Square)','Circle', 'Heart'])
+            extra_stopwords = st.text_input("Remove stopwords (please separate words by comma):")
             submit_button = st.form_submit_button(label='Create Wordcloud')
+        
+        progress = st.header("Ready to plot! Click 'Create Wordcloud' to begin.")
+        progressbar = st.progress(0)
 
-        extra_stopwords = ("the, video, god")
         try:
             if submit_button:
+                progress.header("Building wordcloud, please wait...")
+                progressbar.progress(0.1)
                 if dataset == "Data 1":
                     if hasattr(ss, "data1_prep"):
+                        progressbar.progress(0.2)
                         wordcloud = vectorize_multiple([ss.data1_prep], extra_stopwords)
+                        progressbar.progress(0.4)
                         wordcloud = visualize(wordcloud, cloud_color, cloud_bg, cloud_shape, cloud_font)
+                        progressbar.progress(0.9)
                     else:
+                        progressbar.progress(0.2)
                         ss.data1_prep = prep([ss.data1])
+                        progressbar.progress(0.4)
                         wordcloud = vectorize_multiple([ss.data1_prep], extra_stopwords)
-                        wordcloud = visualize(wordcloud, cloud_color, cloud_bg, cloud_shape, cloud_font) 
+                        progressbar.progress(0.6)
+                        wordcloud = visualize(wordcloud, cloud_color, cloud_bg, cloud_shape, cloud_font)
+                        progressbar.progress(0.9)
                 if dataset == "Data 2":
                     if hasattr(ss, "data2_prep"):
+                        progressbar.progress(0.2)
                         wordcloud = vectorize_multiple([ss.data2_prep], extra_stopwords)
+                        progressbar.progress(0.4)
                         wordcloud = visualize(wordcloud, cloud_color, cloud_bg, cloud_shape, cloud_font)
+                        progressbar.progress(0.9)
                     else:
+                        progressbar.progress(0.2)
                         ss.data2_prep = prep([ss.data2])
+                        progressbar.progress(0.4)
                         wordcloud = vectorize_multiple([ss.data2_prep], extra_stopwords)
-                        wordcloud = visualize(wordcloud, cloud_color, cloud_bg, cloud_shape, cloud_font) 
+                        progressbar.progress(0.6)
+                        wordcloud = visualize(wordcloud, cloud_color, cloud_bg, cloud_shape, cloud_font)
+                        progressbar.progress(0.9) 
                 if dataset == "Data 3":
                     if hasattr(ss, "data3_prep"):
+                        progressbar.progress(0.2)
                         wordcloud = vectorize_multiple([ss.data3_prep], extra_stopwords)
+                        progressbar.progress(0.4)
                         wordcloud = visualize(wordcloud, cloud_color, cloud_bg, cloud_shape, cloud_font)
+                        progressbar.progress(0.9)
                     else:
+                        progressbar.progress(0.2)
                         ss.data3_prep = prep([ss.data3])
+                        progressbar.progress(0.4)
                         wordcloud = vectorize_multiple([ss.data3_prep], extra_stopwords)
+                        progressbar.progress(0.6)
                         wordcloud = visualize(wordcloud, cloud_color, cloud_bg, cloud_shape, cloud_font)
+                        progressbar.progress(0.9)
                 if dataset == "Data 4":
                     if hasattr(ss, "data4_prep"):
+                        progressbar.progress(0.2)
                         wordcloud = vectorize_multiple([ss.data4_prep], extra_stopwords)
+                        progressbar.progress(0.4)
                         wordcloud = visualize(wordcloud, cloud_color, cloud_bg, cloud_shape, cloud_font)
+                        progressbar.progress(0.9)
                     else:
+                        progressbar.progress(0.2)
                         ss.data4_prep = prep([ss.data4])
+                        progressbar.progress(0.4)
                         wordcloud = vectorize_multiple([ss.data4_prep], extra_stopwords)
+                        progressbar.progress(0.6)
                         wordcloud = visualize(wordcloud, cloud_color, cloud_bg, cloud_shape, cloud_font)
+                        progressbar.progress(0.9)
                 if dataset == "Data 5":
                     if hasattr(ss, "data5_prep"):
+                        progressbar.progress(0.2)
                         wordcloud = vectorize_multiple([ss.data5_prep], extra_stopwords)
+                        progressbar.progress(0.4)
                         wordcloud = visualize(wordcloud, cloud_color, cloud_bg, cloud_shape, cloud_font)
+                        progressbar.progress(0.9)
                     else:
+                        progressbar.progress(0.2)
                         ss.data5_prep = prep([ss.data5])
+                        progressbar.progress(0.4)
                         wordcloud = vectorize_multiple([ss.data5_prep], extra_stopwords)
-                        wordcloud = visualize(wordcloud, cloud_color, cloud_bg, cloud_shape, cloud_font) 
+                        progressbar.progress(0.6)
+                        wordcloud = visualize(wordcloud, cloud_color, cloud_bg, cloud_shape, cloud_font)
+                        progressbar.progress(0.9) 
+                progress.header("Displaying wordcloud - this may take a second...")
                 st.image(wordcloud.to_array())
+                progressbar.progress(1.0)
+                progress.header("Done! Save the wordcloud, or try changing the inputs for other results!")
         except AttributeError as e:
             st.write("Please scrape some data first, fool!")
             st.write("Error:", e)
@@ -436,7 +485,6 @@ def page_visualize():
         
         submit_button = False
         datanumber = 0
-        extra_stopwords = ("the, video, god")
 
         for x in ['data1','data2','data3','data4','data5']:
             if hasattr(ss, x):
@@ -465,6 +513,8 @@ def page_visualize():
                 cloud_font2 = col2.selectbox("Cloud 2 Font:", ['Default (AU Passata)','AU', 'SpicyRice'])
                 cloud_bg2 = col2.selectbox("Cloud 2 Background:", ['Default (White)','black', 'white', 'red'])
                 cloud_shape2 = col2.selectbox("Cloud 2 Shape:", ['Default (Square)','Circle', 'Heart'])
+                
+                extra_stopwords = st.text_input("Remove stopwords (please separate words by comma):")
 
                 submit_button = st.form_submit_button(label='Create Wordclouds')
 
@@ -488,7 +538,9 @@ def page_visualize():
                 cloud_font3 = col3.selectbox("Cloud 3 Font:", ['Default (AU Passata)','AU', 'SpicyRice'])
                 cloud_bg3 = col3.selectbox("Cloud 3 Background:", ['Default (White)','black', 'white', 'red'])
                 cloud_shape3 = col3.selectbox("Cloud 3 Shape:", ['Default (Square)','Circle', 'Heart'])
-
+                
+                extra_stopwords = st.text_input("Remove stopwords (please separate words by comma):")
+                
                 submit_button = st.form_submit_button(label='Create Wordclouds')
 
         if datanumber == 4:
@@ -516,7 +568,9 @@ def page_visualize():
                 cloud_font4 = col4.selectbox("Cloud 4 Font:", ['Default (AU Passata)','AU', 'SpicyRice'])
                 cloud_bg4 = col4.selectbox("Cloud 4 Background:", ['Default (White)','black', 'white', 'red'])
                 cloud_shape4 = col4.selectbox("Cloud 4 Shape:", ['Default (Square)','Circle', 'Heart'])
-
+                
+                extra_stopwords = st.text_input("Remove stopwords (please separate words by comma):")
+                
                 submit_button = st.form_submit_button(label='Create Wordclouds')
 
         if datanumber == 5:
@@ -549,11 +603,18 @@ def page_visualize():
                 cloud_font5 = col5.selectbox("Cloud 5 Font:", ['Default (AU Passata)','AU', 'SpicyRice'])
                 cloud_bg5 = col5.selectbox("Cloud 5 Background:", ['Default (White)','black', 'white', 'red'])
                 cloud_shape5 = col5.selectbox("Cloud 5 Shape:", ['Default (Square)','Circle', 'Heart'])
-
+                
+                extra_stopwords = st.text_input("Remove stopwords (please separate words by comma):")
+                
                 submit_button = st.form_submit_button(label='Create Wordclouds')
+
+        progress = st.header("Ready to plot! Click 'Create Wordcloud' to begin.")
+        progressbar = st.progress(0)
 
         try:
             if submit_button:
+                progress.header("Building wordclouds, please wait...")
+                progressbar.progress(0.1)
 
                 if datanumber == 2:
                     df_list = [ss.data1,ss.data2]
@@ -583,16 +644,77 @@ def page_visualize():
                     cloud_shape_list = [cloud_shape1, cloud_shape2, cloud_shape3, cloud_shape4, cloud_shape5]
                     cloud_font_list = [cloud_font1, cloud_font2, cloud_font3, cloud_font4, cloud_font5]
 
-                wordcloud_list = pipeline_multiple(df_list, cloud_color_list, cloud_bg_list, cloud_shape_list, cloud_font_list, extra_stopwords)
+                progressbar.progress(0.2)
+                prepped_list = []
+                progress_value = 0.2
 
-                # prepped_list = []
-                # for df in df_list:
-                #     if hasattr(ss, str(df)+ "_prep"):
-                #         prepped_list.append(df.)
-                #         f"{ss.df}{+}'_prep'" = prep([df])
-                        
+                for i in df_list:
+                    increment = 0.5/len(df_list)
+                    progress_value += increment 
+                    progressbar.progress(progress_value)
+                    if hasattr(ss, "data1"):
+                        if str(i) == str(ss.data1):
+                            if hasattr(ss, "data1_prep"):
+                                prepped_list.append(ss.data1_prep)
+                                continue
+                            else:
+                                ss.data1_prep = prep([i])
+                                prepped_list.append(ss.data1_prep)
+
+                    if hasattr(ss, "data2"):
+                        if str(i) == str(ss.data2):
+                            if hasattr(ss, "data2_prep"):
+                                prepped_list.append(ss.data2_prep)
+                                continue
+                            else:
+                                ss.data2_prep = prep([i])
+                                prepped_list.append(ss.data2_prep)
+                    
+                    if hasattr(ss, "data3"):
+                        if str(i) == str(ss.data3):
+                            if hasattr(ss, "data3_prep"):
+                                prepped_list.append(ss.data3_prep)
+                                continue
+                            else:
+                                ss.data3_prep = prep([i])
+                                prepped_list.append(ss.data3_prep)
+                    
+                    if hasattr(ss, "data4"):
+                        if str(i) == str(ss.data4):
+                            if hasattr(ss, "data4_prep"):
+                                prepped_list.append(ss.data4_prep)
+                                continue
+                            else:
+                                ss.data4_prep = prep([i])
+                                prepped_list.append(ss.data4_prep)
+                    
+                    if hasattr(ss, "data5"):
+                        if str(i) == str(ss.data5):
+                            if hasattr(ss, "data5_prep"):
+                                prepped_list.append(ss.data5_prep)
+                                continue
+                            else:
+                                ss.data5_prep = prep([i])
+                                prepped_list.append(ss.data5_prep)
+
+
+                prepped_list = [item for sublist in prepped_list for item in sublist]
+                df = vectorize_multiple(prepped_list, extra_stopwords)
+                total_dfs = len(prepped_list)
+                wordcloud_list = []
+
+                for x in range(total_dfs):
+                    selected_df = df[[x]]
+                    cloud_color = cloud_color_list[x]
+                    cloud_bg = cloud_bg_list[x]
+                    cloud_shape = cloud_shape_list[x]
+                    cloud_font = cloud_font_list[x]
+                    wordcloud = visualize(selected_df, cloud_color, cloud_bg, cloud_shape, cloud_font, x)
+                    wordcloud_list.append(wordcloud)
                 
                 windows = len(df_list)
+
+                progress.header("Displaying wordclouds - this may take a second...")
 
                 if windows == 2:
                     wc_col1, wc_col2 = st.beta_columns(windows)
@@ -630,8 +752,9 @@ def page_visualize():
                     wc_col3.image(wordcloud_list[2].to_array())
                     wc_col4.image(wordcloud_list[3].to_array())
                     wc_col5.image(wordcloud_list[4].to_array())
-
-
+            time.sleep(0.5)
+            progressbar.progress(1.0)
+            progress.header("Done! Save the wordclouds, or try changing the inputs for other results!")
         except AttributeError as e:
             st.write("Please scrape some data first, fool!")
             st.write("Error:", e)
@@ -698,8 +821,8 @@ def page_sentiment():
         y = 'compound',
         color=alt.Color("Query")
         ).properties(
-        width=600,
-        height=200
+        width=800,
+        height=300
         )
 
         upper = base.encode(
