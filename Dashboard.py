@@ -40,46 +40,12 @@ from typing import Union
 import pandas as pd
 import streamlit as st
 
-
-#### POSSIBLE FUNCTIONS TO MOVE ####
-
-def pipeline_multiple (df_list, cloud_color_list, cloud_bg_list, cloud_shape_list, cloud_font_list):
-    progress = st.text('1/3: Running Term-Frequency Inverse-Document-Frequency analysis...')
-    total_dfs = len(df_list)
-    df_list = tfidf_prep(df_list)
-    progress.text('2/3: Vectorizing documents...')
-    df = vectorize_multiple(df_list)
-    progress.text('3/3: Building wordcloud visualization...')
-    wordcloud_list = []
-    for x in range(total_dfs):
-        selected_df = df[[x]]
-        cloud_color = cloud_color_list[x]
-        cloud_bg = cloud_bg_list[x]
-        cloud_shape = cloud_shape_list[x]
-        cloud_font = cloud_font_list[x]
-        wordcloud = visualize(selected_df, cloud_color, cloud_bg, cloud_shape, cloud_font, x)
-        wordcloud_list.append(wordcloud)
-    progress.text('Done!')
-    return wordcloud_list
-
-def pipeline_single (df, cloud_color, cloud_bg, cloud_shape, cloud_font):
-    progress = st.text('1/2: Vectorizing documents...')
- #   df = tfidf_prep(df)
-  #  progress.text('3/4: Vectorizing documents...')
-    df = vectorize_single(df)
-    progress.text('2/2: Building wordcloud visualization...')
-    wordcloud = visualize(df, cloud_color, cloud_bg, cloud_shape, cloud_font)
-    progress.text('Done!')
-    return wordcloud
-
-
 ss = SessionState.get(current = "Welcome", upload = "NA", wc = "NA",
                 data1q = "NA", data1s = 0, data1tf = "NA",
                 data2q = "NA", data2s = 0, data2tf = "NA", 
                 data3q = "NA", data3s = 0, data3tf = "NA",
                 data4q = "NA", data4s = 0, data4tf = "NA",
                 data5q = "NA", data5s = 0, data5tf = "NA")
-
 
 def main():
 
@@ -418,14 +384,49 @@ def page_visualize():
             cloud_shape = col2.selectbox("Shape:", ['Default (Square)','Circle', 'Heart'])
             submit_button = st.form_submit_button(label='Create Wordcloud')
 
+        extra_stopwords = ("the, video, god")
         try:
             if submit_button:
                 if dataset == "Data 1":
-                    wordcloud = pipeline_single(ss.data1, cloud_color, cloud_bg, cloud_shape, cloud_font)
+                    if hasattr(ss, "data1_prep"):
+                        wordcloud = vectorize_multiple([ss.data1_prep], extra_stopwords)
+                        wordcloud = visualize(wordcloud, cloud_color, cloud_bg, cloud_shape, cloud_font)
+                    else:
+                        ss.data1_prep = prep([ss.data1])
+                        wordcloud = vectorize_multiple([ss.data1_prep], extra_stopwords)
+                        wordcloud = visualize(wordcloud, cloud_color, cloud_bg, cloud_shape, cloud_font) 
                 if dataset == "Data 2":
-                    wordcloud = pipeline_single(ss.data2, cloud_color, cloud_bg, cloud_shape, cloud_font)
+                    if hasattr(ss, "data2_prep"):
+                        wordcloud = vectorize_multiple([ss.data2_prep], extra_stopwords)
+                        wordcloud = visualize(wordcloud, cloud_color, cloud_bg, cloud_shape, cloud_font)
+                    else:
+                        ss.data2_prep = prep([ss.data2])
+                        wordcloud = vectorize_multiple([ss.data2_prep], extra_stopwords)
+                        wordcloud = visualize(wordcloud, cloud_color, cloud_bg, cloud_shape, cloud_font) 
                 if dataset == "Data 3":
-                    wordcloud = pipeline_single(ss.data3, cloud_color, cloud_bg, cloud_shape, cloud_font)
+                    if hasattr(ss, "data3_prep"):
+                        wordcloud = vectorize_multiple([ss.data3_prep], extra_stopwords)
+                        wordcloud = visualize(wordcloud, cloud_color, cloud_bg, cloud_shape, cloud_font)
+                    else:
+                        ss.data3_prep = prep([ss.data3])
+                        wordcloud = vectorize_multiple([ss.data3_prep], extra_stopwords)
+                        wordcloud = visualize(wordcloud, cloud_color, cloud_bg, cloud_shape, cloud_font)
+                if dataset == "Data 4":
+                    if hasattr(ss, "data4_prep"):
+                        wordcloud = vectorize_multiple([ss.data4_prep], extra_stopwords)
+                        wordcloud = visualize(wordcloud, cloud_color, cloud_bg, cloud_shape, cloud_font)
+                    else:
+                        ss.data4_prep = prep([ss.data4])
+                        wordcloud = vectorize_multiple([ss.data4_prep], extra_stopwords)
+                        wordcloud = visualize(wordcloud, cloud_color, cloud_bg, cloud_shape, cloud_font)
+                if dataset == "Data 5":
+                    if hasattr(ss, "data5_prep"):
+                        wordcloud = vectorize_multiple([ss.data5_prep], extra_stopwords)
+                        wordcloud = visualize(wordcloud, cloud_color, cloud_bg, cloud_shape, cloud_font)
+                    else:
+                        ss.data5_prep = prep([ss.data5])
+                        wordcloud = vectorize_multiple([ss.data5_prep], extra_stopwords)
+                        wordcloud = visualize(wordcloud, cloud_color, cloud_bg, cloud_shape, cloud_font) 
                 st.image(wordcloud.to_array())
         except AttributeError as e:
             st.write("Please scrape some data first, fool!")
@@ -435,6 +436,7 @@ def page_visualize():
         
         submit_button = False
         datanumber = 0
+        extra_stopwords = ("the, video, god")
 
         for x in ['data1','data2','data3','data4','data5']:
             if hasattr(ss, x):
@@ -581,7 +583,14 @@ def page_visualize():
                     cloud_shape_list = [cloud_shape1, cloud_shape2, cloud_shape3, cloud_shape4, cloud_shape5]
                     cloud_font_list = [cloud_font1, cloud_font2, cloud_font3, cloud_font4, cloud_font5]
 
-                wordcloud_list = pipeline_multiple(df_list, cloud_color_list, cloud_bg_list, cloud_shape_list, cloud_font_list)
+                wordcloud_list = pipeline_multiple(df_list, cloud_color_list, cloud_bg_list, cloud_shape_list, cloud_font_list, extra_stopwords)
+
+                # prepped_list = []
+                # for df in df_list:
+                #     if hasattr(ss, str(df)+ "_prep"):
+                #         prepped_list.append(df.)
+                #         f"{ss.df}{+}'_prep'" = prep([df])
+                        
                 
                 windows = len(df_list)
 
