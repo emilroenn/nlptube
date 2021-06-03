@@ -91,13 +91,6 @@ def visualize(df, cloud_color = "gist_gray", cloud_bg = "white",  cloud_shape = 
 
 
 
-
-
-
-
-
-
-
 def vectorize_single(document):
 
     more_stopwords = ("com, youtube, www, http, https").split(",")
