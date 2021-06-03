@@ -28,9 +28,6 @@ import streamlit as st
 
 #### POSSIBLE FUNCTIONS TO MOVE ####
 
-
-
-
 def pipeline_multiple(df_list, cloud_color_list, cloud_bg_list, cloud_shape_list, cloud_font_list, extra_stopwords):
     progress = st.text(
         '1/3: Running Term-Frequency Inverse-Document-Frequency analysis...')
