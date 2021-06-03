@@ -107,8 +107,9 @@ def main():
         "How it works": page_how,
         "Upload Data": page_upload,
         "Scrape YouTube Data": page_scrape,
-        "Visualize Data" : page_visualize,
+        "Wordcloud Analysis" : page_visualize,
         "Sentiment Analysis" : page_sentiment,
+        "Topic Analysis" : page_topic,
         "About Us" : page_about
     }
 
@@ -125,10 +126,12 @@ def main():
         ss.current = "Upload Data"
     if st.sidebar.button("Scrape YouTube Data"):
         ss.current = "Scrape YouTube Data"
-    if st.sidebar.button("Visualize Data"):
-        ss.current = "Visualize Data"
+    if st.sidebar.button("Wordcloud Analysis"):
+        ss.current = "Wordcloud Analysis"
     if st.sidebar.button("Sentiment Analysis"):
         ss.current = "Sentiment Analysis"
+    if st.sidebar.button("Topic Analysis"):
+        ss.current = "Topic Analysis"
     if st.sidebar.button("About Us"):
         ss.current = "About Us"
 
@@ -701,6 +704,11 @@ def page_sentiment():
         chart2 = upper & lower
 
         st.altair_chart(chart2, use_container_width=True)
+
+
+def page_topic():
+    st.title("TOPICS ARE COOL. LET'S ANALYZE THEM.")
+
 
 
 def page_about():
