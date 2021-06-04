@@ -1,5 +1,4 @@
 altair
-time
 sklearn
 matplotlib
 nltk
