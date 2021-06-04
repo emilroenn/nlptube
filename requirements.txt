@@ -5,7 +5,6 @@ nltk
 numpy
 gensim
 spacy
-re 
 os 
 pickle 
 pandas 
