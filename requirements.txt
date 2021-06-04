@@ -6,7 +6,6 @@ numpy
 gensim
 spacy
 pandas 
-google.auth.transport.requests
 youtube_transcript_api 
 wordcloud
 PIL
