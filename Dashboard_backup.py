@@ -5,13 +5,6 @@ from nlp_fns import *
 import base64
 import altair as alt
 import time
-import pandas as pd
-from sklearn.feature_extraction.text import TfidfVectorizer
-import matplotlib.pyplot as plt
-from sklearn.cluster import KMeans
-from sklearn.decomposition import PCA
-from sklearn.manifold import TSNE
-from scipy import sparse
 
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import nltk
@@ -48,8 +41,7 @@ from typing import Union
 import pandas as pd
 import streamlit as st
 
-ss = SessionState.get(current = "Welcome", upload = "NA", wc = "NA", 
-                df_list = [1,1,1,1,1], query_list = [1,1,1,1,1], prep_list = [1,1,1,1,1],
+ss = SessionState.get(current = "Welcome", upload = "NA", wc = "NA", df_list = [1,1,1,1,1], query_list = [1,1,1,1,1],
                 data1q = "NA", data1s = 0, data1tf = "NA",
                 data2q = "NA", data2s = 0, data2tf = "NA", 
                 data3q = "NA", data3s = 0, data3tf = "NA",
@@ -466,8 +458,9 @@ def page_visualize():
             col1, col2, col3, col4 = st.beta_columns([2,3,3,4])
             containers = ['Container 1', 'Container 2', 'Container 3', 'Container 4', 'Container 5']
             dataset = col1.radio("Choose data to plot:", (containers))
-            df_index = int(dataset[-1])-1
-            dataset = ss.df_list[df_index] 
+         #   choice = int(dataset[-1])-1
+         #   dataset = ss.df_list[choice] 
+        #    col1.header(ss.query_list[choice])
             cloud_color = col2.selectbox("Theme:", ['Default (Black)','summer', 'Wistia', 'OrRd', 'YlGn'])
             cloud_bg = col2.selectbox("Background:", ['Default (Transparent)','black', 'white', 'red'])
             cloud_font = col3.selectbox("Font:", ['Default (AU Passata)','AU', 'SpicyRice'])
@@ -478,6 +471,7 @@ def page_visualize():
             extra_stopwords = col1.text_input("Remove stopwords (please separate words by comma):")
             col2.write("**Wordclouds from word frequencies**  \n Wordclouds in this tool are made from word frequencies, where the size of a word in the cloud corresponds to the number of times the word is mentioned in the analyzed data.")
             submit_button = col1.form_submit_button(label='Create Wordcloud')
+        
         progress = st.header("Ready to plot! Click 'Create Wordcloud' to begin.")
         progressbar = st.progress(0)
 
@@ -485,24 +479,82 @@ def page_visualize():
             if submit_button:
                 progress.header("Building wordcloud, please wait...")
                 progressbar.progress(0.1)
-                
-                if ss.prep_list[df_index] != 1:
-                    progressbar.progress(0.2)
-                    wordcloud = vectorize_multiple([ss.prep_list[df_index]], extra_stopwords)
-                    progressbar.progress(0.3)
-                    wordcloud = visualize(wordcloud, cloud_color, cloud_bg, cloud_shape, cloud_font)
-                    progressbar.progress(0.9)
-                else:
-                    progressbar.progress(0.2)
-                    ss.prep_list[df_index] = prep([ss.df_list[df_index]])
-                    progressbar.progress(0.3)
-                    wordcloud = vectorize_multiple([ss.prep_list[df_index]], extra_stopwords)
-                    progressbar.progress(0.5)
-                    wordcloud = visualize(wordcloud, cloud_color, cloud_bg, cloud_shape, cloud_font)
-                    progressbar.progress(0.9)
-
+                if dataset == "Container 1":
+                    if hasattr(ss, "data1_prep"):
+                        progressbar.progress(0.2)
+                        wordcloud = vectorize_multiple([ss.data1_prep], extra_stopwords)
+                        progressbar.progress(0.4)
+                        wordcloud = visualize(wordcloud, cloud_color, cloud_bg, cloud_shape, cloud_font)
+                        progressbar.progress(0.9)
+                    else:
+                        progressbar.progress(0.2)
+                        ss.data1_prep = prep([ss.data1])
+                        progressbar.progress(0.4)
+                        wordcloud = vectorize_multiple([ss.data1_prep], extra_stopwords)
+                        progressbar.progress(0.6)
+                        wordcloud = visualize(wordcloud, cloud_color, cloud_bg, cloud_shape, cloud_font)
+                        progressbar.progress(0.9)
+                if dataset == "Container 2":
+                    if hasattr(ss, "data2_prep"):
+                        progressbar.progress(0.2)
+                        wordcloud = vectorize_multiple([ss.data2_prep], extra_stopwords)
+                        progressbar.progress(0.4)
+                        wordcloud = visualize(wordcloud, cloud_color, cloud_bg, cloud_shape, cloud_font)
+                        progressbar.progress(0.9)
+                    else:
+                        progressbar.progress(0.2)
+                        ss.data2_prep = prep([ss.data2])
+                        progressbar.progress(0.4)
+                        wordcloud = vectorize_multiple([ss.data2_prep], extra_stopwords)
+                        progressbar.progress(0.6)
+                        wordcloud = visualize(wordcloud, cloud_color, cloud_bg, cloud_shape, cloud_font)
+                        progressbar.progress(0.9) 
+                if dataset == "Container 3":
+                    if hasattr(ss, "data3_prep"):
+                        progressbar.progress(0.2)
+                        wordcloud = vectorize_multiple([ss.data3_prep], extra_stopwords)
+                        progressbar.progress(0.4)
+                        wordcloud = visualize(wordcloud, cloud_color, cloud_bg, cloud_shape, cloud_font)
+                        progressbar.progress(0.9)
+                    else:
+                        progressbar.progress(0.2)
+                        ss.data3_prep = prep([ss.data3])
+                        progressbar.progress(0.4)
+                        wordcloud = vectorize_multiple([ss.data3_prep], extra_stopwords)
+                        progressbar.progress(0.6)
+                        wordcloud = visualize(wordcloud, cloud_color, cloud_bg, cloud_shape, cloud_font)
+                        progressbar.progress(0.9)
+                if dataset == "Container 4":
+                    if hasattr(ss, "data4_prep"):
+                        progressbar.progress(0.2)
+                        wordcloud = vectorize_multiple([ss.data4_prep], extra_stopwords)
+                        progressbar.progress(0.4)
+                        wordcloud = visualize(wordcloud, cloud_color, cloud_bg, cloud_shape, cloud_font)
+                        progressbar.progress(0.9)
+                    else:
+                        progressbar.progress(0.2)
+                        ss.data4_prep = prep([ss.data4])
+                        progressbar.progress(0.4)
+                        wordcloud = vectorize_multiple([ss.data4_prep], extra_stopwords)
+                        progressbar.progress(0.6)
+                        wordcloud = visualize(wordcloud, cloud_color, cloud_bg, cloud_shape, cloud_font)
+                        progressbar.progress(0.9)
+                if dataset == "Container 5":
+                    if hasattr(ss, "data5_prep"):
+                        progressbar.progress(0.2)
+                        wordcloud = vectorize_multiple([ss.data5_prep], extra_stopwords)
+                        progressbar.progress(0.4)
+                        wordcloud = visualize(wordcloud, cloud_color, cloud_bg, cloud_shape, cloud_font)
+                        progressbar.progress(0.9)
+                    else:
+                        progressbar.progress(0.2)
+                        ss.data5_prep = prep([ss.data5])
+                        progressbar.progress(0.4)
+                        wordcloud = vectorize_multiple([ss.data5_prep], extra_stopwords)
+                        progressbar.progress(0.6)
+                        wordcloud = visualize(wordcloud, cloud_color, cloud_bg, cloud_shape, cloud_font)
+                        progressbar.progress(0.9) 
                 progress.header("Displaying wordcloud - this may take a second...")
-                st.subheader("Search term: *" + ss.query_list[df_index] + "*")
                 st.image(wordcloud.to_array())
                 progressbar.progress(1.0)
                 progress.header("Done! Save the wordcloud, or try changing the inputs for other results!")
@@ -683,24 +735,63 @@ def page_visualize():
                 progress_value = 0.2
                 progress.header("Preprocessing...")
                 increment = 0.1/datanumber
-
-                for index in [0,1,2,3,4]:
+                
+                for i in ss.df_list:
                     
                     progress_value += increment 
                     progressbar.progress(progress_value)
+                    if hasattr(ss, "data1"):
+                        if str(i) == str(ss.data1):
+                            if hasattr(ss, "data1_prep"):
+                                prepped_list.append(ss.data1_prep)
+                                continue
+                            else:
+                                ss.data1_prep = prep([i])
+                                prepped_list.append(ss.data1_prep)
 
-                    if str(ss.df_list[index]) != "1":
-                        if ss.prep_list[index] == 1:
-                            ss.prep_list[index] = prep([ss.df_list[index]])
-                            prepped_list.append(ss.prep_list[index])
-                        else:
-                            prepped_list.append(ss.prep_list[index])
+                    if hasattr(ss, "data2"):
+                        if str(i) == str(ss.data2):
+                            if hasattr(ss, "data2_prep"):
+                                prepped_list.append(ss.data2_prep)
+                                continue
+                            else:
+                                ss.data2_prep = prep([i])
+                                prepped_list.append(ss.data2_prep)
+                    
+                    if hasattr(ss, "data3"):
+                        if str(i) == str(ss.data3):
+                            if hasattr(ss, "data3_prep"):
+                                prepped_list.append(ss.data3_prep)
+                                continue
+                            else:
+                                ss.data3_prep = prep([i])
+                                prepped_list.append(ss.data3_prep)
+                    
+                    if hasattr(ss, "data4"):
+                        if str(i) == str(ss.data4):
+                            if hasattr(ss, "data4_prep"):
+                                prepped_list.append(ss.data4_prep)
+                                continue
+                            else:
+                                ss.data4_prep = prep([i])
+                                prepped_list.append(ss.data4_prep)
+                    
+                    if hasattr(ss, "data5"):
+                        if str(i) == str(ss.data5):
+                            if hasattr(ss, "data5_prep"):
+                                prepped_list.append(ss.data5_prep)
+                                continue
+                            else:
+                                ss.data5_prep = prep([i])
+                                prepped_list.append(ss.data5_prep)
+
 
                 prepped_list = [item for sublist in prepped_list for item in sublist]
                 progress.header("Vectorizing...")
                 df = vectorize_multiple(prepped_list, extra_stopwords)
                 total_dfs = len(prepped_list)
                 wordcloud_list = []
+
 
                 progress_value = 0.2
                 for x in range(total_dfs):
@@ -776,14 +867,6 @@ def page_sentiment():
     #generate list of dataframes:
     list_dfs = []
     queries = []
-
-  #  for index in [0,1,2,3,4]:
-  #      if str(ss.df_list[index]) != "1":
-  #          ss.df_list[index]
-  #          ss.df_list[index]['scores'] = ss.df_list[index]['Comment'].apply(lambda comment: sid.polarity_scores(comment))
-  #          ss.df_list[index]['compound'] = ss.df_list[index]['scores'].apply(lambda x: x.get('compound'))
-  #          list_dfs.append(ss.df_list[index])
-  #          queries.append(ss.query_list[index])
 
     if hasattr(ss, 'data1'):
         ss.data1['scores'] = ss.data1['Comment'].apply(lambda comment: sid.polarity_scores(comment))
@@ -895,154 +978,12 @@ def page_topic():
         st.write("**You don't have any datasets loaded yet - analysis requires at least 1!**") 
         st.write("Please scrape or upload at least 1 dataset before continuing.")
     else:
-        st.info("Here, you can run a principal component analysis (PCA) on the TF-IDF matrix of the words in your scraped YouTube comments.   \n"
-        "What this essentially does, is that it allows you assess, which of your different queries are similar or dissimilar to each other.   \n"
-        "Do not worry - this application automatically handles the preprocessing and analysis, so you can focus on the results. Below here, you can read about how the analyses work and what they do.")
+        st.info("Here, you can run a principal component analysis on the TF-IDF matrix of the words in your scraped YouTube comments.   \n"
+        "What this essentially does, is that it allows you assess, which of your different queries are similar or dissimilar to each other   \n"
+        "Do not worry - this application automatically handles the preprocessing and analysis, so you can focus on the results. Below here, you can read about how the analyses work and what they do")
 
-        with st.beta_expander("What is TF-IDF?"):
-            st.markdown(
-                "**Term frequency-inverse document frequency** (TF-IDF) is a statistical measure that evaluates how relevant a word is to a document in a collection of documents.   \n"
-                "This is done by multiplying two metrics: how many times a word appears in a document, and the inverse document frequency of the word across a set of documents [(Ref)](https://monkeylearn.com/blog/what-is-tf-idf/)   \n   \n"
-                "In this case, we are using TF-IDF to assess the importance of individual words of the comments in a youtube query relative to the other queries made.   \n"
-                "The principal component analysis then uses this TF-IDF matrix to compare queries across all their word vectors. More on this can be found below."
-            )
-        with st.beta_expander("What is PCA?"):
-            st.markdown(
-                "**Principal component analysis** (PCA) is a dimensionality-reduction method that is often used to reduce the dimensionality of large data sets, by transforming a large set of variables into a smaller one that still contains most of the information in the large set [(Ref)](https://builtin.com/data-science/step-step-explanation-principal-component-analysis).    \n"
-                "This has the merit of increasing interpretability but at the same time minimizing information loss. It does so by creating new uncorrelated variables that successively maximize variance [(Ref)](https://royalsocietypublishing.org/doi/10.1098/rsta.2015.0202).    \n   \n"
-                "In this case, we are utilizing the TF-IDF matrix of vectors containing the relative importance of each word to each query. These word vectors each represent a dimension of word importance. The PCA effectively 'boils down' these dimensions to a 2-dimensional space. Each query can then be mapped into this new space and compared to other queries.    \n   \n"
-                "**Notice** that the axis in this new 2-dimensional space no longer carry any semantic meaning, and interpretability is pointless."
-                "The point of running PCA in this case, is that it allows us to see whether queries are similar to each other with regards to individual word importance."
-                )
-
-        col1, col2 = st.beta_columns([1,1])
-
-        with col1.form(key='my_form'):
-            extra_stopwords = st.text_input("Remove stopwords (please separate words by comma):")
-            st.markdown("Here you can select specific words that won't be included in the principal companant analysis. The vectors for these specified words simply wont be included in the model.   \n   You can use the wordclouds to search for problematic keywords that you want to exclude.")
-            st.info("**Please note**: Depending on the number of comments or loaded queries, this may take a few minutes. Please don't navigate to other dashboard tabs while this is running.")
-            submit_button = st.form_submit_button(label='Run PCA')
-
-        if submit_button:
-            
-
-            #Prep data:
-            #collect all available data
-            df_list = [x for x in ss.df_list if str(x) != str(1)]
-            prepped_list = [] #empty placeholder
-
-            #Check if data has already been preprocessed. If not - run preprocessing on each individual element
-            for i in df_list: 
-                if hasattr(ss, "data1"):
-                    if str(i) == str(ss.data1):
-                        if hasattr(ss, "data1_prep"):
-                            prepped_list.append(ss.data1_prep)
-                            continue
-                        else:
-                            ss.data1_prep = prep([i])
-                            prepped_list.append(ss.data1_prep)
-
-                if hasattr(ss, "data2"):
-                    if str(i) == str(ss.data2):
-                        if hasattr(ss, "data2_prep"):
-                            prepped_list.append(ss.data2_prep)
-                            continue
-                        else:
-                            ss.data2_prep = prep([i])
-                            prepped_list.append(ss.data2_prep)
-                
-                if hasattr(ss, "data3"):
-                    if str(i) == str(ss.data3):
-                        if hasattr(ss, "data3_prep"):
-                            prepped_list.append(ss.data3_prep)
-                            continue
-                        else:
-                            ss.data3_prep = prep([i])
-                            prepped_list.append(ss.data3_prep)
-                
-                if hasattr(ss, "data4"):
-                    if str(i) == str(ss.data4):
-                        if hasattr(ss, "data4_prep"):
-                            prepped_list.append(ss.data4_prep)
-                            continue
-                        else:
-                            ss.data4_prep = prep([i])
-                            prepped_list.append(ss.data4_prep)
-                
-                if hasattr(ss, "data5"):
-                    if str(i) == str(ss.data5):
-                        if hasattr(ss, "data5_prep"):
-                            prepped_list.append(ss.data5_prep)
-                            continue
-                        else:
-                            ss.data5_prep = prep([i])
-                            prepped_list.append(ss.data5_prep)
-
-            #Unpack preprocessed data and prep query names
-            prepped_list = [item for sublist in prepped_list for item in sublist]
-            names = [x for x in ss.query_list if x != 1]
-            dictOfWords = { i : names[i] for i in range(0, len(names) ) }
-
-            
-            #Run TF-IDF vectorizer and rename columns appropriately
-            vectors = vectorize_pca(prepped_list, extra_stopwords)
-            X = vectors.todense()
-
-            #df = df.rename(columns = dictOfWords , inplace = False)
-
-            num_clusters = len(df_list)
-            num_seeds = len(df_list)
-            max_iterations = 300
-            labels_color_map = {
-                0: '#20b2aa', 1: '#ff7373', 2: '#ffe4e1', 3: '#005073', 4: '#4d0404',
-                5: '#ccc0ba', 6: '#4700f9', 7: '#f6f900', 8: '#00f91d', 9: '#da8c49'
-            }
-            pca_num_components = 2
-
-            clustering_model = KMeans(
-                n_clusters=num_clusters,
-                max_iter=max_iterations,
-                precompute_distances="auto",
-                n_jobs=-1
-            )
-
-            labels = clustering_model.fit_predict(vectors)
-
-            tags =  ss.query_list
-
-            reduced_data = PCA(n_components=pca_num_components).fit_transform(X)
-            # print reduced_data
-            z = reduced_data[:,0]
-            y = reduced_data[:,1]
-
-            fig, ax = plt.subplots()
-            for index, instance in enumerate(reduced_data):
-                # print instance, index, labels[index]
-                pca_comp_1, pca_comp_2 = reduced_data[index]
-                color = labels_color_map[labels[index]]
-                ax.scatter(pca_comp_1, pca_comp_2, c=color, s = 80)
-                ax.axes.xaxis.set_visible(False)
-                ax.axes.yaxis.set_visible(False)
-            for i, txt in enumerate(tags):
-                ax.annotate(txt, (z[i], y[i]+0.02))
-
-
-            col1.write("Principal component analysis finished!")
-
-            st.set_option('deprecation.showPyplotGlobalUse', False)
-            col2.pyplot(fig, use_container_width=True )
-
-        with st.beta_expander("What is LDA - topic modelling?"):
-            st.markdown(
-                "Meh."
-                )
-
-
-
-
-            #gif_runner = st.image("rocket.gif")
-            #
-
+        with st.beta_expander("What is TF-IDF and principal component analysis?"):
+            st.markdown("TF-IDF ")
 
 
 def page_about():
