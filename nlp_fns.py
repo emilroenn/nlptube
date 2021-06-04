@@ -7,18 +7,17 @@ import os
 import pickle
 import pandas as pd
 from pandas import DataFrame
-import google.oauth2.credentials
-from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
-from google_auth_oauthlib.flow import InstalledAppFlow
-from google.auth.transport.requests import Request
+# import google.oauth2.credentials
+# from googleapiclient.discovery import build
+# from googleapiclient.errors import HttpError
+# from google_auth_oauthlib.flow import InstalledAppFlow
+# from google.auth.transport.requests import Request
 from youtube_transcript_api import YouTubeTranscriptApi
 from sklearn.feature_extraction.text import TfidfVectorizer
 import matplotlib.pyplot as plt
-from nlp_fns import *
 
 import numpy as np
-from stqdm import stqdm
+
 from wordcloud import WordCloud
 from PIL import Image
 import streamlit as st
