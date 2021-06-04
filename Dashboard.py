@@ -652,7 +652,7 @@ def page_topic():
     st.title("TOPICS ARE COOL. LET'S ANALYZE THEM.")
     names = [x for x in ss.query_list if x != 1]
 
-    if len(names) > 2:
+    if len(names) < 2:
         st.write("**You don't have enough datasets loaded - PCA analysis requires at least 3!**") 
         st.write("Please scrape or upload at least 3 dataset before continuing.")
     else:
@@ -753,13 +753,10 @@ def page_topic():
             st.set_option('deprecation.showPyplotGlobalUse', False)
             col2.pyplot(fig, use_container_width=True )
 
-        with st.beta_expander("What is LDA - topic modelling?"):
-            st.markdown(
-                "Meh."
-                )
+        
 
             #gif_runner = st.image("rocket.gif")
-            #
+            
 
 
 def page_about():
