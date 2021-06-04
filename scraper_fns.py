@@ -10,6 +10,7 @@ from pandas import DataFrame
 #from youtube_transcript_api import YouTubeTranscriptApi
 import matplotlib.pyplot as plt
 import streamlit as st
+from tqdm import tqdm
 
 
 from wordcloud import WordCloud
@@ -109,7 +110,7 @@ def get_data(query, results):
     progress = 0
     progressbar = st.progress(0)
 
-    from tqdm import tqdm
+    
     for i, video in enumerate(tqdm(video_id, ncols = 100)):
         progress = progress + 1
         progress_number = int(progress/results*100)
