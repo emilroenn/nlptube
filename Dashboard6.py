@@ -12,6 +12,16 @@ nltk.download('vader_lexicon')
 import numpy as np
 sid = SentimentIntensityAnalyzer()
 
+###### Load modules
+import pandas as pd
+from sklearn.feature_extraction.text import TfidfVectorizer
+import matplotlib.pyplot as plt
+from sklearn.cluster import KMeans
+from sklearn.decomposition import PCA
+from sklearn.manifold import TSNE
+from scipy import sparse
+#############
+
 from nltk.corpus import stopwords
 import gensim
 from gensim.utils import simple_preprocess
@@ -85,88 +95,61 @@ def main():
     st.sidebar.header("")
 
     # Sidebar buttons - if a button is True, state will be set to the page of that button
+    if st.sidebar.button("Welcome"):
+        ss.current = "Welcome"
+    if st.sidebar.button("How it works"):
+        ss.current = "How it works"
+    if st.sidebar.button("Upload Data"):
+        ss.current = "Upload Data"
+    if st.sidebar.button("Scrape YouTube Data"):
+        ss.current = "Scrape YouTube Data"
+    if st.sidebar.button("Wordcloud Analysis"):
+        ss.current = "Wordcloud Analysis"
+    if st.sidebar.button("Sentiment Analysis"):
+        ss.current = "Sentiment Analysis"
+    if st.sidebar.button("Topic Analysis"):
+        ss.current = "Topic Analysis"
+    if st.sidebar.button("About Us"):
+        ss.current = "About Us"
 
-    with st.sidebar.beta_expander("About This App"):
-        if st.button("Welcome"):
-            ss.current = "Welcome"
-        if st.button("How It Works"):
-            ss.current = "How it works"
-        if st.button("About Us"):
-            ss.current = "About Us"
+    
+    st.sidebar.header(":floppy_disk: Data Stored:")
+    if ss.data1q == "NA":
+        data1text = "CONTAINER 1: Empty"
+    if ss.data1q != "NA":
+        data1text = "CONTAINER 1: " + str(ss.data1q) + " (" + str(ss.data1s) + " comments)"
+    if ss.data2q == "NA":
+        data2text = "CONTAINER 2: Empty"
+    if ss.data2q != "NA":
+        data2text = "CONTAINER 2: " + str(ss.data2q) + " (" + str(ss.data2s) + " comments)"
+    if ss.data3q == "NA":
+        data3text = "CONTAINER 3: Empty"
+    if ss.data3q != "NA":
+        data3text = "CONTAINER 3: " + str(ss.data3q) + " (" + str(ss.data3s) + " comments)"
+    if ss.data4q == "NA":
+        data4text = "CONTAINER 4: Empty"
+    if ss.data4q != "NA":
+        data4text = "CONTAINER 4: " + str(ss.data4q) + " (" + str(ss.data4s) + " comments)"
+    if ss.data5q == "NA":
+        data5text = "CONTAINER 5: Empty"
+    if ss.data5q != "NA":
+        data5text = "CONTAINER 5: " + str(ss.data5q) + " (" + str(ss.data5s) + " comments)"
 
-    with st.sidebar.beta_expander("Manage Data"):
-        if st.button("Scrape YouTube Data"):
-            ss.current = "Scrape YouTube Data"
-        if st.button("Upload YouTube Data"):
-            ss.current = "Upload Data"
-
-    with st.sidebar.beta_expander("Analyze Data"):
-        if st.button("Wordcloud Analysis"):
-            ss.current = "Wordcloud Analysis"
-        if st.button("Sentiment Analysis"):
-            ss.current = "Sentiment Analysis"
-        if st.button("Topic Analysis"):
-            ss.current = "Topic Analysis"
-
-    with st.sidebar.beta_expander("Data Storage"):
-      #  st.header(":floppy_disk:")
-        if ss.data1q == "NA":
-            st.markdown('<font color=grey>**CONTAINER 1:** \n *Not in use*</font>', unsafe_allow_html=True)
-        if ss.data1q != "NA":
-            st.markdown('<font color=green>**CONTAINER 1:**</font>', unsafe_allow_html=True)
-            text1 = "**Search term: **" + str(ss.data1q) + "  \n   **Comments:** " + str(ss.data1s)
-            st.write(text1)
-            if hasattr(ss, 'data1_href'):
-                st.markdown(ss.data1_href, unsafe_allow_html=True)
-
-        if ss.data2q == "NA":
-            st.markdown('<font color=grey>**CONTAINER 2:** \n *Not in use*</font>', unsafe_allow_html=True)
-        if ss.data2q != "NA":
-            st.markdown('<font color=green>**CONTAINER 2:**</font>', unsafe_allow_html=True)
-            text2 = "**Search term: **" + str(ss.data2q) + "  \n   **Comments:** " + str(ss.data2s)
-            st.write(text2)
-            if hasattr(ss, 'data2_href'):
-                st.markdown(ss.data2_href, unsafe_allow_html=True)
-
-        if ss.data3q == "NA":
-            st.markdown('<font color=grey>**CONTAINER 3:** \n *Not in use*</font>', unsafe_allow_html=True)
-        if ss.data3q != "NA":
-            st.markdown('<font color=green>**CONTAINER 3:**</font>', unsafe_allow_html=True)
-            text3 = "**Search term: **" + str(ss.data3q) + "  \n   **Comments:** " + str(ss.data3s)
-            st.write(text3)
-            if hasattr(ss, 'data3_href'):
-                st.markdown(ss.data3_href, unsafe_allow_html=True)
-
-        if ss.data4q == "NA":
-            st.markdown('<font color=grey>**CONTAINER 4:** \n *Not in use*</font>', unsafe_allow_html=True)
-        if ss.data4q != "NA":
-            st.markdown('<font color=green>**CONTAINER 4:**</font>', unsafe_allow_html=True)
-            text4 = "**Search term: **" + str(ss.data4q) + "  \n   **Comments:** " + str(ss.data4s)
-            st.write(text4)
-            if hasattr(ss, 'data4_href'):
-                st.markdown(ss.data4_href, unsafe_allow_html=True)
-
-        if ss.data5q == "NA":
-            st.markdown('<font color=grey>**CONTAINER 5:** \n *Not in use*</font>', unsafe_allow_html=True)
-        if ss.data5q != "NA":
-            st.markdown('<font color=green>**CONTAINER 5:**</font>', unsafe_allow_html=True)
-            text5 = "**Search term: **" + str(ss.data5q) + "  \n   **Comments:** " + str(ss.data5s)
-            st.write(text5)
-            if hasattr(ss, 'data5_href'):
-                st.markdown(ss.data5_href, unsafe_allow_html=True)
-        
-        
-      #  st.markdown('<font color=grey>**CONTAINER 1:**</font>', unsafe_allow_html=True)
-    #    st.write(data1text)
-
-      #  st.write(data2text)
-
-    #    st.write(data3text)
-
-     #   st.write(data4text)
-
-      #  st.write(data5text)
-
+    st.sidebar.text(data1text)
+    if hasattr(ss, 'data1_href'):
+        st.sidebar.markdown(ss.data1_href, unsafe_allow_html=True)
+    st.sidebar.text(data2text)
+    if hasattr(ss, 'data2_href'):
+        st.sidebar.markdown(ss.data2_href, unsafe_allow_html=True)
+    st.sidebar.text(data3text)
+    if hasattr(ss, 'data3_href'):
+        st.sidebar.markdown(ss.data3_href, unsafe_allow_html=True)
+    st.sidebar.text(data4text)
+    if hasattr(ss, 'data4_href'):
+        st.sidebar.markdown(ss.data4_href, unsafe_allow_html=True)
+    st.sidebar.text(data5text)
+    if hasattr(ss, 'data5_href'):
+        st.sidebar.markdown(ss.data5_href, unsafe_allow_html=True)
 
 
     # Display the selected page with the session state
@@ -175,7 +158,7 @@ def main():
 
 
 def page_main():
-    st.title('Welcome to the YouNLP Analysis Tool')
+    st.title('Welcome to the Fucking Fancy Youtube Scraper (TM)')
     st.header("This is where we put a motherfucking header")
     st.write("This is where the welcome text fucking goes, motherfucker.")
 
@@ -184,28 +167,29 @@ def page_how():
     st.write("This is where we tell you how to use it, motherfucker")
 
 def page_upload():
-
-    st.header('Upload YouTube Data')
+    st.title('Upload your own motherfucking data')
+    st.info("Select the data container that you wish to upload your data to")
     
-    col1, col2, col3 = st.beta_columns([1,2,3])
-
-
-    col3.write("**To analyse data, you gotta have data first!**  \n This tool executes a YouTube search for an input query, finds the number of videos selected, and scrapes up to the top 100 comments of each video. Details about the scraped videos and comments are then converted to a data frame and stored in the selected container in the app. After scraping is complete, feel free to download the data frame or use one of the tools in the sidebar for further analysis. You can store up to 5 datasets in the app's containers.")
-    dataset = col1.radio("Store data in:", ('Container 1', 'Container 2', 'Container 3', 'Container 4', 'Container 5'))
-   # st.info("Please note: YouTube's API has a daily limit of 10,000 requests. Please limit searches to 100 videos or less.")
-
-    if dataset == "Container 1":
+    col1, col2, col3, col4, col5 = st.beta_columns(5)
+    container1 = col1.button("Data Container 1")
+    container2 = col2.button("Data Container 2")
+    container3 = col3.button("Data Container 3")
+    container4 = col4.button("Data Container 4")
+    container5 = col5.button("Data Container 5")
+  #  dataset = st.selectbox("",['Data 1', 'Data 2', 'Data 3'])
+    
+    if container1:
         ss.upload = "Data 1"
-    if dataset == "Container 2":
+    if container2:
         ss.upload = "Data 2"
-    if dataset == "Container 3":
+    if container3:
         ss.upload = "Data 3"
-    if dataset == "Container 4":
+    if container4:
         ss.upload = "Data 3"
-    if dataset == "Container 5":
+    if container5:
         ss.upload = "Data 3"
 
-
+    dataset = ss.upload
     STYLE = """
     <style>
     img {
@@ -244,8 +228,8 @@ def page_upload():
         """Run this function to display the Streamlit app"""
         st.markdown(STYLE, unsafe_allow_html=True)
 
-        file = col2.file_uploader("Upload file", type="CSV")
-        show_file = col2.empty()
+        file = st.file_uploader("Upload file", type="CSV")
+        show_file = st.empty()
         if not file:
             show_file.info("Please upload a file of type: CSV " )
             return
@@ -256,7 +240,7 @@ def page_upload():
         # elif file_type == FileType.PYTHON:
             # st.info("please upload a .csv file in the scraper format, and not and not python code")
         if file_type == FileType.CSV:
-            if dataset == "Container 1":
+            if dataset == "Data 1":
                 data = pd.read_csv(file)
                 ss.data1 = data
                 ss.data1q = data.at[2,'Query']
@@ -266,10 +250,9 @@ def page_upload():
                 csv = ss.data1.to_csv(index=False)
                 b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
                 ss.data1_href = f'<a href="data:file/csv;base64,{b64}" download="{ss.data1q}.csv">Download CSV</a>'
-                st.info(f"File using the query '{ss.data1q}' with {ss.data1s} comments successfully uploaded to Data Container 1")
-                with st.beta_expander("Examine data frame"):
-                    st.dataframe(ss.data1.head(10))
-            if dataset == "Container 2":
+                st.info(f"file using the query '{ss.data1q}' with {ss.data1s} comments successfully uploaded to data container 1")
+                st.dataframe(data.head(10))
+            if dataset == "Data 2":
                 data = pd.read_csv(file)
                 ss.data2 = data
                 ss.data2q = data.at[2,'Query']
@@ -279,10 +262,9 @@ def page_upload():
                 csv = ss.data2.to_csv(index=False)
                 b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
                 ss.data2_href = f'<a href="data:file/csv;base64,{b64}" download="{ss.data2q}.csv">Download CSV</a>'
-                st.info(f"File using the query '{ss.data2q}' with {ss.data2s} comments successfully uploaded to Data Container 2")
-                with st.beta_expander("Examine data frame"):
-                    st.dataframe(ss.data2.head(10))
-            if dataset == "Container 3":
+                st.info(f"file using the query '{ss.data2q}' with {ss.data2s} comments successfully uploaded to data container 2")
+                st.dataframe(data.head(10))
+            if dataset == "Data 3":
                 data = pd.read_csv(file)
                 ss.data3 = data
                 ss.data3q = data.at[2,'Query']
@@ -292,10 +274,9 @@ def page_upload():
                 csv = ss.data3.to_csv(index=False)
                 b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
                 ss.data3_href = f'<a href="data:file/csv;base64,{b64}" download="{ss.data3q}.csv">Download CSV</a>'
-                st.info(f"File using the query '{ss.data3q}' with {ss.data3s} comments successfully uploaded to Data Container 3")
-                with st.beta_expander("Examine data frame"):
-                    st.dataframe(ss.data3.head(10))
-            if dataset == "Container 4":
+                st.info(f"file using the query '{ss.data3q}' with {ss.data3s} comments successfully uploaded to data container 3")
+                st.dataframe(data.head(10))
+            if dataset == "Data 4":
                 data = pd.read_csv(file)
                 ss.data4 = data
                 ss.data4q = data.at[2,'Query']
@@ -305,10 +286,9 @@ def page_upload():
                 csv = ss.data4.to_csv(index=False)
                 b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
                 ss.data4_href = f'<a href="data:file/csv;base64,{b64}" download="{ss.data4q}.csv">Download CSV</a>'
-                st.info(f"File using the query '{ss.data4q}' with {ss.data4s} comments successfully uploaded to Data Container 4")
-                with st.beta_expander("Examine data frame"):
-                    st.dataframe(ss.data4.head(10))
-            if dataset == "Container 5":
+                st.info(f"file using the query '{ss.data4q}' with {ss.data4s} comments successfully uploaded to data container 3")
+                st.dataframe(data.head(10))
+            if dataset == "Data 5":
                 data = pd.read_csv(file)
                 ss.data5 = data
                 ss.data5q = data.at[2,'Query']
@@ -318,12 +298,11 @@ def page_upload():
                 csv = ss.data5.to_csv(index=False)
                 b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
                 ss.data5_href = f'<a href="data:file/csv;base64,{b64}" download="{ss.data5q}.csv">Download CSV</a>'
-                st.info(f"File using the query '{ss.data5q}' with {ss.data5s} comments successfully uploaded to Data Container 5")
-                with st.beta_expander("Examine data frame"):
-                    st.dataframe(ss.data5.head(10))
+                st.info(f"file using the query '{ss.data5q}' with {ss.data5s} comments successfully uploaded to data container 3")
+                st.dataframe(data.head(10))
 
         file.close()
-
+        
     main2()
 
     
@@ -331,7 +310,7 @@ def page_scrape():
     st.header('YouTube Scraper')
     with st.form(key='my_form'):
         col1, col2, col3 = st.beta_columns([1,2,3])
-        col3.write("**To analyse data, you gotta have data first!**  \n This tool executes a YouTube search for an input query, finds the number of videos selected, and scrapes up to the top 100 comments of each video. Details about the scraped videos and comments are then converted to a data frame and stored in the selected container in the app. After scraping is complete, feel free to download the data frame or use one of the tools in the sidebar for further analysis. You can store up to 5 datasets in the app's containers.")
+        col3.write("**To analyse data, you gotta have data first!**  \n This tool executes a YouTube search for an input query, finds the number of videos selected, and scrapes up to the top 100 comments of each video. Detailed information about both the videos and comments are then converted to a data frame and stored in the selected data container in the app. After the scraping is complete, feel free to download the data frame or use one of the tools in the sidebar for further analysis!")
         dataset = col1.radio("Store data in:", ('Container 1', 'Container 2', 'Container 3', 'Container 4', 'Container 5'))
         user_input1 = col2.text_input("Search term:", '')
         user_input2 = col2.number_input("Videos:", 1)
@@ -351,7 +330,7 @@ def page_scrape():
         if user_input1 == "":
             st.info("Please enter a search term before scraping!")
         else:
-            progress = st.subheader("Scraping YouTube, please wait...")
+            progress = st.header("Scraping YouTube, please wait...")
             if dataset == "Container 1":
                 ss.data1 = get_data(user_input1, user_input2)
                 ss.data1q = user_input1
@@ -361,10 +340,9 @@ def page_scrape():
                 total = len(ss.data1)
                 csv = ss.data1.to_csv(index=False)
                 b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
-                ss.data1_href = f'<a href="data:file/csv;base64,{b64}" download="{ss.data1q}.csv">Download CSV</a>'
+                ss.data1_href = f'<a href="data:file/csv;base64,{b64}" download="{ss.data1q}.csv">Click here to download CSV</a>'
                 st.markdown(ss.data1_href, unsafe_allow_html=True)
-                with st.beta_expander("Examine data frame"):
-                    st.dataframe(ss.data1.head(10))
+                st.dataframe(ss.data1.head(10))
             if dataset == "Container 2":
                 ss.data2 = get_data(user_input1, user_input2)
                 ss.data2q = user_input1
@@ -374,10 +352,8 @@ def page_scrape():
                 total = len(ss.data2)
                 csv = ss.data2.to_csv(index=False)
                 b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
-                ss.data2_href = f'<a href="data:file/csv;base64,{b64}" download="{ss.data2q}.csv">Download CSV</a>'
+                ss.data2_href = f'<a href="data:file/csv;base64,{b64}" download="{ss.data2q}.csv">Click here to download CSV</a>'
                 st.markdown(ss.data2_href, unsafe_allow_html=True)
-                with st.beta_expander("Examine data frame"):
-                    st.dataframe(ss.data2.head(10))
             if dataset == "Container 3":
                 ss.data3 = get_data(user_input1, user_input2)
                 ss.data3q = user_input1
@@ -387,10 +363,8 @@ def page_scrape():
                 total = len(ss.data3)
                 csv = ss.data3.to_csv(index=False)
                 b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
-                ss.data3_href = f'<a href="data:file/csv;base64,{b64}" download="{ss.data3q}.csv">Download CSV</a>'
+                ss.data3_href = f'<a href="data:file/csv;base64,{b64}" download="{ss.data3q}.csv">Click here to download CSV</a>'
                 st.markdown(ss.data3_href, unsafe_allow_html=True)
-                with st.beta_expander("Examine data frame"):
-                    st.dataframe(ss.data3.head(10))
             if dataset == "Container 4":
                 ss.data4 = get_data(user_input1, user_input2)
                 ss.data4q = user_input1
@@ -400,10 +374,8 @@ def page_scrape():
                 total = len(ss.data4)
                 csv = ss.data4.to_csv(index=False)
                 b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
-                ss.data4_href = f'<a href="data:file/csv;base64,{b64}" download="{ss.data4q}.csv">Download CSV</a>'
+                ss.data4_href = f'<a href="data:file/csv;base64,{b64}" download="{ss.data4q}.csv">Click here to download CSV</a>'
                 st.markdown(ss.data4_href, unsafe_allow_html=True)
-                with st.beta_expander("Examine data frame"):
-                    st.dataframe(ss.data4.head(10))
             if dataset == "Container 5":
                 ss.data5 = get_data(user_input1, user_input2)
                 ss.data5q = user_input1
@@ -413,44 +385,52 @@ def page_scrape():
                 total = len(ss.data5)
                 csv = ss.data5.to_csv(index=False)
                 b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
-                ss.data5_href = f'<a href="data:file/csv;base64,{b64}" download="{ss.data5q}.csv">Download CSV</a>'
+                ss.data5_href = f'<a href="data:file/csv;base64,{b64}" download="{ss.data5q}.csv">Click here to download CSV</a>'
                 st.markdown(ss.data5_href, unsafe_allow_html=True)
-                with st.beta_expander("Examine data frame"):
-                    st.dataframe(ss.data5.head(10))
-            progress.subheader("Done! Total comments scraped: " + str(total))
-       #     st.write("Total comments scraped:", total)
+            progress.header("Done!")
+            st.write("Total comments scraped:", total)
 
 
 
 def page_visualize():
-    
-
     st.header('**Wordclouds**')
-    
-    col1, col2 = st.beta_columns(2)
-    type = col1.selectbox(label = "",options = ['Individual Datasets (Word Frequency)', 'Compare Datasets (TF-IDF Scores)'])
-    
-    st.info("Use the menu above to switch between wordclouds examining individual datasets (using word frequency) and wordclouds comparing multiple datasets (using TF-IDF scores). For more information on both, see the descriptions for each type in the information box on the right.")   
+    st.write("Wordclouds are one of the most simple yet effective visualizations of large amounts of text data. A tag cloud (word cloud or wordle or weighted list in visual design) is a novelty visual representation of text data, typically used to depict keyword metadata (tags) on websites, or to visualize free form text. Tags are usually single words, and the importance of each tag is shown with font size or color.[2] This format is useful for quickly perceiving the most prominent terms to determine its relative prominence. Bigger term means greater weight.")   
 
-    if type == "Individual Datasets (Word Frequency)":
+    type = st.selectbox("Analysis:", ['Individual datasets', 'Compare Datasets'])
+
+    if type == "Individual datasets":
+
+        col1, col2, col3, col4, col5, _ = st.beta_columns([1,1,1,1,1,2])
+        container1 = col1.button("Dataset 1")
+        container2 = col2.button("Dataset 2")
+        container3 = col3.button("Dataset 3")
+        container4 = col4.button("Dataset 4")
+        container5 = col5.button("Dataset 5")
+            
+        if container1:
+            ss.wc = "Data 1"
+        if container2:
+            ss.wc = "Data 2"
+        if container3:
+            ss.wc = "Data 3"
+        if container4:
+            ss.wc = "Data 3"
+        if container5:
+            ss.wc = "Data 3"
+
+        dataset = ss.wc
 
         with st.form(key='my_form'):
             #dataset = st.selectbox("Select a dataset to visualize:", ['Data 1', 'Data 2', 'Data 3'])
 
-            #st.text("Customize wordcloud:")   
-            col1, col2, col3, col4 = st.beta_columns([2,3,3,4])
-            dataset = col1.radio("Choose data to plot:", ('Container 1', 'Container 2', 'Container 3', 'Container 4', 'Container 5'))
-
-            cloud_color = col2.selectbox("Theme:", ['Default (Black)','summer', 'Wistia', 'OrRd', 'YlGn'])
-            cloud_bg = col2.selectbox("Background:", ['Default (Transparent)','black', 'white', 'red'])
-            cloud_font = col3.selectbox("Font:", ['Default (AU Passata)','AU', 'SpicyRice'])
-            cloud_shape = col3.selectbox("Shape:", ['Default (Square)','Circle', 'Heart'])
-
-            col4.write("**They're clouds, but made from words!**  \n Wordclouds are one of the most simple yet effective visualizations of large amounts of text data. A tag cloud (word cloud or wordle or weighted list in visual design) is a novelty visual representation of text data, typically used to depict keyword metadata (tags) on websites, or to visualize free form text.")   
-            col1, col2 = st.beta_columns([4,2])
-            extra_stopwords = col1.text_input("Remove stopwords (please separate words by comma):")
-            col2.write("**Wordclouds from word frequencies**  \n Wordclouds in this tool are made from word frequencies, where the size of a word in the cloud corresponds to the number of times the word is mentioned in the analyzed data.")
-            submit_button = col1.form_submit_button(label='Create Wordcloud')
+            st.text("Customize wordcloud:")   
+            col1, col2 = st.beta_columns(2)
+            cloud_color = col1.selectbox("Theme:", ['Default (Black)','summer', 'Wistia', 'OrRd', 'YlGn'])
+            cloud_font = col1.selectbox("Font:", ['Default (AU Passata)','AU', 'SpicyRice'])
+            cloud_bg = col2.selectbox("Background:", ['Default (White)','black', 'white', 'red'])
+            cloud_shape = col2.selectbox("Shape:", ['Default (Square)','Circle', 'Heart'])
+            extra_stopwords = st.text_input("Remove stopwords (please separate words by comma):")
+            submit_button = st.form_submit_button(label='Create Wordcloud')
         
         progress = st.header("Ready to plot! Click 'Create Wordcloud' to begin.")
         progressbar = st.progress(0)
@@ -459,7 +439,7 @@ def page_visualize():
             if submit_button:
                 progress.header("Building wordcloud, please wait...")
                 progressbar.progress(0.1)
-                if dataset == "Container 1":
+                if dataset == "Data 1":
                     if hasattr(ss, "data1_prep"):
                         progressbar.progress(0.2)
                         wordcloud = vectorize_multiple([ss.data1_prep], extra_stopwords)
@@ -474,7 +454,7 @@ def page_visualize():
                         progressbar.progress(0.6)
                         wordcloud = visualize(wordcloud, cloud_color, cloud_bg, cloud_shape, cloud_font)
                         progressbar.progress(0.9)
-                if dataset == "Container 2":
+                if dataset == "Data 2":
                     if hasattr(ss, "data2_prep"):
                         progressbar.progress(0.2)
                         wordcloud = vectorize_multiple([ss.data2_prep], extra_stopwords)
@@ -489,7 +469,7 @@ def page_visualize():
                         progressbar.progress(0.6)
                         wordcloud = visualize(wordcloud, cloud_color, cloud_bg, cloud_shape, cloud_font)
                         progressbar.progress(0.9) 
-                if dataset == "Container 3":
+                if dataset == "Data 3":
                     if hasattr(ss, "data3_prep"):
                         progressbar.progress(0.2)
                         wordcloud = vectorize_multiple([ss.data3_prep], extra_stopwords)
@@ -504,7 +484,7 @@ def page_visualize():
                         progressbar.progress(0.6)
                         wordcloud = visualize(wordcloud, cloud_color, cloud_bg, cloud_shape, cloud_font)
                         progressbar.progress(0.9)
-                if dataset == "Container 4":
+                if dataset == "Data 4":
                     if hasattr(ss, "data4_prep"):
                         progressbar.progress(0.2)
                         wordcloud = vectorize_multiple([ss.data4_prep], extra_stopwords)
@@ -519,7 +499,7 @@ def page_visualize():
                         progressbar.progress(0.6)
                         wordcloud = visualize(wordcloud, cloud_color, cloud_bg, cloud_shape, cloud_font)
                         progressbar.progress(0.9)
-                if dataset == "Container 5":
+                if dataset == "Data 5":
                     if hasattr(ss, "data5_prep"):
                         progressbar.progress(0.2)
                         wordcloud = vectorize_multiple([ss.data5_prep], extra_stopwords)
@@ -542,7 +522,7 @@ def page_visualize():
             st.write("Please scrape some data first, fool!")
             st.write("Error:", e)
     
-    if type == "Compare Datasets (TF-IDF Scores)":
+    if type == "Compare Datasets":
         
         submit_button = False
         datanumber = 0
@@ -567,20 +547,17 @@ def page_visualize():
 
                 cloud_color1 = col1.selectbox("Cloud 1 Theme:", ['Default (Black)','summer', 'Wistia', 'OrRd', 'YlGn'])
                 cloud_font1 = col1.selectbox("Cloud 1 Font:", ['Default (AU Passata)','AU', 'SpicyRice'])
-                cloud_bg1 = col1.selectbox("Cloud 1 Background:", ['Default (Transparent)','black', 'white', 'red'])
+                cloud_bg1 = col1.selectbox("Cloud 1 Background:", ['Default (White)','black', 'white', 'red'])
                 cloud_shape1 = col1.selectbox("Cloud 1 Shape:", ['Default (Square)','Circle', 'Heart'])
 
                 cloud_color2 = col2.selectbox("Cloud 2 Theme:", ['Default (Black)','summer', 'Wistia', 'OrRd', 'YlGn'])
                 cloud_font2 = col2.selectbox("Cloud 2 Font:", ['Default (AU Passata)','AU', 'SpicyRice'])
-                cloud_bg2 = col2.selectbox("Cloud 2 Background:", ['Default (Transparent)','black', 'white', 'red'])
+                cloud_bg2 = col2.selectbox("Cloud 2 Background:", ['Default (White)','black', 'white', 'red'])
                 cloud_shape2 = col2.selectbox("Cloud 2 Shape:", ['Default (Square)','Circle', 'Heart'])
                 
                 extra_stopwords = st.text_input("Remove stopwords (please separate words by comma):")
 
                 submit_button = st.form_submit_button(label='Create Wordclouds')
-
-            progress = st.header("Ready to plot! Click 'Create Wordcloud' to begin.")
-            progressbar = st.progress(0)
 
         if datanumber == 3:
             st.info("**3 datasets found in storage. Customize and create wordclouds below to compare!**")
@@ -590,25 +567,22 @@ def page_visualize():
 
                 cloud_color1 = col1.selectbox("Cloud 1 Theme:", ['Default (Black)','summer', 'Wistia', 'OrRd', 'YlGn'])
                 cloud_font1 = col1.selectbox("Cloud 1 Font:", ['Default (AU Passata)','AU', 'SpicyRice'])
-                cloud_bg1 = col1.selectbox("Cloud 1 Background:", ['Default (Transparent)','black', 'white', 'red'])
+                cloud_bg1 = col1.selectbox("Cloud 1 Background:", ['Default (White)','black', 'white', 'red'])
                 cloud_shape1 = col1.selectbox("Cloud 1 Shape:", ['Default (Square)','Circle', 'Heart'])
 
                 cloud_color2 = col2.selectbox("Cloud 2 Theme:", ['Default (Black)','summer', 'Wistia', 'OrRd', 'YlGn'])
                 cloud_font2 = col2.selectbox("Cloud 2 Font:", ['Default (AU Passata)','AU', 'SpicyRice'])
-                cloud_bg2 = col2.selectbox("Cloud 2 Background:", ['Default (Transparent)','black', 'white', 'red'])
+                cloud_bg2 = col2.selectbox("Cloud 2 Background:", ['Default (White)','black', 'white', 'red'])
                 cloud_shape2 = col2.selectbox("Cloud 2 Shape:", ['Default (Square)','Circle', 'Heart'])
 
                 cloud_color3 = col3.selectbox("Cloud 3 Theme:", ['Default (Black)','summer', 'Wistia', 'OrRd', 'YlGn'])
                 cloud_font3 = col3.selectbox("Cloud 3 Font:", ['Default (AU Passata)','AU', 'SpicyRice'])
-                cloud_bg3 = col3.selectbox("Cloud 3 Background:", ['Default (Transparent)','black', 'white', 'red'])
+                cloud_bg3 = col3.selectbox("Cloud 3 Background:", ['Default (White)','black', 'white', 'red'])
                 cloud_shape3 = col3.selectbox("Cloud 3 Shape:", ['Default (Square)','Circle', 'Heart'])
                 
                 extra_stopwords = st.text_input("Remove stopwords (please separate words by comma):")
                 
                 submit_button = st.form_submit_button(label='Create Wordclouds')
-
-            progress = st.header("Ready to plot! Click 'Create Wordcloud' to begin.")
-            progressbar = st.progress(0)
 
         if datanumber == 4:
             st.write("**4 datasets found in storage. Customize and create wordclouds below to compare!**")
@@ -639,9 +613,6 @@ def page_visualize():
                 extra_stopwords = st.text_input("Remove stopwords (please separate words by comma):")
                 
                 submit_button = st.form_submit_button(label='Create Wordclouds')
-
-            progress = st.header("Ready to plot! Click 'Create Wordcloud' to begin.")
-            progressbar = st.progress(0)
 
         if datanumber == 5:
             st.write("**5 datasets found in storage. Customize and create wordclouds below to compare!**")
@@ -678,8 +649,8 @@ def page_visualize():
                 
                 submit_button = st.form_submit_button(label='Create Wordclouds')
 
-            progress = st.header("Ready to plot! Click 'Create Wordcloud' to begin.")
-            progressbar = st.progress(0)
+        progress = st.header("Ready to plot! Click 'Create Wordcloud' to begin.")
+        progressbar = st.progress(0)
 
         try:
             if submit_button:
@@ -839,8 +810,8 @@ def page_visualize():
             st.write("Error:", e)
 
 def page_sentiment():
-    st.title("Sentiment analysis of comments")
-    st.text("Each comment is assigned sentiment scores weighted between 'positive', 'neutral', and 'negative' as well as a compound between them")
+    st.title("IT'S ABOUT EMOTIONS, FUCKER")
+    st.text("Let's see how we feel.")
 
     #Generate sentiment scores
     #generate list of dataframes:
@@ -886,27 +857,7 @@ def page_sentiment():
         formated["Comment Published"] = formated["Comment Published"].dt.strftime('%Y-%m-%d')
 
         formated = formated.groupby(['Query', 'Comment Published'], as_index=False)['compound'].mean()
-
-
-
-
-        with st.beta_expander("What are sentiment scores?"):
-                    st.markdown(
-                        "Sentiment scores are generated using the VADER (Valence Aware Dictionary for Sentiment Reasoning)  \n"
-                        "This model is sensitive to both polarity and intensity of emotion  \n"
-                        "Each individual comment is assigned 4 scores based on their content:  \n   \n"
-                        "⋅⋅⋅ **Positive**  \n"
-                        "⋅⋅⋅ **Negative**  \n"
-                        "⋅⋅⋅ **Neutral**  \n"
-                        "⋅⋅⋅ **Compound**  \n  \n"
-                        "The compound is the result of normalizing (between -1 and 1) the three other scores, providing a good estimate for overall sentence valence.  \n"
-                        "Positive compound scores suggest positive comments, and vice versa" 
-                    )
-        
-        st.info("Below here, you can select which of the queries, you want to include in the sentiment chart.  \n"
-         "The sentiment chart will plot the compound sentiment for all comments in each selected query over time  \n  \n"
-         "The sentiment chart is **interactable**: On the timeline below the plot, you can select an interval to scale the plot to. This interval can be dragged across the timeline and the plot will adjust accordingly. The three dots in the top right corner, will allow you to download the plot as well as access the source code that generated your plot.")
-
+        st.dataframe(formated)
         options = st.multiselect(
         'Select data to include',
         queries,
@@ -924,8 +875,6 @@ def page_sentiment():
         height=400
         )
 
-        
-
         upper = base.encode(
         alt.X('Comment Published:T', scale=alt.Scale(domain=brush))
         )
@@ -936,34 +885,117 @@ def page_sentiment():
 
         chart2 = upper & lower
 
-
         st.altair_chart(chart2, use_container_width=True)
 
 
-        with st.beta_expander("See the aggregated sentiment compound scores"):
-            st.info("Sentiment scores are mean aggregated by date and query. This means that for each of your YouTube scrapes, you get the compound sentiment over time for all comments captured by the query. "
-            "Remember, positive compound scores reflect that the comments on that particular day primarily exhibited positive sentiment with higher scores reflecting increased sentiment strength. The opposite is true for negative values.   \n"
-            "**Here is what that looks like:**")
-            st.dataframe(formated)
-
-
 def page_topic():
-
-
     st.title("TOPICS ARE COOL. LET'S ANALYZE THEM.")
+
+    #Prep data:
+    #collect all available data
+    df_list = [x for x in ss.df_list if str(x) != str(1)]
+    prepped_list = [] #empty placeholder
+
+    #Check if data has already been preprocessed. If not - run preprocessing on each individual element
+    for i in df_list: 
+        if hasattr(ss, "data1"):
+            if str(i) == str(ss.data1):
+                if hasattr(ss, "data1_prep"):
+                    prepped_list.append(ss.data1_prep)
+                    continue
+                else:
+                    ss.data1_prep = prep([i])
+                    prepped_list.append(ss.data1_prep)
+
+        if hasattr(ss, "data2"):
+            if str(i) == str(ss.data2):
+                if hasattr(ss, "data2_prep"):
+                    prepped_list.append(ss.data2_prep)
+                    continue
+                else:
+                    ss.data2_prep = prep([i])
+                    prepped_list.append(ss.data2_prep)
+        
+        if hasattr(ss, "data3"):
+            if str(i) == str(ss.data3):
+                if hasattr(ss, "data3_prep"):
+                    prepped_list.append(ss.data3_prep)
+                    continue
+                else:
+                    ss.data3_prep = prep([i])
+                    prepped_list.append(ss.data3_prep)
+        
+        if hasattr(ss, "data4"):
+            if str(i) == str(ss.data4):
+                if hasattr(ss, "data4_prep"):
+                    prepped_list.append(ss.data4_prep)
+                    continue
+                else:
+                    ss.data4_prep = prep([i])
+                    prepped_list.append(ss.data4_prep)
+        
+        if hasattr(ss, "data5"):
+            if str(i) == str(ss.data5):
+                if hasattr(ss, "data5_prep"):
+                    prepped_list.append(ss.data5_prep)
+                    continue
+                else:
+                    ss.data5_prep = prep([i])
+                    prepped_list.append(ss.data5_prep)
+
+    #Unpack preprocessed data and prep query names
+    prepped_list = [item for sublist in prepped_list for item in sublist]
     names = [x for x in ss.query_list if x != 1]
+    dictOfWords = { i : names[i] for i in range(0, len(names) ) }
 
-    if len(names) == 0:
-        st.write("**You don't have any datasets loaded yet - analysis requires at least 1!**") 
-        st.write("Please scrape or upload at least 1 dataset before continuing.")
-    else:
-        st.info("Here, you can run a principal component analysis on the TF-IDF matrix of the words in your scraped YouTube comments.   \n"
-        "What this essentially does, is that it allows you assess, which of your different queries are similar or dissimilar to each other   \n"
-        "Do not worry - this application automatically handles the preprocessing and analysis, so you can focus on the results. Below here, you can read about how the analyses work and what they do")
+    extra_stopwords = st.text_input("Remove stopwords (please separate words by comma):")
+    
+    #Run TF-IDF vectorizer and rename columns appropriately
+    df = vectorize_multiple(prepped_list, extra_stopwords)
+    df = df.rename(columns = dictOfWords , inplace = False)
 
-        with st.beta_expander("What is TF-IDF and principal component analysis?"):
-            st.markdown("TF-IDF ")
+    st.dataframe(df.head(10))
 
+    X = df.to_numpy()
+
+    num_clusters = len(df_list)
+    num_seeds = len(df_list)
+    max_iterations = 300
+    labels_color_map = {
+        0: '#20b2aa', 1: '#ff7373', 2: '#ffe4e1', 3: '#005073', 4: '#4d0404',
+        5: '#ccc0ba', 6: '#4700f9', 7: '#f6f900', 8: '#00f91d', 9: '#da8c49'
+    }
+    pca_num_components = 2
+
+
+    clustering_model = KMeans(
+        n_clusters=num_clusters,
+        max_iter=max_iterations,
+        precompute_distances="auto",
+        n_jobs=-1
+    )
+
+    labels = clustering_model.fit_predict(df)
+    # print labels
+
+    tags =  ss.query_list
+
+    reduced_data = PCA(n_components=pca_num_components).fit_transform(X)
+    # print reduced_data
+    z = reduced_data[:,0]
+    y = reduced_data[:,1]
+
+    fig, ax = plt.subplots()
+    for index, instance in enumerate(reduced_data):
+        # print instance, index, labels[index]
+        pca_comp_1, pca_comp_2 = reduced_data[index]
+        color = labels_color_map[labels[index]]
+        ax.scatter(pca_comp_1, pca_comp_2, c=color, s = 80)
+    for i, txt in enumerate(tags):
+        ax.annotate(txt, (z[i], y[i]+0.01))
+
+    st.set_option('deprecation.showPyplotGlobalUse', False)
+    st.pyplot(fig)
 
 def page_about():
     st.title("LET'S TALK A LITTLE ABOUT US")
