@@ -1,32 +1,25 @@
-import streamlit as st
 import SessionState
 from scraper_fns import *
 from nlp_fns import *
 import base64
 import altair as alt
 import time
-import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
 from sklearn.manifold import TSNE
 from scipy import sparse
-
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import nltk
-nltk.download('vader_lexicon')
 import numpy as np
-sid = SentimentIntensityAnalyzer()
-
 from nltk.corpus import stopwords
 import gensim
 from gensim.utils import simple_preprocess
 import spacy
 import re 
-import os #
+import os 
 import pickle 
-import pandas as pd
 from pandas import DataFrame
 import google.oauth2.credentials
 from googleapiclient.discovery import build
@@ -36,17 +29,14 @@ from google.auth.transport.requests import Request
 from youtube_transcript_api import YouTubeTranscriptApi
 from sklearn.feature_extraction.text import TfidfVectorizer
 import matplotlib.pyplot as plt
-
-from stqdm import stqdm
 from wordcloud import WordCloud
 from PIL import Image
-
 from enum import Enum
 from io import BytesIO, StringIO
 from typing import Union
-
 import pandas as pd
 import streamlit as st
+
 
 ss = SessionState.get(current = "Welcome", upload = "NA", wc = "NA", 
                 df_list = [1,1,1,1,1], prep_list = [1,1,1,1,1],
@@ -85,6 +75,7 @@ def main():
     }
 
     # Sidebar title
+    st.sidebar.image("./resources/logo.png", use_column_width=True)
     st.sidebar.title("Navigation")
     st.sidebar.header("")
 
@@ -562,7 +553,8 @@ def page_visualize():
 def page_sentiment():
     st.title("Sentiment analysis of comments")
     st.text("Each comment is assigned sentiment scores weighted between 'positive', 'neutral', and 'negative' as well as a compound between them")
-
+    nltk.download('vader_lexicon')
+    sid = SentimentIntensityAnalyzer()
     #Generate sentiment scores
     #generate list of dataframes:
     list_dfs = []
@@ -652,7 +644,7 @@ def page_topic():
     st.title("TOPICS ARE COOL. LET'S ANALYZE THEM.")
     names = [x for x in ss.query_list if x != 1]
 
-    if len(names) > 2:
+    if len(names) < 2:
         st.write("**You don't have enough datasets loaded - PCA analysis requires at least 3!**") 
         st.write("Please scrape or upload at least 3 dataset before continuing.")
     else:
@@ -753,13 +745,10 @@ def page_topic():
             st.set_option('deprecation.showPyplotGlobalUse', False)
             col2.pyplot(fig, use_container_width=True )
 
-        with st.beta_expander("What is LDA - topic modelling?"):
-            st.markdown(
-                "Meh."
-                )
+        
 
             #gif_runner = st.image("rocket.gif")
-            #
+            
 
 
 def page_about():
