@@ -181,6 +181,21 @@ def vectorize_single(document):
   #  document = document.rename(columns = {0: 'word_word'}, inplace = False)
     return document
 
+def vectorize_pca(df_list, extra_stopwords):
+    # prep stopwords
+    stops = list(stopwords.words('english'))
+    extra_stopwords = extra_stopwords.split(",")
+    stops.extend(extra_stopwords)
+    stops = [x.strip(' ') for x in stops]
+    # , tokenizer=LemmaTokenizer())
+    vectorizer = TfidfVectorizer(stop_words=stops, lowercase=True)
+    if len(df_list) == 1:
+        df_list = df_list[0]
+    else:
+        df_list = df_list
+    vectors = vectorizer.fit_transform(df_list)
+
+    return vectors
 
 def vectorize_multiple(df_list, extra_stopwords):
     print("Running TF-IDF on all data sets...")
