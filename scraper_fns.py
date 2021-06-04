@@ -11,7 +11,7 @@ from pandas import DataFrame
 import matplotlib.pyplot as plt
 import streamlit as st
 
-from stqdm import stqdm
+
 from wordcloud import WordCloud
 from PIL import Image
 
