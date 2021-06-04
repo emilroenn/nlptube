@@ -85,6 +85,7 @@ def main():
     }
 
     # Sidebar title
+    st.sidebar.image("logo.png", use_column_width=True)
     st.sidebar.title("Navigation")
     st.sidebar.header("")
 
