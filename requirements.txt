@@ -6,7 +6,6 @@ numpy
 gensim
 spacy
 pandas 
-google_auth_oauthlib.flow 
 google.auth.transport.requests
 youtube_transcript_api 
 wordcloud
