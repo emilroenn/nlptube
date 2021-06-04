@@ -12,6 +12,7 @@ from sklearn.manifold import TSNE
 from scipy import sparse
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import nltk
+nltk.download('stopwords')
 import numpy as np
 from nltk.corpus import stopwords
 import gensim
