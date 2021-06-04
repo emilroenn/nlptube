@@ -6,7 +6,6 @@ numpy
 gensim
 spacy
 pandas 
-googleapiclient.discovery
 googleapiclient.errors 
 google_auth_oauthlib.flow 
 google.auth.transport.requests
