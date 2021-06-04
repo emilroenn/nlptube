@@ -4,10 +4,8 @@ altair
 time
 sklearn
 matplotlib
-nltk.sentiment.vader
 nltk
 numpy
-nltk.corpus
 gensim
 spacy
 re 
