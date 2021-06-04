@@ -849,8 +849,8 @@ def page_visualize():
             st.write("Error:", e)
 
 def page_sentiment():
-    st.title("IT'S ABOUT EMOTIONS, FUCKER")
-    st.text("Let's see how we feel.")
+    st.title("Sentiment analysis of comments")
+    st.text("Each comment is assigned sentiment scores weighted between 'positive', 'neutral', and 'negative' as well as a compound between them")
 
     #Generate sentiment scores
     #generate list of dataframes:
@@ -896,7 +896,27 @@ def page_sentiment():
         formated["Comment Published"] = formated["Comment Published"].dt.strftime('%Y-%m-%d')
 
         formated = formated.groupby(['Query', 'Comment Published'], as_index=False)['compound'].mean()
-        st.dataframe(formated)
+
+
+
+
+        with st.beta_expander("What are sentiment scores?"):
+                    st.markdown(
+                        "Sentiment scores are generated using the VADER (Valence Aware Dictionary for Sentiment Reasoning)  \n"
+                        "This model is sensitive to both polarity and intensity of emotion  \n"
+                        "Each individual comment is assigned 4 scores based on their content:  \n   \n"
+                        "⋅⋅⋅ **Positive**  \n"
+                        "⋅⋅⋅ **Negative**  \n"
+                        "⋅⋅⋅ **Neutral**  \n"
+                        "⋅⋅⋅ **Compound**  \n  \n"
+                        "The compound is the result of normalizing (between -1 and 1) the three other scores, providing a good estimate for overall sentence valence.  \n"
+                        "Positive compound scores suggest positive comments, and vice versa" 
+                    )
+        
+        st.info("Below here, you can select which of the queries, you want to include in the sentiment chart.  \n"
+         "The sentiment chart will plot the compound sentiment for all comments in each selected query over time  \n  \n"
+         "The sentiment chart is **interactable**: On the timeline below the plot, you can select an interval to scale the plot to. This interval can be dragged across the timeline and the plot will adjust accordingly. The three dots in the top right corner, will allow you to download the plot as well as access the source code that generated your plot.")
+
         options = st.multiselect(
         'Select data to include',
         queries,
@@ -914,6 +934,8 @@ def page_sentiment():
         height=400
         )
 
+        
+
         upper = base.encode(
         alt.X('Comment Published:T', scale=alt.Scale(domain=brush))
         )
@@ -924,11 +946,33 @@ def page_sentiment():
 
         chart2 = upper & lower
 
+
         st.altair_chart(chart2, use_container_width=True)
 
 
+        with st.beta_expander("See the aggregated sentiment compound scores"):
+            st.info("Sentiment scores are mean aggregated by date and query. This means that for each of your YouTube scrapes, you get the compound sentiment over time for all comments captured by the query. "
+            "Remember, positive compound scores reflect that the comments on that particular day primarily exhibited positive sentiment with higher scores reflecting increased sentiment strength. The opposite is true for negative values.   \n"
+            "**Here is what that looks like:**")
+            st.dataframe(formated)
+
+
 def page_topic():
+
+
     st.title("TOPICS ARE COOL. LET'S ANALYZE THEM.")
+    names = [x for x in ss.query_list if x != 1]
+
+    if len(names) == 0:
+        st.write("**You don't have any datasets loaded yet - analysis requires at least 1!**") 
+        st.write("Please scrape or upload at least 1 dataset before continuing.")
+    else:
+        st.info("Here, you can run a principal component analysis on the TF-IDF matrix of the words in your scraped YouTube comments.   \n"
+        "What this essentially does, is that it allows you assess, which of your different queries are similar or dissimilar to each other   \n"
+        "Do not worry - this application automatically handles the preprocessing and analysis, so you can focus on the results. Below here, you can read about how the analyses work and what they do")
+
+        with st.beta_expander("What is TF-IDF and principal component analysis?"):
+            st.markdown("TF-IDF ")
 
 
 def page_about():
