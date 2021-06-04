@@ -1,39 +1,31 @@
-import SessionState
-from scraper_fns import *
-from nlp_fns import *
-import base64
-import altair as alt
-import time
-from sklearn.feature_extraction.text import TfidfVectorizer
-import matplotlib.pyplot as plt
-from sklearn.cluster import KMeans
-from sklearn.decomposition import PCA
-from sklearn.manifold import TSNE
-from scipy import sparse
-from nltk.sentiment.vader import SentimentIntensityAnalyzer
-import nltk
-import numpy as np
-from nltk.corpus import stopwords
-import gensim
-from gensim.utils import simple_preprocess
-import spacy
-import re 
-import os 
-import pickle 
-from pandas import DataFrame
-import google.oauth2.credentials
-from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
-from google_auth_oauthlib.flow import InstalledAppFlow
-from google.auth.transport.requests import Request
-import google.oauth2.credentials
-from youtube_transcript_api import YouTubeTranscriptApi
-from sklearn.feature_extraction.text import TfidfVectorizer
-import matplotlib.pyplot as plt
-from wordcloud import WordCloud
-from PIL import Image
-from enum import Enum
-from io import BytesIO, StringIO
-from typing import Union
-import pandas as pd
-import streamlit as st
+SessionState
+scraper_fns 
+nlp_fns
+base64
+altair
+time
+sklearn
+matplotlib
+nltk.sentiment.vader
+nltk
+numpy
+nltk.corpus
+gensim
+spacy
+re 
+os 
+pickle 
+pandas 
+google.oauth2.credentials
+googleapiclient.discovery
+googleapiclient.errors 
+google_auth_oauthlib.flow 
+google.auth.transport.requests
+google.oauth2.credentials
+youtube_transcript_api 
+wordcloud
+PIL
+enum 
+io 
+typing 
+streamlit

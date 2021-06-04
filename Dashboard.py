@@ -36,7 +36,7 @@ from io import BytesIO, StringIO
 from typing import Union
 import pandas as pd
 import streamlit as st
-import google.oauth2
+
 
 ss = SessionState.get(current = "Welcome", upload = "NA", wc = "NA", 
                 df_list = [1,1,1,1,1], prep_list = [1,1,1,1,1],
