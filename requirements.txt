@@ -8,6 +8,5 @@ spacy
 pandas 
 youtube_transcript_api 
 wordcloud
-io 
 typing 
 streamlit
