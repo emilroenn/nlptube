@@ -6,12 +6,10 @@ numpy
 gensim
 spacy
 pandas 
-google.oauth2.credentials
 googleapiclient.discovery
 googleapiclient.errors 
 google_auth_oauthlib.flow 
 google.auth.transport.requests
-google.oauth2.credentials
 youtube_transcript_api 
 wordcloud
 PIL
