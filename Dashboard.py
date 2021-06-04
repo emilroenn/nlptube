@@ -515,8 +515,8 @@ def page_visualize():
         submit_button = False
         datanumber = 0
 
-        for x in ['data1','data2','data3','data4','data5']:
-            if hasattr(ss, x):
+        for index in [0,1,2,3,4]:
+            if str(ss.df_list[index]) != str(1):
                 datanumber += 1
 
         if datanumber == 0: 
