@@ -777,39 +777,42 @@ def page_sentiment():
     list_dfs = []
     queries = []
 
-  #  for index in [0,1,2,3,4]:
-  #      if str(ss.df_list[index]) != "1":
-  #          ss.df_list[index]
-  #          ss.df_list[index]['scores'] = ss.df_list[index]['Comment'].apply(lambda comment: sid.polarity_scores(comment))
-  #          ss.df_list[index]['compound'] = ss.df_list[index]['scores'].apply(lambda x: x.get('compound'))
-  #          list_dfs.append(ss.df_list[index])
-  #          queries.append(ss.query_list[index])
+    for index in [0,1,2,3,4]:
+        if str(ss.df_list[index]) != "1":
+            ss.df_list[index]['scores'] = ss.df_list[index]['Comment'].apply(lambda comment: sid.polarity_scores(comment))
+            ss.df_list[index]['compound'] = ss.df_list[index]['scores'].apply(lambda x: x.get('compound'))
+            ss.df_list[index]['positive'] = ss.df_list[index]['scores'].apply(lambda x: x.get('positive'))
+            ss.df_list[index]['negative'] = ss.df_list[index]['scores'].apply(lambda x: x.get('negative'))
+            ss.df_list[index]['neutral'] = ss.df_list[index]['scores'].apply(lambda x: x.get('neutral'))
 
-    if hasattr(ss, 'data1'):
-        ss.data1['scores'] = ss.data1['Comment'].apply(lambda comment: sid.polarity_scores(comment))
-        ss.data1['compound'] = ss.data1['scores'].apply(lambda x: x.get('compound'))
-        list_dfs.append(ss.data1)
-        queries.append(ss.data1q)
-    if hasattr(ss, 'data2'):
-        ss.data2['scores'] = ss.data2['Comment'].apply(lambda comment: sid.polarity_scores(comment))
-        ss.data2['compound'] = ss.data2['scores'].apply(lambda x: x.get('compound'))
-        list_dfs.append(ss.data2)
-        queries.append(ss.data2q)
-    if hasattr(ss, 'data3'):
-        ss.data3['scores'] = ss.data3['Comment'].apply(lambda comment: sid.polarity_scores(comment))
-        ss.data3['compound'] = ss.data3['scores'].apply(lambda x: x.get('compound'))
-        list_dfs.append(ss.data3)
-        queries.append(ss.data3q)
-    if hasattr(ss, 'data4'):
-        ss.data4['scores'] = ss.data4['Comment'].apply(lambda comment: sid.polarity_scores(comment))
-        ss.data4['compound'] = ss.data4['scores'].apply(lambda x: x.get('compound'))
-        list_dfs.append(ss.data4)
-        queries.append(ss.data4q)
-    if hasattr(ss, 'data5'):
-        ss.data5['scores'] = ss.data5['Comment'].apply(lambda comment: sid.polarity_scores(comment))
-        ss.data5['compound'] = ss.data5['scores'].apply(lambda x: x.get('compound'))
-        list_dfs.append(ss.data5)
-        queries.append(ss.data5q)
+            list_dfs.append(ss.df_list[index])
+            queries.append(ss.query_list[index])
+
+    # if hasattr(ss, 'data1'):
+    #     ss.data1['scores'] = ss.data1['Comment'].apply(lambda comment: sid.polarity_scores(comment))
+    #     ss.data1['compound'] = ss.data1['scores'].apply(lambda x: x.get('compound'))
+    #     list_dfs.append(ss.data1)
+    #     queries.append(ss.data1q)
+    # if hasattr(ss, 'data2'):
+    #     ss.data2['scores'] = ss.data2['Comment'].apply(lambda comment: sid.polarity_scores(comment))
+    #     ss.data2['compound'] = ss.data2['scores'].apply(lambda x: x.get('compound'))
+    #     list_dfs.append(ss.data2)
+    #     queries.append(ss.data2q)
+    # if hasattr(ss, 'data3'):
+    #     ss.data3['scores'] = ss.data3['Comment'].apply(lambda comment: sid.polarity_scores(comment))
+    #     ss.data3['compound'] = ss.data3['scores'].apply(lambda x: x.get('compound'))
+    #     list_dfs.append(ss.data3)
+    #     queries.append(ss.data3q)
+    # if hasattr(ss, 'data4'):
+    #     ss.data4['scores'] = ss.data4['Comment'].apply(lambda comment: sid.polarity_scores(comment))
+    #     ss.data4['compound'] = ss.data4['scores'].apply(lambda x: x.get('compound'))
+    #     list_dfs.append(ss.data4)
+    #     queries.append(ss.data4q)
+    # if hasattr(ss, 'data5'):
+    #     ss.data5['scores'] = ss.data5['Comment'].apply(lambda comment: sid.polarity_scores(comment))
+    #     ss.data5['compound'] = ss.data5['scores'].apply(lambda x: x.get('compound'))
+    #     list_dfs.append(ss.data5)
+    #     queries.append(ss.data5q)
     
 
     if len(queries) == 0:
