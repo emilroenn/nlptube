@@ -104,11 +104,14 @@ def vectorize(df):
     return df
 
 
-def visualize(df, cloud_color="gist_gray", cloud_bg="white",  cloud_shape=None, cloud_font="AU", column=0):
+def visualize(df, cloud_color="gist_gray", cloud_bg="'Default (Transparent)'",  cloud_shape=None, cloud_font="AU", column=0):
     if cloud_color == 'Default (Black)':
         cloud_color = "copper"
-    if cloud_bg == 'Default (White)':
-        cloud_bg = "white"
+    if cloud_bg == 'Default (Transparent)':
+        cloud_bg = "rgba(255, 255, 255, 0)"
+        mode="RGBA"
+    if cloud_bg != 'Default (White)':
+        mode="RGB"
     if cloud_font == 'Default (AU Passata)':
         cloud_font = 'AU'
     if cloud_shape == 'Default (Square)':
@@ -127,7 +130,7 @@ def visualize(df, cloud_color="gist_gray", cloud_bg="white",  cloud_shape=None, 
     values = tuple(df[column])
     my_dict = dict(zip(keys, values))
 
-    wordcloud = WordCloud(font_path=cloud_font, mask=cloud_shape, regexp=None, relative_scaling=cloud_scale, prefer_horizontal=cloud_horizontal,
+    wordcloud = WordCloud(mode = mode, font_path=cloud_font, mask=cloud_shape, regexp=None, relative_scaling=cloud_scale, prefer_horizontal=cloud_horizontal,
                           width=800, height=800, background_color=cloud_bg, max_words=500, contour_width=0, colormap=cloud_color)
 
     wordcloud.generate_from_frequencies(my_dict)

@@ -8,7 +8,7 @@ import time
 
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import nltk
-#nltk.download('vader_lexicon')
+nltk.download('vader_lexicon')
 import numpy as np
 sid = SentimentIntensityAnalyzer()
 
@@ -423,44 +423,34 @@ def page_scrape():
 
 
 def page_visualize():
+    
+
     st.header('**Wordclouds**')
-    st.write("Wordclouds are one of the most simple yet effective visualizations of large amounts of text data. A tag cloud (word cloud or wordle or weighted list in visual design) is a novelty visual representation of text data, typically used to depict keyword metadata (tags) on websites, or to visualize free form text. Tags are usually single words, and the importance of each tag is shown with font size or color.[2] This format is useful for quickly perceiving the most prominent terms to determine its relative prominence. Bigger term means greater weight.")   
+    
+    col1, col2 = st.beta_columns(2)
+    type = col1.selectbox(label = "",options = ['Individual Datasets (Word Frequency)', 'Compare Datasets (TF-IDF Scores)'])
+    
+    st.info("Use the menu above to switch between wordclouds examining individual datasets (using word frequency) and wordclouds comparing multiple datasets (using TF-IDF scores). For more information on both, see the descriptions for each type in the information box on the right.")   
 
-    type = st.selectbox("Analysis:", ['Individual datasets', 'Compare Datasets'])
-
-    if type == "Individual datasets":
-
-        col1, col2, col3, col4, col5, _ = st.beta_columns([1,1,1,1,1,2])
-        container1 = col1.button("Dataset 1")
-        container2 = col2.button("Dataset 2")
-        container3 = col3.button("Dataset 3")
-        container4 = col4.button("Dataset 4")
-        container5 = col5.button("Dataset 5")
-            
-        if container1:
-            ss.wc = "Data 1"
-        if container2:
-            ss.wc = "Data 2"
-        if container3:
-            ss.wc = "Data 3"
-        if container4:
-            ss.wc = "Data 3"
-        if container5:
-            ss.wc = "Data 3"
-
-        dataset = ss.wc
+    if type == "Individual Datasets (Word Frequency)":
 
         with st.form(key='my_form'):
             #dataset = st.selectbox("Select a dataset to visualize:", ['Data 1', 'Data 2', 'Data 3'])
 
-            st.text("Customize wordcloud:")   
-            col1, col2 = st.beta_columns(2)
-            cloud_color = col1.selectbox("Theme:", ['Default (Black)','summer', 'Wistia', 'OrRd', 'YlGn'])
-            cloud_font = col1.selectbox("Font:", ['Default (AU Passata)','AU', 'SpicyRice'])
-            cloud_bg = col2.selectbox("Background:", ['Default (White)','black', 'white', 'red'])
-            cloud_shape = col2.selectbox("Shape:", ['Default (Square)','Circle', 'Heart'])
-            extra_stopwords = st.text_input("Remove stopwords (please separate words by comma):")
-            submit_button = st.form_submit_button(label='Create Wordcloud')
+            #st.text("Customize wordcloud:")   
+            col1, col2, col3, col4 = st.beta_columns([2,3,3,4])
+            dataset = col1.radio("Choose data to plot:", ('Container 1', 'Container 2', 'Container 3', 'Container 4', 'Container 5'))
+
+            cloud_color = col2.selectbox("Theme:", ['Default (Black)','summer', 'Wistia', 'OrRd', 'YlGn'])
+            cloud_bg = col2.selectbox("Background:", ['Default (Transparent)','black', 'white', 'red'])
+            cloud_font = col3.selectbox("Font:", ['Default (AU Passata)','AU', 'SpicyRice'])
+            cloud_shape = col3.selectbox("Shape:", ['Default (Square)','Circle', 'Heart'])
+
+            col4.write("**They're clouds, but made from words!**  \n Wordclouds are one of the most simple yet effective visualizations of large amounts of text data. A tag cloud (word cloud or wordle or weighted list in visual design) is a novelty visual representation of text data, typically used to depict keyword metadata (tags) on websites, or to visualize free form text.")   
+            col1, col2 = st.beta_columns([4,2])
+            extra_stopwords = col1.text_input("Remove stopwords (please separate words by comma):")
+            col2.write("**Wordclouds from word frequencies**  \n Wordclouds in this tool are made from word frequencies, where the size of a word in the cloud corresponds to the number of times the word is mentioned in the analyzed data.")
+            submit_button = col1.form_submit_button(label='Create Wordcloud')
         
         progress = st.header("Ready to plot! Click 'Create Wordcloud' to begin.")
         progressbar = st.progress(0)
@@ -469,7 +459,7 @@ def page_visualize():
             if submit_button:
                 progress.header("Building wordcloud, please wait...")
                 progressbar.progress(0.1)
-                if dataset == "Data 1":
+                if dataset == "Container 1":
                     if hasattr(ss, "data1_prep"):
                         progressbar.progress(0.2)
                         wordcloud = vectorize_multiple([ss.data1_prep], extra_stopwords)
@@ -484,7 +474,7 @@ def page_visualize():
                         progressbar.progress(0.6)
                         wordcloud = visualize(wordcloud, cloud_color, cloud_bg, cloud_shape, cloud_font)
                         progressbar.progress(0.9)
-                if dataset == "Data 2":
+                if dataset == "Container 2":
                     if hasattr(ss, "data2_prep"):
                         progressbar.progress(0.2)
                         wordcloud = vectorize_multiple([ss.data2_prep], extra_stopwords)
@@ -499,7 +489,7 @@ def page_visualize():
                         progressbar.progress(0.6)
                         wordcloud = visualize(wordcloud, cloud_color, cloud_bg, cloud_shape, cloud_font)
                         progressbar.progress(0.9) 
-                if dataset == "Data 3":
+                if dataset == "Container 3":
                     if hasattr(ss, "data3_prep"):
                         progressbar.progress(0.2)
                         wordcloud = vectorize_multiple([ss.data3_prep], extra_stopwords)
@@ -514,7 +504,7 @@ def page_visualize():
                         progressbar.progress(0.6)
                         wordcloud = visualize(wordcloud, cloud_color, cloud_bg, cloud_shape, cloud_font)
                         progressbar.progress(0.9)
-                if dataset == "Data 4":
+                if dataset == "Container 4":
                     if hasattr(ss, "data4_prep"):
                         progressbar.progress(0.2)
                         wordcloud = vectorize_multiple([ss.data4_prep], extra_stopwords)
@@ -529,7 +519,7 @@ def page_visualize():
                         progressbar.progress(0.6)
                         wordcloud = visualize(wordcloud, cloud_color, cloud_bg, cloud_shape, cloud_font)
                         progressbar.progress(0.9)
-                if dataset == "Data 5":
+                if dataset == "Container 5":
                     if hasattr(ss, "data5_prep"):
                         progressbar.progress(0.2)
                         wordcloud = vectorize_multiple([ss.data5_prep], extra_stopwords)
@@ -552,7 +542,7 @@ def page_visualize():
             st.write("Please scrape some data first, fool!")
             st.write("Error:", e)
     
-    if type == "Compare Datasets":
+    if type == "Compare Datasets (TF-IDF Scores)":
         
         submit_button = False
         datanumber = 0
@@ -577,12 +567,12 @@ def page_visualize():
 
                 cloud_color1 = col1.selectbox("Cloud 1 Theme:", ['Default (Black)','summer', 'Wistia', 'OrRd', 'YlGn'])
                 cloud_font1 = col1.selectbox("Cloud 1 Font:", ['Default (AU Passata)','AU', 'SpicyRice'])
-                cloud_bg1 = col1.selectbox("Cloud 1 Background:", ['Default (White)','black', 'white', 'red'])
+                cloud_bg1 = col1.selectbox("Cloud 1 Background:", ['Default (Transparent)','black', 'white', 'red'])
                 cloud_shape1 = col1.selectbox("Cloud 1 Shape:", ['Default (Square)','Circle', 'Heart'])
 
                 cloud_color2 = col2.selectbox("Cloud 2 Theme:", ['Default (Black)','summer', 'Wistia', 'OrRd', 'YlGn'])
                 cloud_font2 = col2.selectbox("Cloud 2 Font:", ['Default (AU Passata)','AU', 'SpicyRice'])
-                cloud_bg2 = col2.selectbox("Cloud 2 Background:", ['Default (White)','black', 'white', 'red'])
+                cloud_bg2 = col2.selectbox("Cloud 2 Background:", ['Default (Transparent)','black', 'white', 'red'])
                 cloud_shape2 = col2.selectbox("Cloud 2 Shape:", ['Default (Square)','Circle', 'Heart'])
                 
                 extra_stopwords = st.text_input("Remove stopwords (please separate words by comma):")
@@ -600,17 +590,17 @@ def page_visualize():
 
                 cloud_color1 = col1.selectbox("Cloud 1 Theme:", ['Default (Black)','summer', 'Wistia', 'OrRd', 'YlGn'])
                 cloud_font1 = col1.selectbox("Cloud 1 Font:", ['Default (AU Passata)','AU', 'SpicyRice'])
-                cloud_bg1 = col1.selectbox("Cloud 1 Background:", ['Default (White)','black', 'white', 'red'])
+                cloud_bg1 = col1.selectbox("Cloud 1 Background:", ['Default (Transparent)','black', 'white', 'red'])
                 cloud_shape1 = col1.selectbox("Cloud 1 Shape:", ['Default (Square)','Circle', 'Heart'])
 
                 cloud_color2 = col2.selectbox("Cloud 2 Theme:", ['Default (Black)','summer', 'Wistia', 'OrRd', 'YlGn'])
                 cloud_font2 = col2.selectbox("Cloud 2 Font:", ['Default (AU Passata)','AU', 'SpicyRice'])
-                cloud_bg2 = col2.selectbox("Cloud 2 Background:", ['Default (White)','black', 'white', 'red'])
+                cloud_bg2 = col2.selectbox("Cloud 2 Background:", ['Default (Transparent)','black', 'white', 'red'])
                 cloud_shape2 = col2.selectbox("Cloud 2 Shape:", ['Default (Square)','Circle', 'Heart'])
 
                 cloud_color3 = col3.selectbox("Cloud 3 Theme:", ['Default (Black)','summer', 'Wistia', 'OrRd', 'YlGn'])
                 cloud_font3 = col3.selectbox("Cloud 3 Font:", ['Default (AU Passata)','AU', 'SpicyRice'])
-                cloud_bg3 = col3.selectbox("Cloud 3 Background:", ['Default (White)','black', 'white', 'red'])
+                cloud_bg3 = col3.selectbox("Cloud 3 Background:", ['Default (Transparent)','black', 'white', 'red'])
                 cloud_shape3 = col3.selectbox("Cloud 3 Shape:", ['Default (Square)','Circle', 'Heart'])
                 
                 extra_stopwords = st.text_input("Remove stopwords (please separate words by comma):")
