@@ -302,7 +302,7 @@ def page_manage():
 
     with st.form(key='my_form'):
         containers = ['Container 1', 'Container 2', 'Container 3', 'Container 4', 'Container 5']
-        dataset = col0.radio("Select container to empty:", (containers)) 
+        dataset = st.radio("Select container to empty:", (containers)) 
         df_index = int(dataset[-1])-1
         
         submit_button = st.form_submit_button(label='Empty selected container')
@@ -334,11 +334,10 @@ def page_manage():
     with st.form(key='my_form2'):
         st.subheader("Load Sample Data")
         st.info("Here, you can examine, download, and delete data stored in the app's containers. Please note that once a container is emptied, the data stored in that container is permanently deleted. Using the links above, you can download datasets and later reupload them for additional analysis or comparison.")
-        col0, col1, col2, col3, col4, col5 = st.beta_columns(6)
         containers = ['Container 1', 'Container 2', 'Container 3', 'Container 4', 'Container 5']
         testsets = ['Dogecoin', 'Bitcoin', 'Biden', 'Trump', 'NLP']
-        testdata = col0.radio("Choose a sample dataset:", (testsets)) 
-        dataset = col0.radio("Select container to upload sample data:", (containers)) 
+        testdata = st.radio("Choose a sample dataset:", (testsets)) 
+        dataset = st.radio("Select container to upload sample data:", (containers)) 
         df_index = int(dataset[-1])-1
      #   for index, col in zip([0,1,2,3,4], [col1, col2, col3, col4, col5]):
      #       if str(ss.df_list[index]) == "1":
