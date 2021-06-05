@@ -288,9 +288,9 @@ def page_scrape():
 def page_manage():
     st.header('**Manage Stored Data**')
 
-    st.subheader("Container Status")
+
     st.info("Here, you can examine, download, delete, or load in sample data to the app's containers. Please note that once a container is emptied or overwritten, the data previously stored in that container is permanently deleted. Using the links under each container, you can download datasets and later reupload them for additional analysis or comparison.")
-    
+    st.subheader("Container Status")
     with st.form(key='my_form'):
     
         col0, col1, col2, col3, col4, col5 = st.beta_columns(6)
@@ -331,10 +331,10 @@ def page_manage():
     
   #  st.subheader(" Stored Datasets")
 
-
+    st.subheader("Load Sample Data")
     with st.form(key='my_form2'):
         col1, col2, col3 = st.beta_columns([1,1,2])
-        st.subheader("Load Sample Data")
+        
         containers = ['Container 1', 'Container 2', 'Container 3', 'Container 4', 'Container 5']
         testsets = ['Dogecoin', 'Bitcoin', 'Biden', 'Trump', 'NLP']
         testdata = col2.radio("Choose a sample dataset:", (testsets)) 
@@ -356,9 +356,9 @@ def page_manage():
             ss.prep_list[df_index] = 1
             ss.query_list[df_index] = ss.df_list[df_index].at[2,'Query']
             b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
-       #     ss.href_list[df_index] = f'<a href="data:file/csv;base64,{b64}" download="{ss.query_list[df_index]}.csv">Download CSV</a>'
-            ss.length_list[df_index] = len(ss.df_list[df_index])
-      #      st.info(f"File using the query '{ss.query_list[df_index]}' with {ss.length_list[df_index]} comments successfully uploaded to Data Container {df_index+1}")
+            ss.href_list[df_index] = f'<a href="data:file/csv;base64,{b64}" download="{ss.query_list[df_index]}.csv">Download CSV</a>'
+            ss.length_list[df_index] = 100000 #len(ss.df_list[df_index])
+            st.info(f"File using the query '{ss.query_list[df_index]}' with {ss.length_list[df_index]} comments successfully uploaded to Data Container {df_index+1}")
 
 
 def page_visualize():
