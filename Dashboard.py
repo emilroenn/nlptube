@@ -340,39 +340,29 @@ def page_manage():
         dataset = col1.radio("Select container to upload sample data:", (containers)) 
         df_index = int(dataset[-1])-1
 
-        col3.write("**Test out the app without scraping!**  /n If you want to take the various tools out for a spin without going through the scraping or uploading process, try loading in one of our existing data samples for exploration. These datasets have been meticulously curated for the linguistic connoisseur, giving exciting insights into interesting topics such as memes, cryptocurrencies, and language analytics!")
-     #   for index, col in zip([0,1,2,3,4], [col1, col2, col3, col4, col5]):
-     #       if str(ss.df_list[index]) == "1":
+        col3.write("**Test out the app without scraping!**")
+        col3.write("If you want to take the various tools out for a spin without going through the scraping or uploading process, try loading in one of our existing data samples for exploration. These datasets have been meticulously curated for the linguistic connoisseur, giving exciting insights into interesting topics such as memes, cryptocurrencies, and language analytics!")
+    #   for index, col in zip([0,1,2,3,4], [col1, col2, col3, col4, col5]):
+    #       if str(ss.df_list[index]) == "1":
      #           col.markdown('<font color=grey>**CONTAINER ' + str(index+1) + ':** \n *Not in use*</font>', unsafe_allow_html=True)
-     #       else:
-     #           col.markdown('<font color=green>**CONTAINER ' + str(index+1) + ':**</font>', unsafe_allow_html=True)
+    #       else:
+    #           col.markdown('<font color=green>**CONTAINER ' + str(index+1) + ':**</font>', unsafe_allow_html=True)
      #           datatext = "**Search term: **" + str(ss.query_list[index]) + "  \n   **Comments:** " + str(ss.length_list[index])
-     #           col.write(datatext)
-     #           col.markdown(ss.href_list[index], unsafe_allow_html=True)
+    #           col.write(datatext)
+    #           col.markdown(ss.href_list[index], unsafe_allow_html=True)
         submit_button2 = st.form_submit_button(label='Load Test Data')
 
         
     if submit_button2:
-        if str(ss.df_list[df_index]) != str(1):
-            st.info("Container is already in use! To avoid accidental overwriting, please choose another container or empty the selected container.")
-        else:
-            ss.df_list[df_index] = pd.read_csv("./resources/testdata/" + testdata + ".csv")
-            ss.prep_list[df_index] = 1
-            ss.query_list[df_index] = ss.df_list[df_index].at[2,'Query']
-            ss.href_list[df_index] = f'<a href="data:file/csv;base64,{b64}" download="{ss.query_list[df_index]}.csv">Download CSV</a>'
-            ss.length_list[df_index] = len(ss.df_list[df_index])
-            st.info(f"File using the query '{ss.query_list[df_index]}' with {ss.length_list[df_index]} comments successfully uploaded to Data Container {df_index+1}")
-
-
-
-            ss.df_list[df_index] = pd.read_csv(file)
-            ss.query_list[df_index] = ss.df_list[df_index].at[2,'Query']
-            ss.length_list[df_index] = len(ss.df_list[df_index])
-            csv = ss.df_list[df_index].to_csv(index=False)
-            b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
-            ss.href_list[df_index] = f'<a href="data:file/csv;base64,{b64}" download="{ss.query_list[df_index]}.csv">Download CSV</a>'
-            st.info(f"File using the query '{ss.query_list[df_index]}' with {ss.length_list[df_index]} comments successfully uploaded to Data Container {df_index+1}")
-            
+    #   if str(ss.df_list[df_index]) != str(1):
+    #       st.info("Container is already in use! To avoid accidental overwriting, please choose another container or empty the selected container.")
+    #   else:
+        ss.df_list[df_index] = pd.read_csv("./resources/testdata/" + testdata + ".csv")
+        ss.prep_list[df_index] = 1
+        ss.query_list[df_index] = ss.df_list[df_index].at[2,'Query']
+        ss.href_list[df_index] = f'<a href="data:file/csv;base64,{b64}" download="{ss.query_list[df_index]}.csv">Download CSV</a>'
+        ss.length_list[df_index] = len(ss.df_list[df_index])
+        st.info(f"File using the query '{ss.query_list[df_index]}' with {ss.length_list[df_index]} comments successfully uploaded to Data Container {df_index+1}")
 
 
 def page_visualize():
