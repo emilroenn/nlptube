@@ -81,7 +81,7 @@ def main():
 
     # Sidebar buttons - if a button is True, state will be set to the page of that button
 
-    with st.sidebar.beta_expander("About This App"):
+    with st.sidebar.beta_expander("About This App", expanded = True):
         if st.button("Welcome To YouNLP"):
             ss.current = "Welcome"
         if st.button("How Does It Work?"):
@@ -125,59 +125,55 @@ def page_main():
 
 def page_how():
     st.header('**How To Use This Tool**')
-    st.write("This is where we put a quick, short summary of the tool.")
+    col1, col2 = st.beta_columns([1,1])
+    col1.write("This is where we put a quick, short summary of the tool.")
+    col2.image("./resources/screenshots/flowchart.png")
 
     st.subheader("**Manage Data**")
     st.write("Everything that has to do with data management is located in the *Manage Data* menu of the sidebar. Here, you can scrape new data from YouTube, upload previously scraped data, and view or delete data currently stored in the app.")
-    with st.beta_expander("Click to read more about the tools in the Manage Data menu.", expanded = False):
+    st.info("Click one of the drop-down menus below to learn more about the tools in the Manage Data menu!")
+    
+    with st.beta_expander("Scrape YouTube Data", expanded = False):
         st.subheader("*Scrape YouTube Data*")
-        col1,col2 = st.beta_columns([2,1])
+        col1,col2 = st.beta_columns([1,1])
         col1.write("The *Scrape YouTube Data* tool allows you to create a new dataset for analysis based on any search term. In the tool's menu, you have three")
         col2.image("./resources/screenshots/scrape.png")
-            
+
+    with st.beta_expander("Upload YouTube Data", expanded = False):
         st.subheader("*Upload YouTube Data*")
-        col1,col2 = st.beta_columns([2,1])
+        col1,col2 = st.beta_columns([1,1])
         col1.write("The *Scrape YouTube Data* tool allows you to create a new dataset for analysis based on any search term. In the tool's menu, you have three")
         col2.image("./resources/screenshots/upload.png")
-            
+
+    with st.beta_expander("Manage Stored Data", expanded = False):
         st.subheader("*Manage Stored Data*")
-        col1,col2 = st.beta_columns([2,1])
+        col1,col2 = st.beta_columns([1,1])
         col1.write("The *Scrape YouTube Data* tool allows you to create a new dataset for analysis based on any search term. In the tool's menu, you have three")
         col2.image("./resources/screenshots/manage.png")
 
-    st.subheader("**Manage Data**")
-    st.write("Everything that has to do with data management is located in the *Manage Data* menu of the sidebar. Here, you can scrape new data from YouTube, upload previously scraped data, and view or delete data currently stored in the app.")
-    with st.beta_expander("Click to read more about the tools in the Manage Data menu.", expanded = False):
-        st.subheader("*Scrape YouTube Data*")
-        col1,col2 = st.beta_columns([2,1])
+    st.subheader("**Analyze Data**")
+    st.write("Everything that has to do with data analysis and visualization is located in the *Analyze Data* menu of the sidebar. Here, you can do a variety of different types of language analysis.")
+    st.info("Click one of the drop-down menus below to learn more about the tools in the Analyze Data menu!")
+    
+    with st.beta_expander("Wordcloud Analysis", expanded = False):
+        st.subheader("*Wordcloud Analysis*")
+        st.write("The Word")
+        col1,col2 = st.beta_columns([1,1])
         col1.write("The *Scrape YouTube Data* tool allows you to create a new dataset for analysis based on any search term. In the tool's menu, you have three")
-        col2.image("./resources/screenshots/scrape.png")
-            
-        st.subheader("*Upload YouTube Data*")
-        col1,col2 = st.beta_columns([2,1])
-        col1.write("The *Scrape YouTube Data* tool allows you to create a new dataset for analysis based on any search term. In the tool's menu, you have three")
-        col2.image("./resources/screenshots/upload.png")
-            
-        st.subheader("*Manage Stored Data*")
-        col1,col2 = st.beta_columns([2,1])
-        col1.write("The *Scrape YouTube Data* tool allows you to create a new dataset for analysis based on any search term. In the tool's menu, you have three")
-        col2.image("./resources/screenshots/manage.png")
+        col2.image("./resources/screenshots/wc_single.png")
 
-    st.subheader("**Manage Data**")
-    st.write("Everything that has to do with data management is located in the *Manage Data* menu of the sidebar. Here, you can scrape new data from YouTube, upload previously scraped data, and view or delete data currently stored in the app.")
-    with st.beta_expander("Click to read more about the tools in the Manage Data menu.", expanded = False):
-        st.subheader("*Scrape YouTube Data*")
-        col1,col2 = st.beta_columns([2,1])
         col1.write("The *Scrape YouTube Data* tool allows you to create a new dataset for analysis based on any search term. In the tool's menu, you have three")
-        col2.image("./resources/screenshots/scrape.png")
-            
-        st.subheader("*Upload YouTube Data*")
-        col1,col2 = st.beta_columns([2,1])
+        col2.image("./resources/screenshots/wc_multiple.png")
+
+    with st.beta_expander("Sentiment Analysis", expanded = False):
+        st.subheader("*Sentiment Analysis*")
+        col1,col2 = st.beta_columns([1,1])
         col1.write("The *Scrape YouTube Data* tool allows you to create a new dataset for analysis based on any search term. In the tool's menu, you have three")
         col2.image("./resources/screenshots/upload.png")
-            
-        st.subheader("*Manage Stored Data*")
-        col1,col2 = st.beta_columns([2,1])
+
+    with st.beta_expander("Similarity Analysis", expanded = False):
+        st.subheader("*Similarity Analysis*")
+        col1,col2 = st.beta_columns([1,1])
         col1.write("The *Scrape YouTube Data* tool allows you to create a new dataset for analysis based on any search term. In the tool's menu, you have three")
         col2.image("./resources/screenshots/manage.png")
 
