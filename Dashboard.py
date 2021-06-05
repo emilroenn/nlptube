@@ -153,7 +153,7 @@ def page_how():
     with st.beta_expander("Scrape YouTube Data", expanded = False):
         st.subheader("*Scrape YouTube Data*")
         col1,col2 = st.beta_columns([2,1])
-        col1.write("The *Scrape YouTube Data* tool allows you to create a new dataset for analysis based on any search term. The tool's menu provides you with 3 options: 1) a term to search for, 2) number of videos to gather data from, and 3) an app data container to store the scraped data in.")
+        col1.write("The *Scrape YouTube Data* page allows you to create a new dataset for analysis based on any search term. The tool's menu provides you with 3 options: 1) a term to search for, 2) number of videos to gather data from, and 3) an app data container to store the scraped data in.")
         col1.write("Once you start the scraper using the button, YouNLP accesses YouTube's API, plugs the search term into YouTube's search function, and returns a list of the top videos from the search. The app then sends a request to YouTube's API to return up to the top 100 comments from each listed video.")
         col1.write("These comments are then downloaded, along with other information such as each comment's publishing time and likes, as well as the video's title, views, channel, and more. Finally, the information is converted to a large dataframe and stored in the app's data container for further analysis - or for you to download.")
         col2.image("./resources/screenshots/scrape.png")
@@ -161,14 +161,16 @@ def page_how():
     with st.beta_expander("Upload YouTube Data", expanded = False):
         st.subheader("*Upload YouTube Data*")
         col1,col2 = st.beta_columns([2,1])
-        col1.write("The *Upload YouTube Data* tool allows you to upload an existing dataset CSV file to the YouNLP app. As YouNLP only stores data for as long as the app is open in your browswer, this makes it easier to scrape and store multiple datasets over time, or return at a later time for analysis or novel comparisons.")
+        col1.write("The *Upload YouTube Data* page allows you to upload an existing dataset CSV file to the YouNLP app. As YouNLP only stores data for as long as the app is open in your browswer, this makes it easier to scrape and store multiple datasets over time, or return at a later time for analysis or novel comparisons.")
         col1.write("Be aware that the YouNLP app is currently only able to handle datasets of the same format as the one created by the app. This also means, that if you change any formatting or overwrite the original CSV-file after opening it (e.g. by examining it in Excel), the file may not be recognized by the app.")
         col2.image("./resources/screenshots/upload.png")
 
     with st.beta_expander("Manage Stored Data", expanded = False):
         st.subheader("*Manage Stored Data*")
         col1,col2 = st.beta_columns([2,1])
-        col1.write("Short info text.")
+        col1.write("The *Manage Stored Data* page allows you to get an overview of and manage datasets currently stored in the app's containers. The page provides a live view of the app's 5 data containers, their contents, size, and search queries, and allows you to download or remove the datasets currently stored.")
+        col1.write("For the sake of exploration, we have also added a small set of sample datasets for you to try out the app with. Simple select a container and a dataset to load into it, and hit the button to load it up!")
+        col1.write("Keep in mind that only one dataset can be stored in each container, and that datasets not downloaded before overwriting or emptying their containers are permanently lost.")
         col2.image("./resources/screenshots/manage.png")
 
     st.subheader("**Analyze Data**")
@@ -177,9 +179,8 @@ def page_how():
     
     with st.beta_expander("Wordcloud Analysis", expanded = False):
         st.subheader("*Wordcloud Analysis*")
-        st.write("The Word")
         col1,col2 = st.beta_columns([2,1])
-        col1.write("Short info text.")
+        col1.write("The *Wordcloud Analysis* page allows you to get a quick overview of your data using one of the oldest tricks in the book - a wordcloud! .")
         col2.image("./resources/screenshots/wc_single.png")
 
         col1.write("Short info text.")
