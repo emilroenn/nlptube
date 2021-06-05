@@ -331,7 +331,6 @@ def page_manage():
 
         
     if submit_button2:
-        st.write("Testdata = " ,testdata)
         if str(ss.df_list[df_index]) != str(1):
             st.info("Container is already in use! To avoid accidental overwriting, please choose another container or empty the selected container.")
         else:
@@ -344,7 +343,6 @@ def page_manage():
             b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
             ss.href_list[df_index] = f'<a href="data:file/csv;base64,{b64}" download="{ss.query_list[df_index]}.csv">Download CSV</a>'
             st.info(f"File using the query '{ss.query_list[df_index]}' with {ss.length_list[df_index]} comments successfully loaded into Data Container {df_index+1}")
-
 
     st.subheader("Examine Stored Datasets")
 
@@ -362,16 +360,6 @@ def page_manage():
             datatext = "**Search term: **" + str(ss.query_list[index]) + "  \n   **Comments:** " + str(ss.length_list[index])
             col.write(datatext)
             col.markdown(ss.href_list[index], unsafe_allow_html=True)
-
-    with sidebar_storage:
-        for index in [0,1,2,3,4]:
-            if str(ss.df_list[index]) == "1":
-                st.markdown('<font color=grey>**CONTAINER ' + str(index+1) + ':** \n *Not in use*</font>', unsafe_allow_html=True)
-            else:
-                st.markdown('<font color=green>**CONTAINER ' + str(index+1) + ':**</font>', unsafe_allow_html=True)
-                datatext = "**Search term: **" + str(ss.query_list[index]) + "  \n   **Comments:** " + str(ss.length_list[index])
-                st.write(datatext)
-                st.markdown(ss.href_list[index], unsafe_allow_html=True)
 
 
 
