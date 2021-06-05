@@ -338,10 +338,12 @@ def page_manage():
             ss.df_list[df_index] = pd.read_csv(file)
             ss.prep_list[df_index] = 1
             ss.query_list[df_index] = ss.df_list[df_index].at[2,'Query']
+            ss.length_list[df_index] = len(ss.df_list[df_index])
+            csv = ss.df_list[df_index].to_csv(index=False)
             b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
             ss.href_list[df_index] = f'<a href="data:file/csv;base64,{b64}" download="{ss.query_list[df_index]}.csv">Download CSV</a>'
        #     ss.length_list[df_index] = 100000 #len(ss.df_list[df_index])
-       #     st.info(f"File using the query '{ss.query_list[df_index]}' with {ss.length_list[df_index]} comments successfully uploaded to Data Container {df_index+1}")
+            st.info(f"File using the query '{ss.query_list[df_index]}' with {ss.length_list[df_index]} comments successfully uploaded to Data Container {df_index+1}")
 
 
     st.subheader("Examine Stored Datasets")
