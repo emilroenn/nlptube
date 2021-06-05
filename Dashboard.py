@@ -145,8 +145,8 @@ def page_how():
     col2.image("./resources/screenshots/flowchart.png")
 
     st.subheader("**Manage Data**")
-    st.write("Everything that has to do with data management is located in the *Manage Data* menu of the sidebar. Here, you can scrape new data from YouTube, upload previously scraped data, and view or delete data currently stored in the app.")
-    st.info("Click one of the drop-down menus below to learn more about the tools in the Manage Data menu!")
+    st.write("The *Manage Data* menu of the sidebar allows you to scrape new data from YouTube, upload previously scraped data, and view, delete, or load sample data into the app's data containers.")
+    st.info("Click one of the drop-down menus below to learn more about the tool in the Manage Data menu!")
     
     with st.beta_expander("Scrape YouTube Data", expanded = False):
         st.subheader("*Scrape YouTube Data*")
@@ -167,7 +167,7 @@ def page_how():
         col2.image("./resources/screenshots/manage.png")
 
     st.subheader("**Analyze Data**")
-    st.write("Everything that has to do with data analysis and visualization is located in the *Analyze Data* menu of the sidebar. Here, you can do a variety of different types of language analysis.")
+    st.write("The *Analyze Data* menu of the sidebar provides a variety of easy-to-use language analysis tools.")
     st.info("Click one of the drop-down menus below to learn more about the tools in the Analyze Data menu!")
     
     with st.beta_expander("Wordcloud Analysis", expanded = False):
