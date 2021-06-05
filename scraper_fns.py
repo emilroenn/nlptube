@@ -113,7 +113,7 @@ def get_data(query, results):
     
     for i, video in enumerate(tqdm(video_id, ncols = 100)):
         progress = progress + 1
-        progress_number = int(progress/results*100)
+        progress_number = float(progress/results*100)
         progressbar.progress(progress_number)
         #global total_scraped
         #total_scraped = total_scraped + 1
