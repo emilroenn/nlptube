@@ -748,6 +748,10 @@ def page_sentiment():
             "Remember, positive compound scores reflect that the comments on that particular day primarily exhibited positive sentiment with higher scores reflecting increased sentiment strength. The opposite is true for negative values.   \n"
             "**Here is what that looks like:**")
             st.dataframe(formated)
+            csv = formated.to_csv(index=False)
+            b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
+            link1 = f'<a href="data:file/csv;base64,{b64}" download="Aggregated_sentiment.csv">Download CSV</a>'
+            st.markdown(link1, unsafe_allow_html=True)
         
         with st.beta_expander("See the raw sentiment scores pr. comment"):
             st.info("These are the raw sentiment scores assigned to each comment. As sentiment is assigned to sentences as a whole instead of individual words, we can handle things as negations or strength markers.   \n   \n"
