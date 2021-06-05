@@ -307,7 +307,7 @@ def page_manage():
         containers = ['Container 1', 'Container 2', 'Container 3', 'Container 4', 'Container 5']
         dataset = subcol2.radio("Select container to empty:", (containers)) 
         df_index = int(dataset[-1])-1
-        submit_button = subcol2.form_submit_button(label='Empty selected container')
+        submit_button = st.form_submit_button(label='Empty selected container')
         
     if submit_button:
         if str(ss.df_list[df_index]) == str(1):
