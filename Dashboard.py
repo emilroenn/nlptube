@@ -125,7 +125,63 @@ def page_main():
 
 def page_how():
     st.header('**How To Use This Tool**')
-    st.write("This is where we tell you how to use it, motherfucker")
+    st.write("This is where we put a quick, short summary of the tool.")
+
+    st.subheader("**Manage Data**")
+    st.write("Everything that has to do with data management is located in the *Manage Data* menu of the sidebar. Here, you can scrape new data from YouTube, upload previously scraped data, and view or delete data currently stored in the app.")
+    with st.beta_expander("Click to read more about the tools in the Manage Data menu.", expanded = False):
+        st.subheader("*Scrape YouTube Data*")
+        col1,col2 = st.beta_columns([2,1])
+        col1.write("The *Scrape YouTube Data* tool allows you to create a new dataset for analysis based on any search term. In the tool's menu, you have three")
+        col2.image("./resources/screenshots/scrape.png")
+            
+        st.subheader("*Upload YouTube Data*")
+        col1,col2 = st.beta_columns([2,1])
+        col1.write("The *Scrape YouTube Data* tool allows you to create a new dataset for analysis based on any search term. In the tool's menu, you have three")
+        col2.image("./resources/screenshots/upload.png")
+            
+        st.subheader("*Manage Stored Data*")
+        col1,col2 = st.beta_columns([2,1])
+        col1.write("The *Scrape YouTube Data* tool allows you to create a new dataset for analysis based on any search term. In the tool's menu, you have three")
+        col2.image("./resources/screenshots/manage.png")
+
+    st.subheader("**Manage Data**")
+    st.write("Everything that has to do with data management is located in the *Manage Data* menu of the sidebar. Here, you can scrape new data from YouTube, upload previously scraped data, and view or delete data currently stored in the app.")
+    with st.beta_expander("Click to read more about the tools in the Manage Data menu.", expanded = False):
+        st.subheader("*Scrape YouTube Data*")
+        col1,col2 = st.beta_columns([2,1])
+        col1.write("The *Scrape YouTube Data* tool allows you to create a new dataset for analysis based on any search term. In the tool's menu, you have three")
+        col2.image("./resources/screenshots/scrape.png")
+            
+        st.subheader("*Upload YouTube Data*")
+        col1,col2 = st.beta_columns([2,1])
+        col1.write("The *Scrape YouTube Data* tool allows you to create a new dataset for analysis based on any search term. In the tool's menu, you have three")
+        col2.image("./resources/screenshots/upload.png")
+            
+        st.subheader("*Manage Stored Data*")
+        col1,col2 = st.beta_columns([2,1])
+        col1.write("The *Scrape YouTube Data* tool allows you to create a new dataset for analysis based on any search term. In the tool's menu, you have three")
+        col2.image("./resources/screenshots/manage.png")
+
+    st.subheader("**Manage Data**")
+    st.write("Everything that has to do with data management is located in the *Manage Data* menu of the sidebar. Here, you can scrape new data from YouTube, upload previously scraped data, and view or delete data currently stored in the app.")
+    with st.beta_expander("Click to read more about the tools in the Manage Data menu.", expanded = False):
+        st.subheader("*Scrape YouTube Data*")
+        col1,col2 = st.beta_columns([2,1])
+        col1.write("The *Scrape YouTube Data* tool allows you to create a new dataset for analysis based on any search term. In the tool's menu, you have three")
+        col2.image("./resources/screenshots/scrape.png")
+            
+        st.subheader("*Upload YouTube Data*")
+        col1,col2 = st.beta_columns([2,1])
+        col1.write("The *Scrape YouTube Data* tool allows you to create a new dataset for analysis based on any search term. In the tool's menu, you have three")
+        col2.image("./resources/screenshots/upload.png")
+            
+        st.subheader("*Manage Stored Data*")
+        col1,col2 = st.beta_columns([2,1])
+        col1.write("The *Scrape YouTube Data* tool allows you to create a new dataset for analysis based on any search term. In the tool's menu, you have three")
+        col2.image("./resources/screenshots/manage.png")
+
+
 
 def page_upload():
 
