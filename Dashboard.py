@@ -300,16 +300,14 @@ def page_manage():
             col.write(datatext)
             col.markdown(ss.href_list[index], unsafe_allow_html=True)
 
-    subcol1, subcol2, subcol3, subcol4, subcol5, subcol6 = st.beta_columns([0.5,2,2,1,1,0.5])
-    
-    with subcol2:
-        with st.form(key='my_form'):
-            st.subheader("*Empty Data Containers*")
-            containers = ['Container 1', 'Container 2', 'Container 3', 'Container 4', 'Container 5']
-            dataset = st.radio("Select container to empty:", (containers)) 
-            df_index = int(dataset[-1])-1
-            submit_button = st.form_submit_button(label='Empty selected container')
+    with st.form(key='my_form'):
+        containers = ['Container 1', 'Container 2', 'Container 3', 'Container 4', 'Container 5']
+        dataset = col0.radio("Select container to empty:", (containers)) 
+        df_index = int(dataset[-1])-1
+        
+        submit_button = st.form_submit_button(label='Empty selected container')
 
+        
     if submit_button:
         if str(ss.df_list[df_index]) == str(1):
             message = "Container is already empty."
@@ -323,19 +321,35 @@ def page_manage():
 
         st.info(message)
 
-    with subcol4:
-        with st.form(key='my_form2'):
-            st.subheader("*Load Sample Data*")
-            containers = ['Container 1', 'Container 2', 'Container 3', 'Container 4', 'Container 5']
-            
-            
-            dataset = st.radio("Select container to upload sample data:", (containers)) 
-            df_index = int(dataset[-1])-1
-            submit_button2 = st.form_submit_button(label='Load Test Data')
+    st.subheader("Examine Stored Datasets")
 
-    with subcol5:
+    for index in [0,1,2,3,4]:
+        if str(ss.df_list[index]) != "1":
+            with st.beta_expander("Examine data in Container " + str(index+1), expanded = False):
+                st.dataframe(ss.df_list[index].head(10))
+    
+  #  st.subheader(" Stored Datasets")
+
+
+    with st.form(key='my_form2'):
+        st.subheader("Load Sample Data")
+        st.info("Here, you can examine, download, and delete data stored in the app's containers. Please note that once a container is emptied, the data stored in that container is permanently deleted. Using the links above, you can download datasets and later reupload them for additional analysis or comparison.")
+        col0, col1, col2, col3, col4, col5 = st.beta_columns(6)
+        containers = ['Container 1', 'Container 2', 'Container 3', 'Container 4', 'Container 5']
         testsets = ['Dogecoin', 'Bitcoin', 'Biden', 'Trump', 'NLP']
-        testdata = st.radio("Choose a sample dataset:", (testsets)) 
+        testdata = col0.radio("Choose a sample dataset:", (testsets)) 
+        dataset = col0.radio("Select container to upload sample data:", (containers)) 
+        df_index = int(dataset[-1])-1
+     #   for index, col in zip([0,1,2,3,4], [col1, col2, col3, col4, col5]):
+     #       if str(ss.df_list[index]) == "1":
+     #           col.markdown('<font color=grey>**CONTAINER ' + str(index+1) + ':** \n *Not in use*</font>', unsafe_allow_html=True)
+     #       else:
+     #           col.markdown('<font color=green>**CONTAINER ' + str(index+1) + ':**</font>', unsafe_allow_html=True)
+     #           datatext = "**Search term: **" + str(ss.query_list[index]) + "  \n   **Comments:** " + str(ss.length_list[index])
+     #           col.write(datatext)
+     #           col.markdown(ss.href_list[index], unsafe_allow_html=True)
+        submit_button2 = st.form_submit_button(label='Load Test Data')
+
         
     if submit_button2:
         if str(ss.df_list[df_index]) != str(1):
@@ -346,15 +360,18 @@ def page_manage():
             ss.query_list[df_index] = ss.df_list[df_index].at[2,'Query']
             ss.href_list[df_index] = f'<a href="data:file/csv;base64,{b64}" download="{ss.query_list[df_index]}.csv">Download CSV</a>'
             ss.length_list[df_index] = len(ss.df_list[df_index])
-            st.info(f"File using the query '{ss.query_list[df_index]}' with {ss.length_list[df_index]} comments successfully loaded into Data Container {df_index+1}")
+            st.info(f"File using the query '{ss.query_list[df_index]}' with {ss.length_list[df_index]} comments successfully uploaded to Data Container {df_index+1}")
 
-    st.subheader("Examine Stored Datasets")
 
-    for index in [0,1,2,3,4]:
-        if str(ss.df_list[index]) != "1":
-            with st.beta_expander("Examine data in Container " + str(index+1), expanded = False):
-                st.dataframe(ss.df_list[index].head(10))
-    
+
+            ss.df_list[df_index] = pd.read_csv(file)
+            ss.query_list[df_index] = ss.df_list[df_index].at[2,'Query']
+            ss.length_list[df_index] = len(ss.df_list[df_index])
+            csv = ss.df_list[df_index].to_csv(index=False)
+            b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
+            ss.href_list[df_index] = f'<a href="data:file/csv;base64,{b64}" download="{ss.query_list[df_index]}.csv">Download CSV</a>'
+            st.info(f"File using the query '{ss.query_list[df_index]}' with {ss.length_list[df_index]} comments successfully uploaded to Data Container {df_index+1}")
+            
 
 
 def page_visualize():
