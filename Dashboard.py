@@ -358,7 +358,7 @@ def page_manage():
     #   if str(ss.df_list[df_index]) != str(1):
     #       st.info("Container is already in use! To avoid accidental overwriting, please choose another container or empty the selected container.")
     #   else:
-  #      ss.df_list[df_index] = pd.read_csv("./resources/testdata/" + testdata + ".csv")
+        ss.df_list[df_index] = pd.read_csv("./resources/testdata/" + testdata + ".csv")
   #      ss.prep_list[df_index] = 1
   #      ss.query_list[df_index] = ss.df_list[df_index].at[2,'Query']
   #      ss.href_list[df_index] = f'<a href="data:file/csv;base64,{b64}" download="{ss.query_list[df_index]}.csv">Download CSV</a>'
