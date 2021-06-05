@@ -121,8 +121,20 @@ def main():
 
 def page_main():
     st.title('Welcome to YouNLP')
-    st.header("**Catchy header**")
-    st.write("This is where the welcome text fucking goes, motherfucker.")
+    st.header("**A quick and easy scraping and analysis tool for the YouTube API**")
+    st.write("Ever wondered what YouTube's users think about funny cat videos? Which feelings they express about politics, social issues, or the latest fads? Or are you just curious to explore what a splash of big data and a couple of natural language processing tools can come up with? Then you've come to the right place!")
+    st.write("*NLP and Big Data at your fingertips!*")
+    st.write("This app provides easy access to YouTube data scraping and language analysis through a series of easy-to-use tools. Simply choose what kind of data you'd like to look at, and what kind of analysis tools to try out!")
+    st.write("**Get smart!**")
+    st.write("Want to have a quick overview of the tools and methods available? Head on over to the *How Does It Work?* page under the *About This App* menu in the sidebar.")
+    st.write("**Get data!**")
+    st.write("Before diving into analysis, you have to set up some data first! Head over to the *Manage Data* menu in the sidebar: here, you can scrape a new dataset on the *Scrape YouTube Data* page, upload data from previous sessions on the *Upload YouTube Data* page, or load in some of our sample datasets on the *Manage Stored Data* page! Up to 5 datasets can be stored in the app simultaneously, and can be independently explored or compared with the available tools!")
+    st.write("**Get results!**")
+    st.write("Once you've acquired your data, head on over to the *Analyze Data* menu! Here, you can use a variety of tools to explore and compare your datasets. Whether it's visualizing your data in customizable wordclouds, plotting the various sentiments of your data over time, or examining the similarities between your chosen datasets, the tools are quick and easy to use. While we're doing the data cleaning and preprocessing in the background, feel free to read more about each tool on their pages!")
+    st.write("")
+    st.write("Happy analyzing!")
+    st.write("*- Emil & Lasse*")
+
 
 def page_how():
     st.header('**How To Use This Tool**')
