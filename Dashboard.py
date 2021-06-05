@@ -323,27 +323,27 @@ def page_manage():
 
         st.info(message)
 
-    # with subcol4:
-    # with st.form(key='my_form2'):
-    #     subcol4.subheader("Load Sample Data")
-    #     containers = ['Container 1', 'Container 2', 'Container 3', 'Container 4', 'Container 5']
-    #     testsets = ['Dogecoin', 'Bitcoin', 'Biden', 'Trump', 'NLP']
-    #     testdata = subcol4.radio("Choose a sample dataset:", (testsets)) 
-    #     dataset = subcol5.radio("Select container to upload sample data:", (containers)) 
-    #     df_index = int(dataset[-1])-1
-    #     submit_button2 = subcol4.form_submit_button(label='Load Test Data')
+    with subcol4:
+        with st.form(key='my_form2'):
+            st.subheader("Load Sample Data")
+            containers = ['Container 1', 'Container 2', 'Container 3', 'Container 4', 'Container 5']
+            testsets = ['Dogecoin', 'Bitcoin', 'Biden', 'Trump', 'NLP']
+            testdata = st.radio("Choose a sample dataset:", (testsets)) 
+            dataset = st.radio("Select container to upload sample data:", (containers)) 
+            df_index = int(dataset[-1])-1
+            submit_button2 = st.form_submit_button(label='Load Test Data')
 
         
-    # if submit_button2:
-    #     if str(ss.df_list[df_index]) != str(1):
-    #         st.info("Container is already in use! To avoid accidental overwriting, please choose another container or empty the selected container.")
-    #     else:
-    #         ss.df_list[df_index] = pd.read_csv("./resources/testdata/" + testdata + ".csv")
-    #         ss.prep_list[df_index] = 1
-    #         ss.query_list[df_index] = ss.df_list[df_index].at[2,'Query']
-    #         ss.href_list[df_index] = f'<a href="data:file/csv;base64,{b64}" download="{ss.query_list[df_index]}.csv">Download CSV</a>'
-    #         ss.length_list[df_index] = len(ss.df_list[df_index])
-    #         st.info(f"File using the query '{ss.query_list[df_index]}' with {ss.length_list[df_index]} comments successfully loaded into Data Container {df_index+1}")
+    if submit_button2:
+        if str(ss.df_list[df_index]) != str(1):
+            st.info("Container is already in use! To avoid accidental overwriting, please choose another container or empty the selected container.")
+        else:
+            ss.df_list[df_index] = pd.read_csv("./resources/testdata/" + testdata + ".csv")
+            ss.prep_list[df_index] = 1
+            ss.query_list[df_index] = ss.df_list[df_index].at[2,'Query']
+            ss.href_list[df_index] = f'<a href="data:file/csv;base64,{b64}" download="{ss.query_list[df_index]}.csv">Download CSV</a>'
+            ss.length_list[df_index] = len(ss.df_list[df_index])
+            st.info(f"File using the query '{ss.query_list[df_index]}' with {ss.length_list[df_index]} comments successfully loaded into Data Container {df_index+1}")
 
     st.subheader("Examine Stored Datasets")
 
