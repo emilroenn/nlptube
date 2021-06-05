@@ -262,8 +262,8 @@ def page_scrape():
         dataset = col1.radio("Stored scraped data in:", (containers))
         df_index = int(dataset[-1])-1
         user_input1 = col2.text_input("Search term:", '')
-        user_input2 = col2.number_input("Videos:", 1)
-        st.info("Please note: YouTube's API has a daily limit of 10,000 requests. Please limit searches to 100 videos or less.")
+        user_input2 = col2.number_input("Videos:", min_value = 1, max_value = 50, value = 10)
+        st.info("Please note: YouTube's API imposes a few limitations on the search. A maximum of 50 videos are allowed per search, and a maximum of 100 searches may be requested per day.")
         submit_button = st.form_submit_button(label='Start Scraper')
 
     if submit_button:
@@ -287,7 +287,7 @@ def page_scrape():
 
 
 def page_manage():
-    st.header('**Manage Stored Data**')
+    st.header('**Manage Datasets**')
 
 
     st.info("Here, you can examine, download, delete, or load in sample data to the app's containers. Please note that once a container is emptied or overwritten, the data previously stored in that container is permanently deleted. Using the links under each container, you can download datasets and later reupload them for additional analysis or comparison.")
