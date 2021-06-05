@@ -105,7 +105,8 @@ def main():
         if st.button("Similarity Analysis"):
             ss.current = "Topic Analysis"
 
-    with st.sidebar.beta_expander("Data Storage", expanded = True):
+    sidebar_storage = st.sidebar.beta_expander("Data Storage", expanded = True)
+    with sidebar_storage:
         for index in [0,1,2,3,4]:
             if str(ss.df_list[index]) == "1":
                 st.markdown('<font color=grey>**CONTAINER ' + str(index+1) + ':** \n *Not in use*</font>', unsafe_allow_html=True)
@@ -362,7 +363,7 @@ def page_manage():
             col.write(datatext)
             col.markdown(ss.href_list[index], unsafe_allow_html=True)
 
-    with st.sidebar.beta_expander("Data Storage", expanded = True):
+    with sidebar_storage:
         for index in [0,1,2,3,4]:
             if str(ss.df_list[index]) == "1":
                 st.markdown('<font color=grey>**CONTAINER ' + str(index+1) + ':** \n *Not in use*</font>', unsafe_allow_html=True)
