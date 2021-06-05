@@ -297,15 +297,6 @@ def page_manage():
         containers = ['Container 1', 'Container 2', 'Container 3', 'Container 4', 'Container 5']
         dataset = col0.radio("Select container to empty:", (containers)) 
         df_index = int(dataset[-1])-1
-        for index, col in zip([0,1,2,3,4], [col1, col2, col3, col4, col5]):
-            if str(ss.df_list[index]) == "1":
-                col.markdown('<font color=grey>**CONTAINER ' + str(index+1) + ':** \n *Not in use*</font>', unsafe_allow_html=True)
-            else:
-                col.markdown('<font color=green>**CONTAINER ' + str(index+1) + ':**</font>', unsafe_allow_html=True)
-                datatext = "**Search term: **" + str(ss.query_list[index]) + "  \n   **Comments:** " + str(ss.length_list[index])
-                col.write(datatext)
-                col.markdown(ss.href_list[index], unsafe_allow_html=True)
-
         submit_button = st.form_submit_button(label='Empty selected container')
 
         
@@ -319,8 +310,19 @@ def page_manage():
         ss.query_list[df_index] = 1
         ss.href_list[df_index] = 1
         ss.length_list[df_index] = 0
-
         st.info(message)
+
+    for index, col in zip([0,1,2,3,4], [col1, col2, col3, col4, col5]):
+        if str(ss.df_list[index]) == "1":
+            col.markdown('<font color=grey>**CONTAINER ' + str(index+1) + ':** \n *Not in use*</font>', unsafe_allow_html=True)
+        else:
+            col.markdown('<font color=green>**CONTAINER ' + str(index+1) + ':**</font>', unsafe_allow_html=True)
+            datatext = "**Search term: **" + str(ss.query_list[index]) + "  \n   **Comments:** " + str(ss.length_list[index])
+            col.write(datatext)
+            col.markdown(ss.href_list[index], unsafe_allow_html=True)
+
+
+
 
     st.subheader("Examine Stored Datasets")
 
