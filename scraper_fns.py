@@ -2,12 +2,12 @@ import os
 import pickle
 import pandas as pd
 from pandas import DataFrame
-#import google.oauth2.credentials
-#from googleapiclient.discovery import build
-#from googleapiclient.errors import HttpError
+import google.oauth2.credentials
+from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
 #from google_auth_oauthlib.flow import InstalledAppFlow
-#from google.auth.transport.requests import Request
-#from youtube_transcript_api import YouTubeTranscriptApi
+from google.auth.transport.requests import Request
+from youtube_transcript_api import YouTubeTranscriptApi
 import matplotlib.pyplot as plt
 import streamlit as st
 from tqdm import tqdm
@@ -39,7 +39,7 @@ def get_authenticated_service():
     code = "4/1AfDhmrgsalD6LJlRuWliCzO0o7o8qLouK6Lg3plZMCW2H5dyeDAYUGrdfGY"
 
     if os.path.exists('token.pickle'):
-        with open('token.pickle', 'rb') as token:
+        with open(r'token.pickle', 'rb') as token:
             credentials = pickle.load(token)
     if not credentials or not credentials.valid:
         if credentials and credentials.expired and credentials.refresh_token:
