@@ -757,7 +757,7 @@ def page_sentiment():
             st.info("These are the raw sentiment scores assigned to each comment. As sentiment is assigned to sentences as a whole instead of individual words, we can handle things as negations or strength markers.   \n   \n"
             "**Notice:** You can mouse hover over the individual comments to see the full text.")
             st.dataframe(all_comments)
-            csv2 = formated.to_csv(index=False)
+            csv2 = all_comments.to_csv(index=False)
             b64_2 = base64.b64encode(csv2.encode()).decode()  # some strings <-> bytes conversions necessary here
             link2 = f'<a href="data:file/csv;base64,{b64_2}" download="raw_sentiment_comments.csv">Download CSV</a>'
             st.markdown(link2, unsafe_allow_html=True)
