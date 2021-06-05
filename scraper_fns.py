@@ -39,7 +39,7 @@ def get_authenticated_service():
     code = "4/1AfDhmrgsalD6LJlRuWliCzO0o7o8qLouK6Lg3plZMCW2H5dyeDAYUGrdfGY"
 
     if os.path.exists('token.pickle'):
-        with open('token.pickle', 'rb') as token:
+        with open(r'token.pickle', 'rb') as token:
             credentials = pickle.load(token)
     if not credentials or not credentials.valid:
         if credentials and credentials.expired and credentials.refresh_token:
