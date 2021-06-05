@@ -332,13 +332,15 @@ def page_manage():
 
 
     with st.form(key='my_form2'):
+        col1, col2, col3 = st.beta_columns([1,1,2])
         st.subheader("Load Sample Data")
-        st.info("Here, you can examine, download, and delete data stored in the app's containers. Please note that once a container is emptied, the data stored in that container is permanently deleted. Using the links above, you can download datasets and later reupload them for additional analysis or comparison.")
         containers = ['Container 1', 'Container 2', 'Container 3', 'Container 4', 'Container 5']
         testsets = ['Dogecoin', 'Bitcoin', 'Biden', 'Trump', 'NLP']
-        testdata = st.radio("Choose a sample dataset:", (testsets)) 
-        dataset = st.radio("Select container to upload sample data:", (containers)) 
+        testdata = col2.radio("Choose a sample dataset:", (testsets)) 
+        dataset = col1.radio("Select container to upload sample data:", (containers)) 
         df_index = int(dataset[-1])-1
+
+        col3.write("**Test out the app without scraping!**  /n If you want to take the various tools out for a spin without going through the scraping or uploading process, try loading in one of our existing data samples for exploration. These datasets have been meticulously curated for the linguistic connoisseur, giving exciting insights into interesting topics such as memes, cryptocurrencies, and language analytics!")
      #   for index, col in zip([0,1,2,3,4], [col1, col2, col3, col4, col5]):
      #       if str(ss.df_list[index]) == "1":
      #           col.markdown('<font color=grey>**CONTAINER ' + str(index+1) + ':** \n *Not in use*</font>', unsafe_allow_html=True)
