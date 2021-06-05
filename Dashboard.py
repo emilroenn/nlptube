@@ -140,8 +140,10 @@ def page_main():
 
 def page_how():
     st.header('**How To Use This Tool**')
-    col1, col2 = st.beta_columns([1,2])
-    col1.write("YouNLP is a plug-and-play type analysis tool. Under normal circumstances, natural language processing analysis of social media texts such as YouTube comments takes a lot of time and effort. Scraping commments from YouTube requires users to know both Python and the YouTube API system, as well as create an authorized account for accessing the website's systems. Once the data is collected, it has to go through several steps of cleaning and preprocessing before it is useful to analysis tools.  /n Because we know that struggle all too well ourselves, we decided to do the hard work for you. Behind the scenes, the YouNLP application is already set up to access the YouTube API, scrape comments, process them, and run them through various types of analysis pipelines. All you have to do, is to put in your search term, and let the tool do the rest for you.  /n For an overview of the process, see the flowchart on the right. If you're interested in any of the involved processes, feel free to read more about them in the dropdown menus below!")
+    col1, col2 = st.beta_columns([3,1])
+    col1.write("YouNLP is a plug-and-play type analysis tool. Under normal circumstances, natural language processing analysis of social media texts such as YouTube comments takes a lot of time and effort. Scraping commments from YouTube requires users to know both Python and the YouTube API system, as well as create an authorized account for accessing the website's systems. Once the data is collected, it has to go through several steps of cleaning and preprocessing before it is useful to analysis tools.")
+    col1.write("Because we know that struggle all too well ourselves, we decided to do the hard work for you. Behind the scenes, the YouNLP application is already set up to access the YouTube API, scrape comments, process them, and run them through various types of analysis pipelines. All you have to do, is to put in your search term, and let the tool do the rest for you.")
+    col1.write("For an overview of the process, see the flowchart on the right. If you're interested in any of the involved processes, feel free to read more about them in the dropdown menus below!")
     col2.image("./resources/screenshots/flowchart.png")
 
     st.subheader("**Manage Data**")
@@ -150,19 +152,19 @@ def page_how():
     
     with st.beta_expander("Scrape YouTube Data", expanded = False):
         st.subheader("*Scrape YouTube Data*")
-        col1,col2 = st.beta_columns([1,2])
+        col1,col2 = st.beta_columns([3,1])
         col1.write("The *Scrape YouTube Data* tool allows you to create a new dataset for analysis based on any search term. In the tool's menu, you have three")
         col2.image("./resources/screenshots/scrape.png")
 
     with st.beta_expander("Upload YouTube Data", expanded = False):
         st.subheader("*Upload YouTube Data*")
-        col1,col2 = st.beta_columns([1,2])
+        col1,col2 = st.beta_columns([3,1])
         col1.write("Short info text.")
         col2.image("./resources/screenshots/upload.png")
 
     with st.beta_expander("Manage Stored Data", expanded = False):
         st.subheader("*Manage Stored Data*")
-        col1,col2 = st.beta_columns([1,2])
+        col1,col2 = st.beta_columns([3,1])
         col1.write("Short info text.")
         col2.image("./resources/screenshots/manage.png")
 
@@ -173,7 +175,7 @@ def page_how():
     with st.beta_expander("Wordcloud Analysis", expanded = False):
         st.subheader("*Wordcloud Analysis*")
         st.write("The Word")
-        col1,col2 = st.beta_columns([1,2])
+        col1,col2 = st.beta_columns([3,1])
         col1.write("Short info text.")
         col2.image("./resources/screenshots/wc_single.png")
 
@@ -182,13 +184,13 @@ def page_how():
 
     with st.beta_expander("Sentiment Analysis", expanded = False):
         st.subheader("*Sentiment Analysis*")
-        col1,col2 = st.beta_columns([1,2])
+        col1,col2 = st.beta_columns([3,1])
         col1.write("Short info text.")
         col2.image("./resources/screenshots/sentiment.png")
 
     with st.beta_expander("Similarity Analysis", expanded = False):
         st.subheader("*Similarity Analysis*")
-        col1,col2 = st.beta_columns([1,2])
+        col1,col2 = st.beta_columns([3,1])
         col1.write("Short info text.")
         col2.image("./resources/screenshots/pca.png")
 
