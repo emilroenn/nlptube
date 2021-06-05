@@ -309,7 +309,7 @@ def page_manage():
             dataset = st.radio("Select container to empty:", (containers)) 
             df_index = int(dataset[-1])-1
             submit_button = st.form_submit_button(label='Empty selected container')
-        
+
     if submit_button:
         if str(ss.df_list[df_index]) == str(1):
             message = "Container is already empty."
@@ -325,14 +325,17 @@ def page_manage():
 
     with subcol4:
         with st.form(key='my_form2'):
-            st.subheader("Load Sample Data")
+            st.subheader("*Load Sample Data*")
             containers = ['Container 1', 'Container 2', 'Container 3', 'Container 4', 'Container 5']
-            testsets = ['Dogecoin', 'Bitcoin', 'Biden', 'Trump', 'NLP']
-            testdata = st.radio("Choose a sample dataset:", (testsets)) 
+            
+            
             dataset = st.radio("Select container to upload sample data:", (containers)) 
             df_index = int(dataset[-1])-1
             submit_button2 = st.form_submit_button(label='Load Test Data')
 
+    with subcol5:
+        testsets = ['Dogecoin', 'Bitcoin', 'Biden', 'Trump', 'NLP']
+        testdata = st.radio("Choose a sample dataset:", (testsets)) 
         
     if submit_button2:
         if str(ss.df_list[df_index]) != str(1):
