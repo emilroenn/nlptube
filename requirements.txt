@@ -1,0 +1,12 @@
+altair
+sklearn
+matplotlib
+nltk
+numpy
+gensim
+spacy
+pandas 
+youtube_transcript_api 
+wordcloud
+typing 
+streamlit
