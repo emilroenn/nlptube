@@ -143,13 +143,13 @@ def page_how():
     with st.beta_expander("Upload YouTube Data", expanded = False):
         st.subheader("*Upload YouTube Data*")
         col1,col2 = st.beta_columns([1,1])
-        col1.write("The *Scrape YouTube Data* tool allows you to create a new dataset for analysis based on any search term. In the tool's menu, you have three")
+        col1.write("Short info text.")
         col2.image("./resources/screenshots/upload.png")
 
     with st.beta_expander("Manage Stored Data", expanded = False):
         st.subheader("*Manage Stored Data*")
         col1,col2 = st.beta_columns([1,1])
-        col1.write("The *Scrape YouTube Data* tool allows you to create a new dataset for analysis based on any search term. In the tool's menu, you have three")
+        col1.write("Short info text.")
         col2.image("./resources/screenshots/manage.png")
 
     st.subheader("**Analyze Data**")
@@ -160,23 +160,23 @@ def page_how():
         st.subheader("*Wordcloud Analysis*")
         st.write("The Word")
         col1,col2 = st.beta_columns([1,1])
-        col1.write("The *Scrape YouTube Data* tool allows you to create a new dataset for analysis based on any search term. In the tool's menu, you have three")
+        col1.write("Short info text.")
         col2.image("./resources/screenshots/wc_single.png")
 
-        col1.write("The *Scrape YouTube Data* tool allows you to create a new dataset for analysis based on any search term. In the tool's menu, you have three")
+        col1.write("Short info text.")
         col2.image("./resources/screenshots/wc_multiple.png")
 
     with st.beta_expander("Sentiment Analysis", expanded = False):
         st.subheader("*Sentiment Analysis*")
         col1,col2 = st.beta_columns([1,1])
-        col1.write("The *Scrape YouTube Data* tool allows you to create a new dataset for analysis based on any search term. In the tool's menu, you have three")
-        col2.image("./resources/screenshots/upload.png")
+        col1.write("Short info text.")
+        col2.image("./resources/screenshots/sentiment.png")
 
     with st.beta_expander("Similarity Analysis", expanded = False):
         st.subheader("*Similarity Analysis*")
         col1,col2 = st.beta_columns([1,1])
-        col1.write("The *Scrape YouTube Data* tool allows you to create a new dataset for analysis based on any search term. In the tool's menu, you have three")
-        col2.image("./resources/screenshots/manage.png")
+        col1.write("Short info text.")
+        col2.image("./resources/screenshots/pca.png")
 
 
 
