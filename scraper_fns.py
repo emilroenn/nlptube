@@ -48,7 +48,7 @@ def get_authenticated_service():
             flow = InstalledAppFlow.from_client_secrets_file(
                 CLIENT_SECRETS_FILE, SCOPES)
             credentials = flow.run_console()
-        with open('token.pickle', 'wb') as token:
+        with open(r'token.pickle', 'wb') as token:
             pickle.dump(credentials, token)
     return build(API_SERVICE_NAME, API_VERSION, credentials = credentials)
 
