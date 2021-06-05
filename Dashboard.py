@@ -312,29 +312,19 @@ def page_manage():
         ss.length_list[df_index] = 0
         st.info(message)
 
-    for index, col in zip([0,1,2,3,4], [col1, col2, col3, col4, col5]):
-        if str(ss.df_list[index]) == "1":
-            col.markdown('<font color=grey>**CONTAINER ' + str(index+1) + ':** \n *Not in use*</font>', unsafe_allow_html=True)
-        else:
-            col.markdown('<font color=green>**CONTAINER ' + str(index+1) + ':**</font>', unsafe_allow_html=True)
-            datatext = "**Search term: **" + str(ss.query_list[index]) + "  \n   **Comments:** " + str(ss.length_list[index])
-            col.write(datatext)
-            col.markdown(ss.href_list[index], unsafe_allow_html=True)
-
-  #  st.subheader(" Stored Datasets")
 
     st.subheader("Load Sample Data")
     with st.form(key='my_form2'):
-        col1, col2, col3 = st.beta_columns([1,1,2])
+        subcol1, subcol2, subcol3 = st.beta_columns([1,1,2])
         
         containers = ['Container 1', 'Container 2', 'Container 3', 'Container 4', 'Container 5']
         testsets = ['Dogecoin', 'Bitcoin', 'Biden', 'Trump', 'NLP']
-        testdata = col2.radio("Choose a sample dataset:", (testsets)) 
-        dataset = col1.radio("Select container to upload sample data:", (containers)) 
+        testdata = subcol2.radio("Choose a sample dataset:", (testsets)) 
+        dataset = subcol1.radio("Select container to upload sample data:", (containers)) 
         df_index = int(dataset[-1])-1
 
-        col3.write("**Test out the app without scraping!**")
-        col3.write("If you want to take the various tools out for a spin without going through the scraping or uploading process, try loading in one of our existing data samples for exploration. These datasets have been meticulously curated for the linguistic connoisseur, giving exciting insights into interesting topics such as memes, cryptocurrencies, and language analytics!")
+        subcol3.write("**Test out the app without scraping!**")
+        subcol3.write("If you want to take the various tools out for a spin without going through the scraping or uploading process, try loading in one of our existing data samples for exploration. These datasets have been meticulously curated for the linguistic connoisseur, giving exciting insights into interesting topics such as memes, cryptocurrencies, and language analytics!")
         
         submit_button2 = st.form_submit_button(label='Load Test Data')
 
@@ -344,7 +334,8 @@ def page_manage():
         if str(ss.df_list[df_index]) != str(1):
             st.info("Container is already in use! To avoid accidental overwriting, please choose another container or empty the selected container.")
         else:
-            ss.df_list[df_index] = pd.read_csv("./resources/testdata/" + testdata + ".csv")
+            file = "./resources/testdata/" + testdata + ".csv"
+            ss.df_list[df_index] = pd.read_csv(file)
             ss.prep_list[df_index] = 1
             ss.query_list[df_index] = ss.df_list[df_index].at[2,'Query']
             b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
@@ -361,7 +352,18 @@ def page_manage():
                 st.dataframe(ss.df_list[index].head(10))
     
 
-    
+    for index, col in zip([0,1,2,3,4], [col1, col2, col3, col4, col5]):
+        if str(ss.df_list[index]) == "1":
+            col.markdown('<font color=grey>**CONTAINER ' + str(index+1) + ':** \n *Not in use*</font>', unsafe_allow_html=True)
+        else:
+            col.markdown('<font color=green>**CONTAINER ' + str(index+1) + ':**</font>', unsafe_allow_html=True)
+            datatext = "**Search term: **" + str(ss.query_list[index]) + "  \n   **Comments:** " + str(ss.length_list[index])
+            col.write(datatext)
+            col.markdown(ss.href_list[index], unsafe_allow_html=True)
+
+
+
+
 def page_visualize():
 
     cloud_color_choices = ['Summer','Autumn', 'Winter', 'Spring', 'Gray']
