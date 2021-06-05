@@ -351,19 +351,25 @@ def page_manage():
         
     if submit_button2:
         if str(ss.df_list[df_index]) != str(1):
-            message = "Container is already in use! To avoid accidental overwriting, please choose another container or empty the selected container."
+            st.info("Container is already in use! To avoid accidental overwriting, please choose another container or empty the selected container.")
         else:
-            message = "Removed data in Container " + str(df_index+1)
-        ss.df_list[df_index] = pd.read_csv("./resources/testdata/" + testdata + ".csv")
-        ss.prep_list[df_index] = 1
-        ss.query_list[df_index] = 1
-        ss.href_list[df_index] = 1
-        ss.length_list[df_index] = 0
-
-        st.info(message)
+            ss.df_list[df_index] = pd.read_csv("./resources/testdata/" + testdata + ".csv")
+            ss.prep_list[df_index] = 1
+            ss.query_list[df_index] = ss.df_list[df_index].at[2,'Query']
+            ss.href_list[df_index] = f'<a href="data:file/csv;base64,{b64}" download="{ss.query_list[df_index]}.csv">Download CSV</a>'
+            ss.length_list[df_index] = len(ss.df_list[df_index])
+            st.info(f"File using the query '{ss.query_list[df_index]}' with {ss.length_list[df_index]} comments successfully uploaded to Data Container {df_index+1}")
 
 
 
+            ss.df_list[df_index] = pd.read_csv(file)
+            ss.query_list[df_index] = ss.df_list[df_index].at[2,'Query']
+            ss.length_list[df_index] = len(ss.df_list[df_index])
+            csv = ss.df_list[df_index].to_csv(index=False)
+            b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
+            ss.href_list[df_index] = f'<a href="data:file/csv;base64,{b64}" download="{ss.query_list[df_index]}.csv">Download CSV</a>'
+            st.info(f"File using the query '{ss.query_list[df_index]}' with {ss.length_list[df_index]} comments successfully uploaded to Data Container {df_index+1}")
+            
 
 
 def page_visualize():
