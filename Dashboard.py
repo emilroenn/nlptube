@@ -325,7 +325,7 @@ def page_manage():
         df_index = int(dataset[-1])-1
 
         subcol3.write("**Test out the app without scraping!**")
-        subcol3.write("If you want to take the various tools out for a spin without going through the scraping or uploading process, try loading in one of our existing data samples for exploration. These datasets have been meticulously curated for the linguistic connoisseur, giving exciting insights into interesting topics such as memes, cryptocurrencies, and language analytics!")
+        subcol3.write("If you want to take the various tools out for a spin without going through the scraping or uploading process, try loading in one of our existing data samples for exploration.  \n These datasets have been meticulously curated for the linguistic connoisseur, giving exciting insights into interesting topics such as memes, cryptocurrencies, and language analytics!")
         
         submit_button2 = st.form_submit_button(label='Load Test Data')
 
