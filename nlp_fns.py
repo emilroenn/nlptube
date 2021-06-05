@@ -105,15 +105,16 @@ def vectorize(df):
 
 def visualize(df, cloud_color="gist_gray", cloud_bg="'Default (Transparent)'",  cloud_shape=None, cloud_font="AU", column=0):
     mode="RGB"
-    
-    if cloud_color == 'Default (Black)':
-        cloud_color = "copper"
-    if cloud_bg == 'Default (Transparent)':
+
+    if cloud_bg == 'Transparent':
         cloud_bg = "rgba(255, 255, 255, 0)"
         mode="RGBA"
-    if cloud_font == 'Default (AU Passata)':
-        cloud_font = 'AU'
-    if cloud_shape == 'Default (Square)':
+    
+    cloud_color = cloud_color.lower()
+
+    cloud_bg = cloud_bg.lower()
+
+    if cloud_shape == 'Square':
         cloud_shape = None
 
     # Scale word size mainly by rank (0) to frequency (1)
