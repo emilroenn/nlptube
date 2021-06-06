@@ -417,7 +417,7 @@ def page_visualize():
         if datanumber > 0:
 
             with st.form(key='my_form'):
-                col1, col2, col3, col4 = st.beta_columns([2,3,3,4])
+                col1, col2, col3, col4 = st.beta_columns([1,2,2,4])
                 containers = ['Container 1', 'Container 2', 'Container 3', 'Container 4', 'Container 5']
                 dataset = col1.radio("Choose data to plot:", (containers))
                 df_index = int(dataset[-1])-1
@@ -430,7 +430,7 @@ def page_visualize():
                 col4.write("**They're clouds, but made from words!**  \n Wordclouds are one of the most simple yet effective visualizations of large amounts of text data. Wordclouds are visual representations of text data, showing the words most commonly occuring in the dataset.")   
                 col1, col2 = st.beta_columns([4,2])
                 extra_stopwords = col1.text_input("Remove stopwords (please separate words by comma):")
-                col2.write("**Frequency VS TF-IDF scores**  \n Wordclouds in this tool's submenus are made from two different methods. In *Individual Datasets* submenu, wordclouds are based on word frequencies, where the size of a word in the cloud corresponds to the number of times the word is mentioned in the dataset.  \n\n In the *Compare Datasets* submenu, wordclouds are instead based on TF-IDF comparison scores, where words that are more unique to a dataset are scored higher, and words that are common across all datasets are scored lower. To learn more, see the *How Does It Work?* page.")
+                col2.write("**Frequency VS TF-IDF scores**  \n Wordclouds in this tool's submenus are made from two different methods. In *Individual Datasets* submenu, wordclouds are based on word frequencies, where the size of a word in the cloud corresponds to the number of times the word is mentioned in the dataset.  \n In the *Compare Datasets* submenu, wordclouds are instead based on TF-IDF comparison scores, where words that are more unique to a dataset are scored higher, and words that are common across all datasets are scored lower. To learn more, see the *How Does It Work?* page.")
                 submit_button = col1.form_submit_button(label='Create Wordcloud')
             progress = st.header("Ready to plot! Click 'Create Wordcloud' to begin.")
             progressbar = st.progress(0)
