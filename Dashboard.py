@@ -291,26 +291,29 @@ def page_scrape():
       #  st.info("Please note that YouTube's API currently imposes a few limitations on the scraping tool. A maximum of 50 videos can be requested per search, and a maximum of 100 searches may be requested per day across the application.")
         submit_button = st.form_submit_button(label='Start Scraper')
 
-
-
     if submit_button:
         if user_input1 == "":
             st.info("Please enter a search term before scraping!")
         else:
-            progress = st.subheader("Scraping YouTube, please wait...")
+            try:
+                progress = st.subheader("Scraping YouTube, please wait...")
 
-            ss.df_list[df_index] = get_data(user_input1, user_input2)
-            ss.query_list[df_index] = user_input1
-            ss.length_list[df_index] = len(ss.df_list[df_index])
-            csv = ss.df_list[df_index].to_csv(index=False)
-            b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
-            ss.href_list[df_index] = f'<a href="data:file/csv;base64,{b64}" download="{ss.query_list[df_index]}.csv">Download CSV</a>'
-            st.markdown(ss.href_list[df_index], unsafe_allow_html=True)
-            with st.beta_expander("Examine data frame"):
-                st.dataframe(ss.df_list[df_index].head(10))
-            ss.prep_list[df_index] = 1
+                ss.df_list[df_index] = get_data(user_input1, user_input2)
+                ss.query_list[df_index] = user_input1
+                ss.length_list[df_index] = len(ss.df_list[df_index])
+                csv = ss.df_list[df_index].to_csv(index=False)
+                b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
+                ss.href_list[df_index] = f'<a href="data:file/csv;base64,{b64}" download="{ss.query_list[df_index]}.csv">Download CSV</a>'
+                st.markdown(ss.href_list[df_index], unsafe_allow_html=True)
+                with st.beta_expander("Examine data frame"):
+                    st.dataframe(ss.df_list[df_index].head(10))
+                ss.prep_list[df_index] = 1
 
-            progress.subheader("Done! Total comments scraped: " + str(ss.length_list[df_index]))
+                progress.subheader("Done! Total comments scraped: " + str(ss.length_list[df_index]))
+
+            except Error as e:
+                st.write(e)
+                st.info("Whoops - looks like something went wrong. If the error persists, we")
 
 
 def page_manage():
