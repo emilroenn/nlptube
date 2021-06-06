@@ -283,9 +283,11 @@ def page_scrape():
         containers = ['Container 1', 'Container 2', 'Container 3', 'Container 4', 'Container 5']
         dataset = col1.radio("Stored scraped data in:", (containers))
         df_index = int(dataset[-1])-1
+        if str(ss.df_list[df_index]) != str(1):
+            st.info("ATTENTION: The selected container already stores data. If you continue, this data will be permanently overwritten. If you wish to keep the data, please select another container above or download the data to your own computer.  \n *Please note that YouTube's API currently imposes a few limitations on the scraping tool. A maximum of 50 videos can be requested per search, and a maximum of 100 searches may be requested per day across the application.*")
         user_input1 = col2.text_input("Search term:", '')
         user_input2 = col2.number_input("Videos:", min_value = 1, max_value = 50, value = 10)
-        st.info("Please note: YouTube's API imposes a few limitations on the search. A maximum of 50 videos are allowed per search, and a maximum of 100 searches may be requested per day.")
+      #  st.info("Please note that YouTube's API currently imposes a few limitations on the scraping tool. A maximum of 50 videos can be requested per search, and a maximum of 100 searches may be requested per day across the application.")
         submit_button = st.form_submit_button(label='Start Scraper')
 
     if submit_button:
