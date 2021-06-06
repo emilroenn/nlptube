@@ -311,7 +311,7 @@ def page_scrape():
 
                 progress.subheader("Done! Total comments scraped: " + str(ss.length_list[df_index]))
 
-            except Error as e:
+            except Exception as e:
                 st.write(e)
                 st.info("Whoops - looks like something went wrong. If the error persists, we")
 
