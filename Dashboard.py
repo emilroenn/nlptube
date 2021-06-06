@@ -407,10 +407,7 @@ def page_visualize():
 
         if datanumber == 0: 
             st.write("**You don't have any datasets stored yet - this analysis requires at least 1!**") 
-            st.info("To use this tool, please head over to the **Manage Data** menu in the sidebar to *create a new dataset* on the **Scrape YouTube Data** page of the menu, *upload a dataset* from a previous search on the **Upload YouTube Data** page, or *load a sample dataset* from the **Manage Stored Data** page!")
-           # st.write()
-         #   st.write("**upload a dataset** from a previous search on the *Upload YouTube Data* page, or")
-         #   st.write("**load a sample dataset** from the *Manage Stored Data* page!")
+            st.info("To use this tool, please head over to the **Manage Data** menu in the sidebar. There, you can *create a new dataset* on the **Scrape YouTube Data** page of the menu, *upload a dataset* from a previous search on the **Upload YouTube Data** page, or *load a sample dataset* from the **Manage Stored Data** page!")
 
         if datanumber > 0:
 
@@ -473,15 +470,15 @@ def page_visualize():
                 datanumber += 1
 
         if datanumber == 0: 
-            st.write("**You don't have any datasets loaded yet - wordcloud comparison requires at least 2!**") 
-            st.write("Please scrape or upload at least 2 datasets before continuing.")
+            st.write("**You don't have any datasets stored yet - this analysis requires at least 2!**") 
+            st.info("To use this tool, please head over to the **Manage Data** menu in the sidebar. There, you can *create a new dataset* on the **Scrape YouTube Data** page of the menu, *upload a dataset* from a previous search on the **Upload YouTube Data** page, or *load a sample dataset* from the **Manage Stored Data** page!")
 
         if datanumber == 1:
-            st.write("**You only have 1 dataset loaded - wordcloud comparison requires at least 2!**")
-            st.write("Please scrape or upload at least 2 datasets before continuing.")
-        
+            st.write("**You only have 1 dataset stored - this analysis requires at least 2!**") 
+            st.info("To use this tool, please head over to the **Manage Data** menu in the sidebar. There, you can *create a new dataset* on the **Scrape YouTube Data** page of the menu, *upload a dataset* from a previous search on the **Upload YouTube Data** page, or *load a sample dataset* from the **Manage Stored Data** page!")
+
         if datanumber == 2:
-            st.info("**2 datasets found in storage. Customize and create wordclouds below to compare!**")
+            st.info("**2 datasets found in storage. Customize and create wordclouds below to compare them!**")
             with st.form(key='2'):
                 st.header("Customize wordclouds:")                  
                 col1, col2 = st.beta_columns(2)
@@ -504,7 +501,7 @@ def page_visualize():
             progressbar = st.progress(0)
 
         if datanumber == 3:
-            st.info("**3 datasets found in storage. Customize and create wordclouds below to compare!**")
+            st.info("**3 datasets found in storage. Customize and create wordclouds below to compare them!**")
             with st.form(key='3'):
                 st.header("Customize wordclouds:")                  
                 col1, col2, col3 = st.beta_columns(3)
@@ -532,7 +529,7 @@ def page_visualize():
             progressbar = st.progress(0)
 
         if datanumber == 4:
-            st.write("**4 datasets found in storage. Customize and create wordclouds below to compare!**")
+            st.write("**4 datasets found in storage. Customize and create wordclouds below to compare them!**")
             with st.form(key='4'):
                 st.header("Customize wordclouds:")                  
                 col1, col2, col3, col4 = st.beta_columns(4)
@@ -565,7 +562,7 @@ def page_visualize():
             progressbar = st.progress(0)
 
         if datanumber == 5:
-            st.write("**5 datasets found in storage. Customize and create wordclouds below to compare!**")
+            st.write("**5 datasets found in storage. Customize and create wordclouds below to compare them!**")
             with st.form(key='5'):
                 st.header("Customize wordclouds:")                  
                 col1, col2, col3, col4, col5 = st.beta_columns(5)
@@ -728,7 +725,6 @@ def page_visualize():
 
 def page_sentiment():
     st.header("**Sentiment Analysis of Comments**")
-    st.write("Each comment is assigned sentiment scores weighted between 'positive', 'neutral', and 'negative' as well as a compound between them")
     nltk.download('vader_lexicon')
     sid = SentimentIntensityAnalyzer()
     #Generate sentiment scores
@@ -748,9 +744,12 @@ def page_sentiment():
             queries.append(ss.query_list[index])
 
     if len(queries) == 0:
-            st.write("**You don't have any datasets loaded yet - analysis requires at least 1!**") 
-            st.write("Please scrape or upload at least 1 dataset before continuing.")
+            st.write("**You don't have any datasets stored yet - this analysis requires at least 1!**") 
+            st.info("To use this tool, please head over to the **Manage Data** menu in the sidebar. There, you can *create a new dataset* on the **Scrape YouTube Data** page of the menu, *upload a dataset* from a previous search on the **Upload YouTube Data** page, or *load a sample dataset* from the **Manage Stored Data** page!")
+
     else:
+        st.write("Each comment is assigned sentiment scores weighted between 'positive', 'neutral', and 'negative' as well as a compound between them")
+
         with st.beta_expander("What are sentiment scores?"):
                     st.markdown(
                         "Sentiment scores are generated using the VADER (Valence Aware Dictionary for Sentiment Reasoning)  \n"
@@ -829,8 +828,9 @@ def page_topic():
     names = [x for x in ss.query_list if x != 1]
 
     if len(names) < 2:
-        st.write("**You don't have enough datasets loaded - PCA analysis requires at least 3!**") 
-        st.write("Please scrape or upload at least 3 dataset before continuing.")
+        st.write("**You don't have any datasets stored yet - this analysis requires at least 3!**") 
+        st.info("To use this tool, please head over to the **Manage Data** menu in the sidebar. There, you can *create a new dataset* on the **Scrape YouTube Data** page of the menu, *upload a dataset* from a previous search on the **Upload YouTube Data** page, or *load a sample dataset* from the **Manage Stored Data** page!")
+
     else:
         st.info("Here, you can run a principal component analysis (PCA) on the TF-IDF matrix of the words in your scraped YouTube comments.   \n"
         "What this essentially does, is that it allows you assess, which of your different queries are similar or dissimilar to each other.   \n"
