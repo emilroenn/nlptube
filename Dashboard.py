@@ -407,7 +407,7 @@ def page_visualize():
 
         if datanumber == 0: 
             st.write("**You don't have any datasets stored yet - this analysis requires at least 1!**") 
-            st.info("To use this tool, please head over to the *Manage Data* menu in the sidebar!.  \n **Create a new dataset** on the *Scrape YouTube Data* page of the menu,  \n **upload a dataset** from a previous search on the *Upload YouTube Data* page, or  \n **load a sample dataset** from the *Manage Stored Data* page!")
+            st.info("To use this tool, please head over to the *Manage Data* menu in the sidebar to **create a new dataset** on the *Scrape YouTube Data* page of the menu, **upload a dataset** from a previous search on the *Upload YouTube Data* page, or **load a sample dataset** from the *Manage Stored Data* page!")
            # st.write()
          #   st.write("**upload a dataset** from a previous search on the *Upload YouTube Data* page, or")
          #   st.write("**load a sample dataset** from the *Manage Stored Data* page!")
