@@ -396,19 +396,21 @@ def page_visualize():
     col1, col2 = st.beta_columns(2)
     type = col1.selectbox(label = "",options = ['Individual Datasets (Word Frequency)', 'Compare Datasets (TF-IDF Scores)'])
 
+    st.info("Use the menu above to switch between wordclouds examining individual datasets (using word frequency) and wordclouds comparing multiple datasets (using TF-IDF scores). For more information on both, see the descriptions for each type in the information box on the right.")   
+
     if type == "Individual Datasets (Word Frequency)":
-        st.info("Use the menu above to switch between wordclouds examining individual datasets (using word frequency) and wordclouds comparing multiple datasets (using TF-IDF scores). For more information on both, see the descriptions for each type in the information box on the right.")   
         datanumber = 0
         for index in [0,1,2,3,4]:
             if str(ss.df_list[index]) != str(1):
                 datanumber += 1
 
+
         if datanumber == 0: 
             st.write("**You don't have any datasets stored yet - this analysis requires at least 1!**") 
-            st.info("To use this tool, please head over to the *Manage Data* menu in the sidebar to set up data.  \n **Create a new dataset** on the *Scrape YouTube Data* page of the menu,")
+            st.info("To use this tool, please head over to the *Manage Data* menu in the sidebar!.  \n **Create a new dataset** on the *Scrape YouTube Data* page of the menu,  \n **upload a dataset** from a previous search on the *Upload YouTube Data* page, or  \n **load a sample dataset** from the *Manage Stored Data* page!")
            # st.write()
-            st.write("**upload a dataset** from a previous search on the *Upload YouTube Data* page, or")
-            st.write("**load a sample dataset** from the *Manage Stored Data* page!")
+         #   st.write("**upload a dataset** from a previous search on the *Upload YouTube Data* page, or")
+         #   st.write("**load a sample dataset** from the *Manage Stored Data* page!")
 
         if datanumber > 0:
 
@@ -463,7 +465,6 @@ def page_visualize():
 
 
     if type == "Compare Datasets (TF-IDF Scores)":
-        st.info("Use the menu above to switch between wordclouds examining individual datasets (using word frequency) and wordclouds comparing multiple datasets (using TF-IDF scores). For more information on both, see the descriptions for each type in the information box on the right.")   
         submit_button = False
         datanumber = 0
 
