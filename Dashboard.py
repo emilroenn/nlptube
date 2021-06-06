@@ -283,12 +283,26 @@ def page_scrape():
         containers = ['Container 1', 'Container 2', 'Container 3', 'Container 4', 'Container 5']
         dataset = col1.radio("Stored scraped data in:", (containers))
         df_index = int(dataset[-1])-1
-       # if str(ss.df_list[df_index]) != str(1):
-       #     st.info("ATTENTION: The selected container already stores data. If you continue, this data will be permanently overwritten. If you wish to keep the data, please select another container above or download the data to your own computer.  \n *Please note that YouTube's API currently imposes a few limitations on the scraping tool. A maximum of 50 videos can be requested per search, and a maximum of 100 searches may be requested per day across the application.*")
         user_input1 = col2.text_input("Search term:", '')
         user_input2 = col2.number_input("Videos:", min_value = 1, max_value = 50, value = 10)
-      #  st.info("Please note that YouTube's API currently imposes a few limitations on the scraping tool. A maximum of 50 videos can be requested per search, and a maximum of 100 searches may be requested per day across the application.")
+        st.info("Please note: YouTube's API currently imposes a few limitations on the scraping tool. A maximum of 50 videos can be requested per search, and a maximum of 100 searches may be requested per day across the application.")
         submit_button = st.form_submit_button(label='Start Scraper')
+
+    # st.header('**Scrape Data From YouTube**')
+    # with st.form(key='my_form'):
+    #     col1, col2, col3 = st.beta_columns([1,2,3])
+    #     col3.write("**To analyse data, you gotta have data first!**  \n This tool executes a YouTube search for an input query, finds the number of videos selected, and scrapes up to the top 100 comments of each video. Details about the scraped videos and comments are then converted to a data frame and stored in the selected container in the app. After scraping is complete, feel free to download the data frame or use one of the tools in the sidebar for further analysis. You can store up to 5 datasets in the app's containers.")
+    #     containers = ['Container 1', 'Container 2', 'Container 3', 'Container 4', 'Container 5']
+    #     dataset = col1.radio("Stored scraped data in:", (containers))
+    #     df_index = int(dataset[-1])-1
+    #    # if str(ss.df_list[df_index]) != str(1):
+    #    #     st.info("ATTENTION: The selected container already stores data. If you continue, this data will be permanently overwritten. If you wish to keep the data, please select another container above or download the data to your own computer.  \n *Please note that YouTube's API currently imposes a few limitations on the scraping tool. A maximum of 50 videos can be requested per search, and a maximum of 100 searches may be requested per day across the application.*")
+    #     user_input1 = col2.text_input("Search term:", '')
+    #     user_input2 = col2.number_input("Videos:", min_value = 1, max_value = 50, value = 10)
+    #   #  st.info("Please note that YouTube's API currently imposes a few limitations on the scraping tool. A maximum of 50 videos can be requested per search, and a maximum of 100 searches may be requested per day across the application.")
+    #     submit_button = st.form_submit_button(label='Start Scraper')
+
+
 
     if submit_button:
         if user_input1 == "":
