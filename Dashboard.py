@@ -312,7 +312,7 @@ def page_scrape():
                 progress.subheader("Done! Total comments scraped: " + str(ss.length_list[df_index]))
 
             except PermissionError:
-                progress = st.subheader("Scraping cancelled: Couldn't access YouTube's API :(")
+                progress.subheader("Scraping cancelled: Couldn't access the YouTube API  : (")
                 st.info("Whoops - looks like YouTube isn't cooperating at the moment. While we fix the problem, feel free to try out YouNLP's analysis tools on one of our sample datasets available on the *Manage Stored Data* page!")
 
 
