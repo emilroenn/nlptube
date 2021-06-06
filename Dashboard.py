@@ -868,78 +868,78 @@ def page_topic():
             submit_button = st.form_submit_button(label='Run PCA')
 
         if submit_button:
+            with st.spinner('Running PCA...'):
+                #Prep data:
+                #collect all available data
+                df_list = [x for x in ss.df_list if str(x) != str(1)]
+                prepped_list = [] #empty placeholder
 
-            #Prep data:
-            #collect all available data
-            df_list = [x for x in ss.df_list if str(x) != str(1)]
-            prepped_list = [] #empty placeholder
+                #Check if data has already been preprocessed. If not - run preprocessing on each individual element
 
-            #Check if data has already been preprocessed. If not - run preprocessing on each individual element
+                for index in [0,1,2,3,4]:
+                    if str(ss.df_list[index]) != "1":
+                        if ss.prep_list[index] == 1:
+                            ss.prep_list[index] = prep([ss.df_list[index]])
+                            prepped_list.append(ss.prep_list[index])
+                        else:
+                            prepped_list.append(ss.prep_list[index])
 
-            for index in [0,1,2,3,4]:
-                if str(ss.df_list[index]) != "1":
-                    if ss.prep_list[index] == 1:
-                        ss.prep_list[index] = prep([ss.df_list[index]])
-                        prepped_list.append(ss.prep_list[index])
-                    else:
-                        prepped_list.append(ss.prep_list[index])
+                #Unpack preprocessed data and prep query names
+                prepped_list = [item for sublist in prepped_list for item in sublist]
+                names = [x for x in ss.query_list if x != 1]
+                dictOfWords = { i : names[i] for i in range(0, len(names) ) }
+                
+                #Run TF-IDF vectorizer and rename columns appropriately
+                vectors = vectorize_pca(prepped_list, extra_stopwords)
+                X = vectors.todense()
 
-            #Unpack preprocessed data and prep query names
-            prepped_list = [item for sublist in prepped_list for item in sublist]
-            names = [x for x in ss.query_list if x != 1]
-            dictOfWords = { i : names[i] for i in range(0, len(names) ) }
+                #df = df.rename(columns = dictOfWords , inplace = False)
+
+                num_clusters = len(df_list)
+                num_seeds = len(df_list)
+                max_iterations = 300
+                labels_color_map = {
+                    0: '#20b2aa', 1: '#ff7373', 2: '#ffe4e1', 3: '#005073', 4: '#4d0404',
+                    5: '#ccc0ba', 6: '#4700f9', 7: '#f6f900', 8: '#00f91d', 9: '#da8c49'
+                }
+                pca_num_components = 2
+
+                clustering_model = KMeans(
+                    n_clusters=num_clusters,
+                    max_iter=max_iterations,
+                    precompute_distances="auto",
+                    n_jobs=-1
+                )
+
+                labels = clustering_model.fit_predict(vectors)
+
+                tags = names
+
+                reduced_data = PCA(n_components=pca_num_components).fit_transform(X)
+                # print reduced_data
+                z = reduced_data[:,0]
+                y = reduced_data[:,1]
+
+                fig, ax = plt.subplots()
+                for index, instance in enumerate(reduced_data):
+                    # print instance, index, labels[index]
+                    pca_comp_1, pca_comp_2 = reduced_data[index]
+                    color = labels_color_map[labels[index]]
+                    ax.scatter(pca_comp_1, pca_comp_2, c=color, s = 80)
+                    ax.axes.xaxis.set_visible(False)
+                    ax.axes.yaxis.set_visible(False)
+                for i, txt in enumerate(tags):
+                    ax.annotate(txt, (z[i], y[i]))
+
+                col1.write("Principal component analysis finished!")
+
+                st.set_option('deprecation.showPyplotGlobalUse', False)
+                col2.pyplot(fig, use_container_width=True )
+
             
-            #Run TF-IDF vectorizer and rename columns appropriately
-            vectors = vectorize_pca(prepped_list, extra_stopwords)
-            X = vectors.todense()
 
-            #df = df.rename(columns = dictOfWords , inplace = False)
-
-            num_clusters = len(df_list)
-            num_seeds = len(df_list)
-            max_iterations = 300
-            labels_color_map = {
-                0: '#20b2aa', 1: '#ff7373', 2: '#ffe4e1', 3: '#005073', 4: '#4d0404',
-                5: '#ccc0ba', 6: '#4700f9', 7: '#f6f900', 8: '#00f91d', 9: '#da8c49'
-            }
-            pca_num_components = 2
-
-            clustering_model = KMeans(
-                n_clusters=num_clusters,
-                max_iter=max_iterations,
-                precompute_distances="auto",
-                n_jobs=-1
-            )
-
-            labels = clustering_model.fit_predict(vectors)
-
-            tags = names
-
-            reduced_data = PCA(n_components=pca_num_components).fit_transform(X)
-            # print reduced_data
-            z = reduced_data[:,0]
-            y = reduced_data[:,1]
-
-            fig, ax = plt.subplots()
-            for index, instance in enumerate(reduced_data):
-                # print instance, index, labels[index]
-                pca_comp_1, pca_comp_2 = reduced_data[index]
-                color = labels_color_map[labels[index]]
-                ax.scatter(pca_comp_1, pca_comp_2, c=color, s = 80)
-                ax.axes.xaxis.set_visible(False)
-                ax.axes.yaxis.set_visible(False)
-            for i, txt in enumerate(tags):
-                ax.annotate(txt, (z[i], y[i]))
-
-            col1.write("Principal component analysis finished!")
-
-            st.set_option('deprecation.showPyplotGlobalUse', False)
-            col2.pyplot(fig, use_container_width=True )
-
-        
-
-            #gif_runner = st.image("rocket.gif")
-            
+                #gif_runner = st.image("rocket.gif")
+                
 
 
 #def page_about():
