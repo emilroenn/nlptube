@@ -834,7 +834,7 @@ def page_topic():
     st.header("**Data Similarity Analysis**")
     names = [x for x in ss.query_list if x != 1]
 
-    if len(names) < 2:
+    if len(names) < 3:
         st.write("**You don't have any datasets stored yet - this analysis requires at least 3!**") 
         st.info("To use this tool, please head over to the **Manage Data** menu in the sidebar. There, you can *create a new dataset* on the **Scrape YouTube Data** page of the menu, *upload a dataset* from a previous search on the **Upload YouTube Data** page, or *load a sample dataset* from the **Manage Stored Data** page!")
 
