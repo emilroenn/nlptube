@@ -297,7 +297,9 @@ def page_scrape():
 
     if submit_button:
         if user_input1 == "":
-            st.info("Please enter a search term before scraping!")
+            st.info("Search term is missing - please enter a search term before scraping!")
+        if user_input2 > 50:
+            st.info("Maximum videos is 50 - please enter a new value before scraping!")
         else:
             try:
                 progress = st.subheader("Scraping YouTube, please wait...")
