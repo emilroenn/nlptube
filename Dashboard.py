@@ -136,6 +136,8 @@ def page_main():
         st.write("")
         st.write("Happy analyzing!")
         st.write("*- Emil & Lasse*")
+    with col2:
+        st.image("./resources/screenshots/flowchart_main.png")
 
 
 def page_how():
