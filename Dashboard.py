@@ -120,7 +120,6 @@ def main():
     pages[ss.current]()
 
 def page_main():
-    col1,col2 = st.beta_columns([2,1])
 
     st.title('Welcome to YouNLP')
     st.subheader("**A fast and easy scraping and analysis tool for the YouTube API!**")
@@ -128,6 +127,7 @@ def page_main():
     st.write("**NLP and Big Data at your fingertips!**")
     st.write("Big data scraping and analysis can be a real hassle, from setting up API credentials and access tokens to complex data wrangling and preprocessing pipelines. Having been through the process ourselves, we know all too well how much time is spent setting up the infrastructure before finally being able to get to the insights.  \n\n That's why we decided to find a way to let others skip the boring parts and get straight to the results! The YouNLP app provides easy access to YouTube data scraping and language analysis through a series of easy-to-use tools. Simply choose what kind of data you'd like to look at, and what kind of analysis tools to try out - the rest is handled by the app!")
 
+    col1,col2 = st.beta_columns([2,1])
     with col1:
         st.write("**Get smart!**")
         st.write("Want to have a quick overview of the tools and methods available? Head on over to the *How Does It Work?* page under the *About This App* menu in the sidebar.")
