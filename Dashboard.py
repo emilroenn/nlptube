@@ -199,8 +199,9 @@ def page_how():
     with st.beta_expander("Sentiment Analysis", expanded = False):
         col1,col2 = st.beta_columns([2,1])
         col1.subheader("*Sentiment Analysis*")
-        col1.write("One interesting avenue of exploration in the acquired comments is the sentiment expressed across your search queries. The *sentiment analysis tool* allows you to do just that!" )
-        col1.write("Start by selecting the queries of your loaded datascrapes that you want to be included in the analysis. Then press the *Show sentiment* button and we will handle the rest. This tool automatically assigns a sentiment score to all selected comments.")
+        col1.write("One interesting avenue of exploration in the acquired comments is the sentiment expressed across your search queries. The **sentiment analysis tool** allows you to do just that!" )
+        col1.write("Start by selecting the queries of your loaded datascrapes that you want to be included in the analysis. Then press the **Show sentiment** button and we will handle the rest. This tool automatically assigns a sentiment score to all selected comments.")
+        col1.write("This processing should run fairly quickly. Upon finishing, You will have access to the raw dataframe with comments and their assigned sentiment scores. Moreover, these sentiment scores are also aggregated across your selected queries and by date, and shown in an interactive chart, allowing you to assess how the sentiment has developed over time. These aggregated scores are also available for download, so that you can use them for your own interesting investigations.")
         col2.image("./resources/screenshots/sentiment.png")
 
     with st.beta_expander("Similarity Analysis", expanded = False):
