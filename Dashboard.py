@@ -223,6 +223,7 @@ def page_how():
         col1.write("The **Similarity Analysis Tool** allows you to compare the relative similarity of your selected queries.")
         col1.write("Specifically, this tool uses the *TF-IDF scores* of the comments of your selected queries and applies *Principal Component Analysis* to the word vectors.")
         col1.write("The end result is a two dimensional representation of your queres and how similar they are with respect to individual word importance.")
+        col1.write("To use this tool, simply select any keywords that you want excluded from the analysis (perhaps identified using wordclouds) and press the **Run PCA** button")
         col2.image("./resources/screenshots/pca.png")
 
 
