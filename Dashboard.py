@@ -202,6 +202,19 @@ def page_how():
         col1.write("One interesting avenue of exploration in the acquired comments is the sentiment expressed across your search queries. The **sentiment analysis tool** allows you to do just that!" )
         col1.write("Start by selecting the queries of your loaded datascrapes that you want to be included in the analysis. Then press the **Show sentiment** button and we will handle the rest. This tool automatically assigns a sentiment score to all selected comments.")
         col1.write("This processing should run fairly quickly. Upon finishing, You will have access to the raw dataframe with comments and their assigned sentiment scores. Moreover, these sentiment scores are also aggregated across your selected queries and by date, and shown in an interactive chart, allowing you to assess how the sentiment has developed over time. These aggregated scores are also available for download, so that you can use them for your own interesting investigations.")
+        col1.write("**On sentiment scores**")
+        col1.markdown(
+                                "Sentiment scores are generated using the VADER (Valence Aware Dictionary for Sentiment Reasoning)  \n"
+                                "This model is sensitive to both polarity and intensity of emotion  \n"
+                                "Each individual comment is assigned 4 scores based on their content:  \n   \n"
+                                "⋅⋅⋅ **Positive**  \n"
+                                "⋅⋅⋅ **Negative**  \n"
+                                "⋅⋅⋅ **Neutral**  \n"
+                                "⋅⋅⋅ **Compound**  \n  \n"
+                                "The compound is the result of normalizing (between -1 and 1) the three other scores, providing a good estimate for overall sentence valence.  \n"
+                                "Positive compound scores suggest positive comments, and vice versa" 
+                            )
+
         col2.image("./resources/screenshots/sentiment.png")
 
     with st.beta_expander("Similarity Analysis", expanded = False):
