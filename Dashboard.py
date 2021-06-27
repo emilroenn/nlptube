@@ -220,7 +220,9 @@ def page_how():
     with st.beta_expander("Similarity Analysis", expanded = False):
         col1,col2 = st.beta_columns([2,1])
         col1.subheader("*Similarity Analysis*")
-        col1.write("Short info text.")
+        col1.write("The **Similarity Analysis Tool** allows you to compare the relative similarity of your selected queries.")
+        col1.write("Specifically, this tool uses the *TF-IDF scores* of the comments of your selected queries and applies *Principal Component Analysis* to the word vectors.")
+        col1.write("The end result is a two dimensional representation of your queres and how similar they are with respect to individual word importance.")
         col2.image("./resources/screenshots/pca.png")
 
 
