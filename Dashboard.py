@@ -223,7 +223,16 @@ def page_how():
         col1.write("The **Similarity Analysis Tool** allows you to compare the relative similarity of your selected queries.")
         col1.write("Specifically, this tool uses the *TF-IDF scores* of the comments of your selected queries and applies *Principal Component Analysis* to the word vectors.")
         col1.write("The end result is a two dimensional representation of your queres and how similar they are with respect to individual word importance.")
-        col1.write("To use this tool, simply select any keywords that you want excluded from the analysis (perhaps identified using wordclouds) and press the **Run PCA** button")
+        col1.write("To use this tool, simply select any keywords that you want excluded from the analysis (perhaps identified using wordclouds) and press the **Run PCA** button.")
+        col1.write("**What is PCA?**")
+        col1.markdown(
+                        "**Principal component analysis** (PCA) is a dimensionality-reduction method that is often used to reduce the dimensionality of large data sets, by transforming a large set of variables into a smaller one that still contains most of the information in the large set [(Ref)](https://builtin.com/data-science/step-step-explanation-principal-component-analysis).    \n"
+                        "This has the merit of increasing interpretability but at the same time minimizing information loss. It does so by creating new uncorrelated variables that successively maximize variance [(Ref)](https://royalsocietypublishing.org/doi/10.1098/rsta.2015.0202).    \n   \n"
+                        "In this case, we are utilizing the TF-IDF matrix of vectors containing the relative importance of each word to each query. These word vectors each represent a dimension of word importance. The PCA effectively 'boils down' these dimensions to a 2-dimensional space. Each query can then be mapped into this new space and compared to other queries.    \n   \n"
+                        "**Notice** that the axis in this new 2-dimensional space no longer carry any semantic meaning, and interpretability is pointless."
+                        "The point of running PCA in this case, is that it allows us to see whether queries are similar to each other with regards to individual word importance."
+                        )
+
         col2.image("./resources/screenshots/pca.png")
 
 
